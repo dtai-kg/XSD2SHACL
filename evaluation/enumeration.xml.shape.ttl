@@ -1,0 +1,21 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/jeans> a sh:NodeShape ;
+    sh:name "jeans" ;
+    sh:node <http://example.com/NodeShape/size> .
+
+<http://example.com/NodeShape/size> a sh:NodeShape ;
+    sh:name "size" ;
+    sh:property <http://example.com/PropertyShape/sex> .
+
+<http://example.com/PropertyShape/sex> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:in ( "male" "female" ) ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "sex" ;
+    sh:path <http://example.com/sex> ;
+    sh:targetSubjectsOf <http://example.com/sex> .
+
