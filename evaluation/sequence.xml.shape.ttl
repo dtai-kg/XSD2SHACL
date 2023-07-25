@@ -1,0 +1,66 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/employee> a sh:NodeShape ;
+    sh:name "employee" ;
+    sh:node <http://example.com/NodeShape/fullpersoninfo> ;
+    sh:targetClass <http://example.com/employee> ;
+    sh:targetSubjectsOf <http://example.com/employee> .
+
+<http://example.com/NodeShape/fullpersoninfo> a sh:NodeShape ;
+    sh:name "fullpersoninfo" ;
+    sh:node <http://example.com/NodeShape/personinfo> .
+
+<http://example.com/NodeShape/personinfo> a sh:NodeShape ;
+    sh:name "personinfo" ;
+    sh:property <http://example.com/PropertyShape/address>,
+        <http://example.com/PropertyShape/city>,
+        <http://example.com/PropertyShape/country>,
+        <http://example.com/PropertyShape/firstname>,
+        <http://example.com/PropertyShape/lastname> .
+
+<http://example.com/PropertyShape/address> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "address" ;
+    sh:order 0 ;
+    sh:path <http://example.com/address> ;
+    sh:targetSubjectsOf <http://example.com/address> .
+
+<http://example.com/PropertyShape/city> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "city" ;
+    sh:order 1 ;
+    sh:path <http://example.com/city> ;
+    sh:targetSubjectsOf <http://example.com/city> .
+
+<http://example.com/PropertyShape/country> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "country" ;
+    sh:order 2 ;
+    sh:path <http://example.com/country> ;
+    sh:targetSubjectsOf <http://example.com/country> .
+
+<http://example.com/PropertyShape/firstname> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "firstname" ;
+    sh:order 0 ;
+    sh:path <http://example.com/firstname> ;
+    sh:targetSubjectsOf <http://example.com/firstname> .
+
+<http://example.com/PropertyShape/lastname> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "lastname" ;
+    sh:order 1 ;
+    sh:path <http://example.com/lastname> ;
+    sh:targetSubjectsOf <http://example.com/lastname> .
+

@@ -11,13 +11,21 @@
 - fixed -> sh:hasValue
 - default -> sh:defaultValue
 - name -> sh:name
+- complexType -> NS
+- simpleType -> PS
+- xs:sequence -> sh:order
+- xs:all
+- xs:union -> sh:or
 
 ## To Do
-- Translate ComplexType
+
+- language
+- sh:order
 - Test XSD2ShEx
 
 ## To be discussed:
 
-- xs:list
-- xs:sequence 
+- xs:list it is not matched with RDF compared with XML
+- xs:sequence, translated ShEx is weird
+- language
 

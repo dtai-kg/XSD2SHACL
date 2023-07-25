@@ -17,15 +17,16 @@ class XSDtoSHACL:
         self.NS = rdflib.Namespace('http://example.com/')
         self.xsdNSdict = dict()
         self.type_list = ['string', 'normalizedString', 'token', 'base64Binary', 'hexBinary', 'integer', 'positiveInteger', 'negativeInteger', 'nonNegativeInteger', 'nonPositiveInteger', 'long', 'unsignedLong', 'int', 'unsignedInt', 'short', 'unsignedShort', 'byte', 'unsignedByte', 'decimal', 'float', 'double', 'boolean', 'duration', 'dateTime', 'date', 'time', 'gYear', 'gYearMonth', 'gMonth', 'gMonthDay', 'gDay', 'Name', 'QName', 'NCName', 'anyURI', 'language', 'ID', 'IDREF', 'IDREFS', 'ENTITY', 'ENTITIES', 'NOTATION', 'NMTOKEN', 'NMTOKENS']
-        # self.SHACL = SHACL()
         self.SHACL = Graph()
         self.shapes = []
         self.translatedShapes = {}
         self.enumerationShapes = []
+        self.order_list = []
 
-    def isSimpleComplex(self,xsd_element):
+    def isSimpleComplex(self,xsd_element,xsd_type=None):
         """A function to determine whether the type of element is SimpleType or ComplexType"""
-        xsd_type = xsd_element.get("type")
+        if xsd_type == None:
+            xsd_type = xsd_element.get("type")
         if xsd_type == None:
             for child in xsd_element.findall("./"):
                 if "complexType" in child.tag:
@@ -134,6 +135,9 @@ class XSDtoSHACL:
         self.SHACL.add((subject,self.shaclNS.maxCount,element_max_occurs))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
 
+        if self.order_list != []:
+            self.SHACL.add((subject,self.shaclNS.order,Literal(self.order_list.pop())))
+
         for name in xsd_element.attrib:
             self.transRestriction(name, xsd_element.attrib[name])
 
@@ -235,6 +239,56 @@ class XSDtoSHACL:
             self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
             return xsd_element  
 
+    def transUnion(self, xsd_element):
+        values = []
+        subject = self.shapes[-1]
+
+        memberTypes = xsd_element.get("memberTypes").split(" ")
+
+        current_BN = BNode()
+        self.SHACL.add((subject, self.shaclNS["or"], current_BN))
+
+        for index in range(len(memberTypes)):
+            memberType = memberTypes[index]
+            if (":" in memberType) and (memberType.split(":")[1] in self.type_list):
+                shape_BN = BNode()
+                self.SHACL.add((current_BN, RDF.first, shape_BN)) 
+                self.SHACL.add((shape_BN, self.shaclNS.datatype, self.xsdNS[memberType.split(":")[1]])) 
+                next_BN = BNode()
+                if index == len(memberTypes)-1:
+                    self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+                else:   
+                    self.SHACL.add((current_BN, RDF.rest, next_BN))
+                current_BN = next_BN
+            else:
+                sub_node = self.root.find(f'.//*[@name="{memberType}"]',self.xsdNSdict)
+                element_type = self.isSimpleComplex(sub_node, memberType)
+                if element_type == 1:
+                    self.SHACL.add((current_BN, RDF.first, self.NS[f'NodeShape/{memberType}'])) 
+                    next_BN = BNode()
+                    if index == len(memberTypes)-1:
+                        self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+                    else:   
+                        self.SHACL.add((current_BN, RDF.rest, next_BN))
+                    current_BN = next_BN
+                elif element_type == 0:
+                    sub_BN = BNode()
+                    self.SHACL.add((current_BN, RDF.first, sub_BN))
+                    self.shapes.append(sub_BN)
+                    self.translate(sub_node)
+                    self.shapes.pop()
+                    next_BN = BNode()
+                    if index == len(memberTypes)-1:
+                        self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+                    else:   
+                        self.SHACL.add((current_BN, RDF.rest, next_BN))
+                    current_BN = next_BN
+
+        # self.SHACL.add((current_BN, RDF.first, Literal(memberTypes[-1])))
+        # self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+
+                
+
     def translate(self,current_node):
         """A function to iteratively translate XSD to SHACL"""
         for child in current_node.findall("*"):
@@ -258,8 +312,13 @@ class XSDtoSHACL:
                 next_node = self.transComplexType(child)
             elif ("complexType" in tag) or ("simpleType" in tag):
                 pass
-            elif ("all" in tag) or ("sequence" in tag) or ("choice" in tag):
+            elif ("sequence" in tag):
+                self.order_list = list(reversed(range(len(child.findall("./")))))
+            elif ("all" in tag) or ("choice" in tag):
                 pass
+            elif ("union" in tag):
+                memberTypes = child.get("memberTypes").split(" ")
+                self.transUnion(child)
             elif ("restriction" in tag):
                 value = child.get("base")
                 self.transRestriction(tag,value)

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="jeans_size">
+  <xs:simpleType>
+    <xs:union memberTypes="sizebyno sizebystring" />
+  </xs:simpleType>
+</xs:element>
+
+<xs:simpleType name="sizebyno">
+  <xs:restriction base="xs:positiveInteger">
+    <xs:maxInclusive value="42"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="sizebystring">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="small"/>
+    <xs:enumeration value="medium"/>
+    <xs:enumeration value="large"/>
+  </xs:restriction>
+</xs:simpleType>
+
+</xs:schema>
