@@ -1,31 +1,38 @@
 # XSD2SHACL
 
-## Done
-- Element with simple type and built-in type -> sh:propertyShape + sh:path + sh:targetSubjectOf
-- Attribute with simple type and built-in type -> sh:propertyShape + sh:path + sh:targetSubjectOf
-- type -> sh:dataType
-- cardinality -> sh:minMaxCount
-- minMaxLength
-- minMaxExInclusive
-- Enumeration -> sh:in
-- fixed -> sh:hasValue
-- default -> sh:defaultValue
-- name -> sh:name
-- complexType -> NS
-- simpleType -> PS
-- xs:sequence -> sh:order
-- xs:all
-- xs:union -> sh:or
+See translation and implementation detail in this report: 
+
+## Prerequisite
+
+Install the required dependencies:
+
+```
+$ pip install -r requirements.txt
+```
+
+## Usage
+
+To translate XML Schema to SHACL shapes:
+
+```
+$ python XSDtoSHACL.py XSD_FILE
+```
+
+## Translation correspondences:
+
+<div align="center">
+  <img src="table1.png">
+</div>
+
+<div align="center">
+  <img src="table2.png">
+</div>
 
 ## To Do
 
-- language
-- sh:order
-- Test XSD2ShEx
+[] choice
+[] fix issue: extension => emueneration.xml and sequence.xml 
+[] Evaluation 
 
-## To be discussed:
 
-- xs:list it is not matched with RDF compared with XML
-- xs:sequence, translated ShEx is weird
-- language
 

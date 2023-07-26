@@ -74,8 +74,6 @@
 <http://example.com/PropertyShape/country> a sh:PropertyShape ;
     sh:datatype xsd:NMTOKEN ;
     sh:hasValue "US" ;
-    sh:maxCount 1 ;
-    sh:minCount 1 ;
     sh:name "country" ;
     sh:path :country ;
     sh:targetSubjectsOf :country .
@@ -90,16 +88,12 @@
 
 <http://example.com/PropertyShape/orderDate> a sh:PropertyShape ;
     sh:datatype xsd:date ;
-    sh:maxCount 1 ;
-    sh:minCount 1 ;
     sh:name "orderDate" ;
     sh:path :orderDate ;
     sh:targetSubjectsOf :orderDate .
 
 <http://example.com/PropertyShape/partNum> a sh:PropertyShape ;
     sh:datatype xsd:string ;
-    sh:maxCount 1 ;
-    sh:minCount 1 ;
     sh:name "partNum" ;
     sh:path :partNum ;
     sh:pattern "\\d{3}-[A-Z]{2}" ;

@@ -131,8 +131,9 @@ class XSDtoSHACL:
         self.shapes.append(subject)
         self.SHACL.add((subject,self.shaclNS.path,self.xsdTargetNS[element_name]))
         self.SHACL.add((subject,self.shaclNS.targetSubjectsOf,self.xsdTargetNS[element_name]))
-        self.SHACL.add((subject,self.shaclNS.minCount,element_min_occurs))
-        self.SHACL.add((subject,self.shaclNS.maxCount,element_max_occurs))
+        if "attribute" not in xsd_element.tag:
+            self.SHACL.add((subject,self.shaclNS.minCount,element_min_occurs))
+            self.SHACL.add((subject,self.shaclNS.maxCount,element_max_occurs))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
 
         if self.order_list != []:
