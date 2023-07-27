@@ -6,7 +6,7 @@
     sh:name "purchaseOrder" ;
     sh:node <http://example.com/NodeShape/PurchaseOrderType> ;
     sh:targetClass :purchaseOrder ;
-    sh:targetSubjectsOf :purchaseOrder .
+    sh:targetObjectsOf :purchaseOrder .
 
 <http://example.com/PropertyShape/comment> a sh:PropertyShape ;
     sh:datatype xsd:string ;
@@ -31,7 +31,7 @@
     sh:name "billTo" ;
     sh:node <http://example.com/NodeShape/USAddress> ;
     sh:targetClass :billTo ;
-    sh:targetSubjectsOf :billTo .
+    sh:targetObjectsOf :billTo .
 
 <http://example.com/NodeShape/item> a sh:NodeShape ;
     sh:name "item" ;
@@ -41,19 +41,19 @@
         <http://example.com/PropertyShape/quantity>,
         <http://example.com/PropertyShape/shipDate> ;
     sh:targetClass :item ;
-    sh:targetSubjectsOf :item .
+    sh:targetObjectsOf :item .
 
 <http://example.com/NodeShape/items> a sh:NodeShape ;
     sh:name "items" ;
     sh:node <http://example.com/NodeShape/Items> ;
     sh:targetClass :items ;
-    sh:targetSubjectsOf :items .
+    sh:targetObjectsOf :items .
 
 <http://example.com/NodeShape/shipTo> a sh:NodeShape ;
     sh:name "shipTo" ;
     sh:node <http://example.com/NodeShape/USAddress> ;
     sh:targetClass :shipTo ;
-    sh:targetSubjectsOf :shipTo .
+    sh:targetObjectsOf :shipTo .
 
 <http://example.com/PropertyShape/USPrice> a sh:PropertyShape ;
     sh:datatype xsd:decimal ;

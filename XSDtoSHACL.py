@@ -164,7 +164,8 @@ class XSDtoSHACL:
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
         
         self.SHACL.add((subject,self.shaclNS.targetClass,self.xsdTargetNS[element_name]))
-        self.SHACL.add((subject,self.shaclNS.targetSubjectsOf,self.xsdTargetNS[element_name]))
+        # self.SHACL.add((subject,self.shaclNS.targetSubjectsOf,self.xsdTargetNS[element_name]))
+        self.SHACL.add((subject,self.shaclNS.targetObjectsOf,self.xsdTargetNS[element_name]))
         #complex type does not have target, element can
 
         for name in xsd_element.attrib:
