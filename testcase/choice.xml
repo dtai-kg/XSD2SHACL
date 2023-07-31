@@ -5,18 +5,19 @@
   <xsd:sequence>
     <xsd:choice>
       <xsd:group   ref="shipAndBill"/>
-      <xsd:element name="singleUSAddress" type="USAddress"/>
+      <xsd:element name="singleUSAddress" type="xsd:string"/>
     </xsd:choice>
     <xsd:element ref="comment" minOccurs="0"/>
-    <xsd:element name="items"  type="Items"/>
   </xsd:sequence>
   <xsd:attribute name="orderDate" type="xsd:date"/>
 </xsd:complexType>
 
+<xsd:element name="comment" type="xsd:string"/> 
+
 <xsd:group id="shipAndBill">
   <xsd:sequence>
-    <xsd:element name="shipTo" type="USAddress"/>
-    <xsd:element name="billTo" type="USAddress"/>
+    <xsd:element name="shipTo" type="xsd:string"/>
+    <xsd:element name="billTo" type="xsd:string"/>
   </xsd:sequence>
 </xsd:group>
 

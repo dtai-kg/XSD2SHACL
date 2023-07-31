@@ -22,8 +22,8 @@ class XSDtoSHACL:
         self.extensionShapes = []
         self.groupShapes = []
         self.enumerationShapes = []
+        self.choiceShapes = []
         self.order_list = []
-        # self.extensionShape = False
         self.backUp = None
 
     def isSimpleComplex(self,xsd_element,xsd_type=None):
@@ -138,7 +138,7 @@ class XSDtoSHACL:
         # self.translatedShapes[subject] = subject
 
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.PropertyShape))
-        if self.shapes != []:
+        if self.shapes != [] and element_name not in self.choiceShapes:
             self.SHACL.add((self.shapes[-1],self.shaclNS.property,subject))
         self.shapes.append(subject)
         self.SHACL.add((subject,self.shaclNS.path,self.xsdTargetNS[element_name]))
@@ -169,7 +169,7 @@ class XSDtoSHACL:
         """A function to translate XSD element with complex type to SHACL node shape"""
         element_name = xsd_element.get("name")
         subject = self.NS[f'NodeShape/{element_name}']
-        if self.shapes != []:
+        if self.shapes != [] and element_name not in self.choiceShapes:
             self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
         self.shapes.append(subject)
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
@@ -196,7 +196,7 @@ class XSDtoSHACL:
         """A function to translate XSD complex type to SHACL node shape""" 
         element_name = xsd_element.get("name")
         subject = self.NS[f'NodeShape/{element_name}']
-        if self.shapes != []:
+        if self.shapes != [] and element_name not in self.choiceShapes:
             self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
         self.shapes.append(subject)
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
@@ -214,8 +214,6 @@ class XSDtoSHACL:
         if element_name == None:
             element_name = xsd_element.get("id")
         subject = self.NS[f'NodeShape/{element_name}']
-        # if self.shapes != []:
-        #     self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
         self.shapes.append(subject)
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
@@ -350,10 +348,43 @@ class XSDtoSHACL:
                         self.SHACL.add((current_BN, RDF.rest, next_BN))
                     current_BN = next_BN
 
-        # self.SHACL.add((current_BN, RDF.first, Literal(memberTypes[-1])))
-        # self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+    def transChoice(self, xsd_element):
 
-                
+        values = []
+        subject = self.shapes[-1]
+
+        for child in xsd_element.findall("./"):
+            tag = child.tag
+            if "element" in tag:
+                element_type = self.isSimpleComplex(child)
+                if element_type == 0:
+                    values.append(self.NS[f'PropertyShape/{child.get("name")}'])
+                else:
+                    values.append(self.NS[f'NodeShape/{child.get("name")}'])
+                self.choiceShapes.append(child.get("name"))
+            elif "group" in tag:
+                temp = child.get("ref")
+                if temp == None:
+                    temp = child.get("id")
+                if temp == None:
+                    temp = child.get("name")
+                self.choiceShapes.append(temp)
+                values.append(self.NS[f'NodeShape/{temp}'])
+
+        if values == []:
+            return xsd_element
+        else:
+            current_BN = BNode()
+            self.SHACL.add((subject, self.shaclNS["xone"], current_BN))
+            for index in range(len(values))[0:-1]:
+                self.SHACL.add((current_BN, RDF.first, Literal(values[index]))) 
+                next_BN = BNode()
+                self.SHACL.add((current_BN, RDF.rest, next_BN)) 
+                current_BN = next_BN
+
+            self.SHACL.add((current_BN, RDF.first, Literal(values[-1]))) 
+            self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+            return xsd_element 
 
     def translate(self,current_node):
         """A function to iteratively translate XSD to SHACL"""
@@ -377,14 +408,16 @@ class XSDtoSHACL:
             elif ("complexType" in tag) and (child.get("name")):
                 next_node = self.transComplexType(child)
             elif ("group" in tag) and ((child.get("name")) or (child.get("ref")) or (child.get("id"))):
-                if child.get("ref"):
-                    self.SHACL.add((self.shapes[-1],self.shaclNS.node,self.NS[f'NodeShape/{child.get("ref")}']))
-                    if child.get("ref") in self.groupShapes:
+                ref = child.get("ref")
+                if ref:
+                    if ref not in self.choiceShapes:
+                        self.SHACL.add((self.shapes[-1],self.shaclNS.node,self.NS[f'NodeShape/{ref}']))
+                    if ref in self.groupShapes:
                         pass
                     else:
-                        next_node = self.root.find(f".//*[@id='{child.get('ref')}']")
+                        next_node = self.root.find(f".//*[@id='{ref}']")
                         if next_node == None:
-                            next_node = self.root.find(f".//*[@name='{child.get('ref')}']")
+                            next_node = self.root.find(f".//*[@name='{ref}']")
                 else:
                     next_node = self.transGroup(child)
             elif ("complexType" in tag) or ("simpleType" in tag):
@@ -397,7 +430,7 @@ class XSDtoSHACL:
             elif ("sequence" in tag):
                 self.order_list = list(reversed(range(len(child.findall("./")))))
             elif ("choice" in tag):
-                pass
+                self.transChoice(child)
             elif ("all" in tag):
                 pass
             elif ("union" in tag):

@@ -38,7 +38,6 @@ The generated shape file will then be located here: testcase/example.xml.shape.t
 
 ## To Do
 
-- [ ] choice
 - [ ] Evaluation 
 
 
