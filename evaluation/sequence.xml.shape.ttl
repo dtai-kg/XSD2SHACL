@@ -5,18 +5,18 @@
     sh:name "employee" ;
     sh:node <http://example.com/NodeShape/fullpersoninfo> ;
     sh:targetClass <http://example.com/employee> ;
-    sh:targetSubjectsOf <http://example.com/employee> .
+    sh:targetObjectsOf <http://example.com/employee> .
 
 <http://example.com/NodeShape/fullpersoninfo> a sh:NodeShape ;
     sh:name "fullpersoninfo" ;
-    sh:node <http://example.com/NodeShape/personinfo> .
+    sh:node <http://example.com/NodeShape/personinfo> ;
+    sh:property <http://example.com/PropertyShape/address>,
+        <http://example.com/PropertyShape/city>,
+        <http://example.com/PropertyShape/country> .
 
 <http://example.com/NodeShape/personinfo> a sh:NodeShape ;
     sh:name "personinfo" ;
-    sh:property <http://example.com/PropertyShape/address>,
-        <http://example.com/PropertyShape/city>,
-        <http://example.com/PropertyShape/country>,
-        <http://example.com/PropertyShape/firstname>,
+    sh:property <http://example.com/PropertyShape/firstname>,
         <http://example.com/PropertyShape/lastname> .
 
 <http://example.com/PropertyShape/address> a sh:PropertyShape ;

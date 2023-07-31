@@ -39,7 +39,6 @@ The generated shape file will then be located here: evaluation/example.xml.shape
 ## To Do
 
 - [ ] choice
-- [ ] fix issue: extension => emueneration.xml and sequence.xml 
 - [ ] Evaluation 
 
 
