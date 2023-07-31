@@ -77,6 +77,15 @@ class XSDtoSHACL:
         elif "pattern" in tag:
             p = self.shaclNS.pattern
             o = Literal(value)
+            # shacl_pattern = "^"
+            # shacl_pattern += str(o).replace("\\d", "[0-9]") \
+            #     .replace("\\w", "[A-Za-z0-9_]") \
+            #     .replace("\\s", "[ \\t\\r\\n]") \
+            #     .replace("\\D", "[^0-9]") \
+            #     .replace("\\W", "[^A-Za-z0-9_]") \
+            #     .replace("\\S", "[^ \\t\\r\\n]")
+            # shacl_pattern += "$"
+            # o = Literal(shacl_pattern)
             self.SHACL.add((subject,p,o))
 
         elif "maxExclusive" in tag:
