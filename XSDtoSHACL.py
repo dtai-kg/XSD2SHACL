@@ -210,8 +210,11 @@ class XSDtoSHACL:
     def transExtension(self,xsd_element):
         """A function to translate XSD extension to SHACL node shape"""
         element_name = xsd_element.get("base")
+        xsd_type = xsd_element.get("type")
         if element_name in self.extensionShapes:
-            # self.extensionShape = False
+            return xsd_element
+        elif "xs" in str(xsd_type) or "xsd" in str(xsd_type):
+            self.SHACL.add((self.shapes[-1],self.shaclNS.datatype,self.xsdNS[xsd_type.split(":")[1]]))
             return xsd_element
         else:
             self.extensionShapes.append(element_name)
