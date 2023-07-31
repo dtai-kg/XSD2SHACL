@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:simpleType name="size">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="small" />
+    <xs:enumeration value="medium" />
+    <xs:enumeration value="large" />
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="jeans">
+  <xs:simpleContent>
+    <xs:extension base="size">
+      <xs:attribute name="sex">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="male" />
+            <xs:enumeration value="female" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+
+</xs:schema>
