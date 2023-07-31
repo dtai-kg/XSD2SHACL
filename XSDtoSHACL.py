@@ -20,6 +20,7 @@ class XSDtoSHACL:
         self.SHACL = Graph()
         self.shapes = []
         self.extensionShapes = []
+        self.groupShapes = []
         self.enumerationShapes = []
         self.order_list = []
         # self.extensionShape = False
@@ -205,6 +206,24 @@ class XSDtoSHACL:
         for name in xsd_element.attrib:
             self.transRestriction(name, xsd_element.attrib[name])
 
+        return xsd_element   
+
+    def transGroup(self,xsd_element):
+        """A function to translate XSD complex type to SHACL node shape""" 
+        element_name = xsd_element.get("name")
+        if element_name == None:
+            element_name = xsd_element.get("id")
+        subject = self.NS[f'NodeShape/{element_name}']
+        # if self.shapes != []:
+        #     self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
+        self.shapes.append(subject)
+        self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
+        self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
+        #complex type does not have target, element can
+
+        for name in xsd_element.attrib:
+            self.transRestriction(name, xsd_element.attrib[name])
+
         return xsd_element    
 
     def transExtension(self,xsd_element):
@@ -357,20 +376,33 @@ class XSDtoSHACL:
                 next_node = self.transExtension(child)
             elif ("complexType" in tag) and (child.get("name")):
                 next_node = self.transComplexType(child)
+            elif ("group" in tag) and ((child.get("name")) or (child.get("ref")) or (child.get("id"))):
+                if child.get("ref"):
+                    self.SHACL.add((self.shapes[-1],self.shaclNS.node,self.NS[f'NodeShape/{child.get("ref")}']))
+                    if child.get("ref") in self.groupShapes:
+                        pass
+                    else:
+                        next_node = self.root.find(f".//*[@id='{child.get('ref')}']")
+                        if next_node == None:
+                            next_node = self.root.find(f".//*[@name='{child.get('ref')}']")
+                else:
+                    next_node = self.transGroup(child)
             elif ("complexType" in tag) or ("simpleType" in tag):
                 pass
-            elif ("sequence" in tag):
-                self.order_list = list(reversed(range(len(child.findall("./")))))
-            elif ("all" in tag) or ("choice" in tag):
-                pass
-            elif ("union" in tag):
-                # memberTypes = child.get("memberTypes").split(" ")
-                self.transUnion(child)
             elif ("restriction" in tag):
                 value = child.get("base")
                 self.transRestriction(tag,value)
             elif ("enumeration" in tag):
                 self.transEnumeration(child)
+            elif ("sequence" in tag):
+                self.order_list = list(reversed(range(len(child.findall("./")))))
+            elif ("choice" in tag):
+                pass
+            elif ("all" in tag):
+                pass
+            elif ("union" in tag):
+                # memberTypes = child.get("memberTypes").split(" ")
+                self.transUnion(child)
             else:
                 value = child.get("value")
                 self.transRestriction(tag,value)
@@ -378,9 +410,7 @@ class XSDtoSHACL:
             # Translate next node
             self.translate(next_node)
                 
-            # if (("element" in tag) and (child.get("name"))) or ("attribute" in tag) or (("complexType" in tag) and (child.get("name"))) or (("extension" in tag) and self.extensionShape):
-            #     self.shapes.pop()
-            if (("element" in tag) and (child.get("name"))) or ("attribute" in tag) or (("complexType" in tag) and (child.get("name"))):
+            if (("element" in tag) and (child.get("name"))) or ("attribute" in tag) or (("complexType" in tag) and (child.get("name"))) or (("group" in tag) and (child.get("name") or child.get("id"))):
                 self.shapes.pop()
         if self.backUp != None:
             self.shapes.pop()

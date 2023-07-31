@@ -21,10 +21,10 @@ $ python XSDtoSHACL.py XSD_FILE
 For example, if you execute the following:
 
 ```
-$ python XSDtoSHACL.py evaluation/example.xml
+$ python XSDtoSHACL.py testcase/example.xml
 ```
 
-The generated shape file will then be located here: evaluation/example.xml.shape.ttl
+The generated shape file will then be located here: testcase/example.xml.shape.ttl
 
 ## Translation correspondences:
 
