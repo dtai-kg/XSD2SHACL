@@ -29,12 +29,9 @@ The generated shape file will then be located here: testcase/example.xml.shape.t
 ## Translation correspondences:
 
 <div align="center">
-  <img src="image/table1.png">
+  <img src="image/image.png">
 </div>
 
-<div align="center">
-  <img src="image/table2.png">
-</div>
 
 ## To Do
 
