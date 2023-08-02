@@ -1,0 +1,29 @@
+List(MaxExclusive(Attributes(Map(value -> "100"))))
+List(Pattern(Attributes(Map(value -> "\d{3}-[A-Z]{2}"))))
+<PurchaseOrderType> {
+:shipTo  @<USAddress> {1}  ;
+:billTo  @<USAddress> {1}  ;
+:comment  xs:string ?  ;
+:items  @<Items> {1}  ;
+:orderDate  xs:date {1}  ;
+}
+<Items> {
+:item  @<item> *  ;
+
+}
+<item> {
+:productName  xs:string {1}  ;
+:quantity xs:positiveInteger {1, 99}  ;
+:USPrice  xs:decimal {1}  ;
+:comment  xs:string ?  ;
+:shipDate  xs:date ?  ;
+:partNum xs:string {1} PATTERN \\d{3}-[A-Z]{2} ;
+}
+<USAddress> {
+:name  xs:string {1}  ;
+:street  xs:string {1}  ;
+:city  xs:string {1}  ;
+:state  xs:string {1}  ;
+:zip  xs:integer {1}  ;
+:country  [US]  {1}  ;
+}
