@@ -1,6 +1,6 @@
 # XSD2SHACL
 
-See translation and implementation detail in this [report](https://drive.google.com/file/d/1vFHQnm-dv6EAjq5gXR66wWf-3D9U85bo/view?usp=drive_link).
+See translation and implementation detail in report.
 
 ## Prerequisite
 
@@ -35,6 +35,7 @@ The generated shape file will then be located here: testcase/example.xml.shape.t
 
 ## To Do
 
+- [ ] fix element without type
 - [ ] Evaluation 
 
 
