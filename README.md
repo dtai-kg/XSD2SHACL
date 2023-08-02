@@ -35,6 +35,7 @@ The generated shape file will then be located here: testcase/example.xml.shape.t
 
 ## To Do
 
+- [ ] attribute language
 - [ ] fix element without type
 - [ ] Evaluation 
 
