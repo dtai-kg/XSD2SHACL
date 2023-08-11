@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="person">
+  <xs:complexType>
+    <xs:all>
+      <xs:element name="firstname" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastname" type="xs:string" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="lang" type="xs:string" use="required"/>
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>

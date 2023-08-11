@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:attributeGroup name="personattr">
+  <xs:attribute name="attr1" type="string"/>
+  <xs:attribute name="attr2" type="integer"/>
+</xs:attributeGroup>
+
+<xs:complexType name="person">
+  <xs:attributeGroup ref="personattr"/>
+</xs:complexType>
+
+</xs:schema>

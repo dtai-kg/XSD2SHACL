@@ -1,0 +1,14 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <xsd:complexType name="USAddress">
+    <xsd:annotation>
+      <xsd:appinfo>APPINFO TEST</xsd:appinfo>
+      <xsd:documentation xml:lang="en">USADDRESS TEST</xsd:documentation>
+    </xsd:annotation>
+    <xsd:all>
+      <xsd:element name="name"   type="xsd:string"/>
+      <xsd:element name="street" type="xsd:string"/>
+    </xsd:all>
+  </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,21 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+<http://example.com/NodeShape/person> a sh:NodeShape ;
+    sh:name "person" ;
+    sh:node <http://example.com/NodeShape/personattr> .
+
+<http://example.com/NodeShape/personattr> a sh:NodeShape ;
+    sh:name "personattr" ;
+    sh:property <http://example.com/PropertyShape/personattr/attr1>,
+        <http://example.com/PropertyShape/personattr/attr2> .
+
+<http://example.com/PropertyShape/personattr/attr1> a sh:PropertyShape ;
+    sh:name "attr1" ;
+    sh:path <http://example.com/attr1> ;
+    sh:targetSubjectsOf <http://example.com/attr1> .
+
+<http://example.com/PropertyShape/personattr/attr2> a sh:PropertyShape ;
+    sh:name "attr2" ;
+    sh:path <http://example.com/attr2> ;
+    sh:targetSubjectsOf <http://example.com/attr2> .
+

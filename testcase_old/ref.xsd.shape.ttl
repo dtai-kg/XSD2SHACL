@@ -1,0 +1,50 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/note> a sh:NodeShape ;
+    sh:name "note" ;
+    sh:property <http://example.com/PropertyShape/body>,
+        <http://example.com/PropertyShape/from>,
+        <http://example.com/PropertyShape/heading>,
+        <http://example.com/PropertyShape/to> ;
+    sh:targetClass <http://example.com/note> ;
+    sh:targetObjectsOf <http://example.com/note> .
+
+<http://example.com/NodeShape/note2> a sh:NodeShape ;
+    sh:name "note2" ;
+    sh:property <http://example.com/PropertyShape/to> ;
+    sh:targetClass <http://example.com/note2> ;
+    sh:targetObjectsOf <http://example.com/note2> .
+
+<http://example.com/PropertyShape/body> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "body" ;
+    sh:path <http://example.com/body> ;
+    sh:targetSubjectsOf <http://example.com/body> .
+
+<http://example.com/PropertyShape/from> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "from" ;
+    sh:path <http://example.com/from> ;
+    sh:targetSubjectsOf <http://example.com/from> .
+
+<http://example.com/PropertyShape/heading> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "heading" ;
+    sh:path <http://example.com/heading> ;
+    sh:targetSubjectsOf <http://example.com/heading> .
+
+<http://example.com/PropertyShape/to> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "to" ;
+    sh:path <http://example.com/to> ;
+    sh:targetSubjectsOf <http://example.com/to> .
+

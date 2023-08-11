@@ -204,14 +204,14 @@ def recursiceCheck(element):
         if "element" in child.tag:
             name = child.get("name")
 
-            print(child.tag, name, identifyElementType(element, child))
+            # print(child.tag, name, identifyElementType(element, child))
         recursiceCheck(child)
 
-xsdTree = ET.parse("usecase\RINF\RINF-metadata.xsd")
-root = xsdTree.getroot()
+# xsdTree = ET.parse("usecase\RINF\RINF-metadata.xsd")
+# root = xsdTree.getroot()
 
-XSD_FILES, XSD_TYPES = parseXSD("F03_2014.xsd", "usecase/TED/")
-print("XSD_FILES", XSD_FILES)
+# XSD_FILES, XSD_TYPES = parseXSD("F03_2014.xsd", "usecase/TED/")
+# print("XSD_FILES", XSD_FILES)
 # print(root.find(f".//*[@name='RINFDataq']"))
 # recursiceCheck(xsdTree.getroot())
 # print("Valid XSD file")
