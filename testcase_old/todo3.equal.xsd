@@ -1,0 +1,11 @@
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://tempuri.org/po.xsd" xmlns="http://tempuri.org/po.xsd" elementFormDefault="qualified"> 
+  
+<xsd:element name="internationalPrice">
+  <xsd:complexType>
+    <xsd:attribute name="currency" type="xsd:string"/>
+    <xsd:attribute name="value"    type="xsd:decimal"/>
+  </xsd:complexType>
+</xsd:element>
+
+</xs:schema>

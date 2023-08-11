@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : MOVE
+#  RELEASE :  "R2.0.9.S05.E01"                                                      
+#  Intermediate release number 001-20210730                                 
+#  Last update : 30/07/2021 
+#  Form : MOVE 
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:n2021="http://publications.europa.eu/resource/schema/ted/2021/nuts" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S05.E01">
+	<xs:include schemaLocation="common_2014.xsd"/>
+	<xs:import namespace="http://publications.europa.eu/resource/schema/ted/2021/nuts" schemaLocation="nuts_codes_2021.xsd"/>
+	<xs:complexType name="contact_party_move">
+		<xs:complexContent>
+			<xs:restriction base="contact">
+				<xs:sequence>
+					<xs:element ref="OFFICIALNAME"/>
+					<xs:element ref="NATIONALID" minOccurs="0"/>
+					<xs:element ref="ADDRESS" minOccurs="0"/>
+					<xs:element ref="TOWN" minOccurs="0"/>
+					<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+					<xs:element ref="COUNTRY"/>
+					<xs:element ref="PHONE" minOccurs="0"/>
+					<xs:element ref="E_MAIL" minOccurs="0"/>
+					<xs:element ref="FAX" minOccurs="0"/>
+					<xs:element ref="n2021:NUTS" minOccurs="0"/>
+					<xs:element ref="URL" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="contact_contractor_move">
+		<xs:complexContent>
+			<xs:restriction base="contact">
+				<xs:sequence>
+					<xs:element ref="OFFICIALNAME"/>
+					<xs:element ref="NATIONALID" minOccurs="0"/>
+					<xs:element ref="ADDRESS" minOccurs="0"/>
+					<xs:element ref="TOWN" minOccurs="0"/>
+					<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+					<xs:element ref="COUNTRY"/>
+					<xs:element ref="PHONE" minOccurs="0"/>
+					<xs:element ref="E_MAIL" minOccurs="0"/>
+					<xs:element ref="FAX" minOccurs="0"/>
+					<xs:element ref="n2021:NUTS" minOccurs="0"/>
+					<xs:element ref="URL" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ca_type_move">
+		<xs:attribute name="VALUE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BODY_PUBLIC"/>
+					<xs:enumeration value="MINISTRY"/>
+					<xs:enumeration value="NATIONAL_AGENCY"/>
+					<xs:enumeration value="REGIONAL_AGENCY"/>
+					<xs:enumeration value="REGIONAL_AUTHORITY"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="contact_add_contracting_body_move">
+		<xs:complexContent>
+			<xs:restriction base="contact">
+				<xs:sequence>
+					<xs:element ref="OFFICIALNAME"/>
+					<xs:element ref="NATIONALID" minOccurs="0"/>
+					<xs:element ref="ADDRESS" minOccurs="0"/>
+					<xs:element ref="TOWN" minOccurs="0"/>
+					<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+					<xs:element ref="COUNTRY" minOccurs="0"/>
+					<xs:element ref="CONTACT_POINT" minOccurs="0"/>
+					<xs:element ref="PHONE" minOccurs="0"/>
+					<xs:element ref="E_MAIL" minOccurs="0"/>
+					<xs:element ref="FAX" minOccurs="0"/>
+					<xs:element ref="n2021:NUTS" minOccurs="0"/>
+					<xs:element ref="URL_GENERAL" minOccurs="0"/>
+					<xs:element ref="URL_BUYER" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="contact_contracting_body_move">
+		<xs:complexContent>
+			<xs:restriction base="contact">
+				<xs:sequence>
+					<xs:element ref="OFFICIALNAME"/>
+					<xs:element ref="NATIONALID" minOccurs="0"/>
+					<xs:element ref="ADDRESS" minOccurs="0"/>
+					<xs:element ref="TOWN"/>
+					<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+					<xs:element ref="COUNTRY"/>
+					<xs:element ref="CONTACT_POINT" minOccurs="0"/>
+					<xs:element ref="PHONE" minOccurs="0"/>
+					<xs:element ref="E_MAIL" minOccurs="0"/>
+					<xs:element ref="FAX" minOccurs="0"/>
+					<xs:element ref="n2021:NUTS" minOccurs="0"/>
+					<xs:element ref="URL_GENERAL" minOccurs="0"/>
+					<xs:element ref="URL_BUYER" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="category_service_move">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(0[1-8])|99"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ci_move">
+		<xs:annotation>
+			<xs:documentation>Section VI: COMPLEMENTARY INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="complement_info">
+				<xs:sequence>
+					<xs:element ref="INFO_ADD" minOccurs="0"/>
+					<xs:element ref="DATE_DISPATCH_NOTICE"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="award_contract_move">
+		<xs:annotation>
+			<xs:documentation>Section V: AWARD OF CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AWARDED_CONTRACT">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DATE_CONCLUSION_CONTRACT"/>
+						<xs:element name="CONTRACTORS">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="CONTRACTOR" maxOccurs="100">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="ADDRESS_CONTRACTOR" type="contact_contractor_move"/>
+												<xs:element name="OWNERSHIP" type="string_200" minOccurs="0"/>
+												<xs:element name="ADDRESS_PARTY" type="contact_party_move" minOccurs="0" maxOccurs="100"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="VALUES">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="VAL_TOTAL"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="NB_KILOMETRES" type="xs:integer" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="procedure_move">
+		<xs:annotation>
+			<xs:documentation>Section IV: PROCEDURE</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="PT_COMPETITIVE_TENDERING" type="empty"/>
+			<xs:element name="PT_REQUEST_EXPRESSION_INTEREST" type="empty"/>
+			<xs:element name="PT_DA_INTERNAL_OPERATOR" type="empty"/>
+			<xs:element name="PT_DA_EXCEPTIONAL_CIRCUMSTANCE_RAIL" type="empty"/>
+			<xs:element name="PT_DA_SMALL_CONTRACT" type="empty"/>
+			<xs:element name="PT_DA_MEDIUM_ENTERPRISE" type="empty"/>
+			<xs:element name="PT_DA_MARKET_NETWORK_RAIL" type="empty"/>
+			<xs:element name="PT_DA_OPERATOR_MANAGER_RAIL" type="empty"/>
+			<xs:element name="PT_DA_RAILWAY_TRANSPORT" type="empty"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="lefti_move">
+		<xs:annotation>
+			<xs:documentation>Section III: LEFTI</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="COST_PARAMETERS" type="text_ft_multi_lines"/>
+			<xs:choice>
+				<xs:element name="EXCLUSIVE_RIGHTS_GRANTED" type="text_ft_multi_lines"/>
+				<xs:element name="NO_EXCLUSIVE_RIGHTS_GRANTED" type="empty"/>
+			</xs:choice>
+			<xs:element name="PCT_ALLOCATED_OPERATOR" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:maxInclusive value="100"/>
+						<xs:minInclusive value="0"/>
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SOCIAL_STANDARDS" type="text_ft_multi_lines" minOccurs="0"/>
+			<xs:element name="PUBLIC_SERVICE_OBLIGATIONS" type="text_ft_multi_lines"/>
+			<xs:element name="OTHER_PARTICULAR_CONDITIONS" type="text_ft_multi_lines" minOccurs="0"/>
+			<xs:element name="INFORMATION_TICKETS" type="text_ft_multi_lines" minOccurs="0"/>
+			<xs:element name="PUNCTUALITY_RELIABILITY" type="text_ft_multi_lines" minOccurs="0"/>
+			<xs:element name="CANCELLATIONS_SERVICES" type="text_ft_multi_lines" minOccurs="0"/>
+			<xs:element name="CLEANLINESS_ROLLING_STOCK" type="text_ft_multi_lines" minOccurs="0"/>
+			<xs:element name="CUST_SATISFACTION_SURVEY" type="text_ft_multi_lines" minOccurs="0"/>
+			<xs:element name="COMPLAINT_HANDLING" type="text_ft_multi_lines" minOccurs="0"/>
+			<xs:element name="ASSIST_PERSONS_REDUCTED_MOB" type="text_ft_multi_lines" minOccurs="0"/>
+			<xs:element name="OTHER_QUALITY_TARGET" type="text_ft_multi_lines" minOccurs="0"/>
+			<xs:element name="REWARDS_PENALITIES" type="text_ft_multi_lines" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="object_contract_move">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="TITLE"/>
+			<xs:element ref="REFERENCE_NUMBER" minOccurs="0"/>
+			<xs:element ref="CPV_MAIN"/>
+			<xs:element name="TYPE_CONTRACT" type="services"/>
+			<xs:element name="CATEGORY" maxOccurs="9">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="category_service_move">
+							<xs:attribute name="CTYPE" use="required" fixed="SERVICES"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="OBJECT_DESCR">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="CPV_ADDITIONAL" minOccurs="0" maxOccurs="100"/>
+						<xs:element ref="n2021:NUTS" maxOccurs="250"/>
+						<xs:element ref="MAIN_SITE"/>
+						<xs:element ref="SHORT_DESCR"/>
+						<xs:sequence>
+							<xs:element ref="DATE_START"/>
+							<xs:element name="DURATION" type="duration_m_d"/>
+						</xs:sequence>
+						<xs:element name="ESSENTIAL_ASSETS" minOccurs="0">
+							<xs:complexType>
+								<xs:choice>
+									<xs:sequence>
+										<xs:element name="EXTENDED_CONTRACT_DURATION" type="empty"/>
+										<xs:element name="LIST" type="text_ft_multi_lines"/>
+										<xs:element name="SIGNIFICANCE" type="text_ft_multi_lines"/>
+										<xs:element name="PREDOMINANCE" type="text_ft_multi_lines"/>
+									</xs:sequence>
+									<xs:element name="NO_EXTENDED_CONTRACT_DURATION" type="empty"/>
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="body_move">
+		<xs:annotation>
+			<xs:documentation>Section I: CONTRACTING AUTHORITY</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ADDRESS_CONTRACTING_BODY" type="contact_contracting_body_move"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="ADDRESS_CONTRACTING_BODY_ADDITIONAL" type="contact_add_contracting_body_move" maxOccurs="unbounded"/>
+				<xs:element ref="CENTRAL_PURCHASING"/>
+			</xs:sequence>
+			<xs:choice>
+				<xs:element ref="ADDRESS_FURTHER_INFO_IDEM"/>
+				<xs:element name="ADDRESS_FURTHER_INFO" type="contact_contracting_body_move"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:element name="CA_TYPE" type="ca_type_move"/>
+				<xs:element ref="CA_TYPE_OTHER"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="legal_basis_move">
+		<xs:annotation>
+			<xs:documentation>Possible values: 32007R1370</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="VALUE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="legal_basis"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="MOVE">
+		<xs:annotation>
+			<xs:documentation>ROOT element MOVE</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:sequence>
+						<xs:element name="LEGAL_BASIS" type="legal_basis_move"/>
+						<xs:element ref="LEGAL_BASIS_OTHER" minOccurs="0"/>
+					</xs:sequence>
+					<xs:element ref="LEGAL_BASIS_OTHER"/>
+				</xs:choice>
+				<xs:element name="CONTRACTING_BODY" type="body_move"/>
+				<xs:element name="OBJECT_CONTRACT" type="object_contract_move"/>
+				<xs:element name="LEFTI" type="lefti_move" minOccurs="0"/>
+				<xs:element name="PROCEDURE" type="procedure_move" minOccurs="0"/>
+				<xs:element name="AWARD_CONTRACT" type="award_contract_move" minOccurs="0"/>
+				<xs:element name="COMPLEMENTARY_INFO" type="ci_move"/>
+			</xs:sequence>
+			<xs:attribute name="LG" type="t_ce_language_list" use="required"/>
+			<xs:attribute name="CATEGORY" type="original_translation" use="required"/>
+			<xs:attribute name="FORM" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="T01"/>
+						<xs:enumeration value="T02"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

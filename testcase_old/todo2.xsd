@@ -1,0 +1,17 @@
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://tempuri.org/po.xsd" xmlns="http://tempuri.org/po.xsd" elementFormDefault="qualified"> 
+  
+<complexType name="RestrictedPurchaseOrderType">
+  <complexContent>
+    <restriction base="ipo:PurchaseOrderType">
+      <sequence>
+        <element name="shipTo" type="ipo:Address"/>
+        <element name="billTo" type="ipo:Address"/>
+        <element ref="ipo:comment" minOccurs="1"/>
+        <element name="items"  type="ipo:Items"/>
+      </sequence>
+    </restriction>
+  </complexContent>
+</complexType>
+
+</xs:schema>

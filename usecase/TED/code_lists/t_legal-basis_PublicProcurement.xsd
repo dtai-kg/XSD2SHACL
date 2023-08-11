@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+####################################################################################
+#  Legal basis code list corresponding to EU-Vocabularies Legal-basis Named Authority List (NAL) version="20200923-0"
+#  Last update : 27/10/2020  
+####################################################################################
+-->
+<xs:schema xmlns:lb="http://publications.europa.eu/resource/authority/legal-basis" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://publications.europa.eu/resource/authority/legal-basis" elementFormDefault="qualified" attributeFormDefault="unqualified" version="20200923-0">
+	<xs:simpleType name="t_legal-basis_tedschema">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="32007R1370">
+				<xs:annotation>
+					<xs:documentation>Regulation (EC) No 1370/2007  / adm.status[current]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32009L0081">
+				<xs:annotation>
+					<xs:documentation>Directive 2009/81/EC  / adm.status[current]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32014L0023">
+				<xs:annotation>
+					<xs:documentation>Directive 2014/23/EU  / adm.status[current]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32014L0024">
+				<xs:annotation>
+					<xs:documentation>Directive 2014/24/EU  / adm.status[current]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32014L0025">
+				<xs:annotation>
+					<xs:documentation>Directive 2014/25/EU  / adm.status[current]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32015R0323">
+				<xs:annotation>
+					<xs:documentation>Regulation (EU) 2015/323}  / adm.status[current]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32016D0002">
+				<xs:annotation>
+					<xs:documentation>Decision (EU) 2016/245  / adm.status[current]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32018R1046">
+				<xs:annotation>
+					<xs:documentation>Regulation (EU, Euratom) 2018/1046  / adm.status[current]</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+		<!--TED_SCHEMA use context-->
+	</xs:simpleType>
+</xs:schema>

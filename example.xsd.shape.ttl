@@ -1,0 +1,159 @@
+@prefix : <http://tempuri.org/po.xsd> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/purchaseOrder> a sh:NodeShape ;
+    sh:name "purchaseOrder" ;
+    sh:node <http://example.com/NodeShape/PurchaseOrderType> ;
+    sh:targetClass :purchaseOrder ;
+    sh:targetObjectsOf :purchaseOrder .
+
+<http://example.com/PropertyShape/comment> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "comment" ;
+    sh:path :comment ;
+    sh:targetSubjectsOf :comment .
+
+<http://example.com/NodeShape/Items> a sh:NodeShape ;
+    sh:name "Items" ;
+    sh:node <http://example.com/NodeShape/Items/item> .
+
+<http://example.com/NodeShape/Items/item> a sh:NodeShape ;
+    sh:name "item" ;
+    sh:property <http://example.com/PropertyShape/Items/item/USPrice>,
+        <http://example.com/PropertyShape/Items/item/partNum>,
+        <http://example.com/PropertyShape/Items/item/productName>,
+        <http://example.com/PropertyShape/Items/item/quantity>,
+        <http://example.com/PropertyShape/Items/item/shipDate> ;
+    sh:targetClass :item ;
+    sh:targetObjectsOf :item .
+
+<http://example.com/NodeShape/PurchaseOrderType> a sh:NodeShape ;
+    sh:name "PurchaseOrderType" ;
+    sh:node <http://example.com/NodeShape/PurchaseOrderType/billTo>,
+        <http://example.com/NodeShape/PurchaseOrderType/items>,
+        <http://example.com/NodeShape/PurchaseOrderType/shipTo> ;
+    sh:property <http://example.com/PropertyShape/PurchaseOrderType/orderDate> .
+
+<http://example.com/NodeShape/PurchaseOrderType/billTo> a sh:NodeShape ;
+    sh:name "billTo" ;
+    sh:node <http://example.com/NodeShape/USAddress> ;
+    sh:targetClass :billTo ;
+    sh:targetObjectsOf :billTo .
+
+<http://example.com/NodeShape/PurchaseOrderType/items> a sh:NodeShape ;
+    sh:name "items" ;
+    sh:node <http://example.com/NodeShape/Items> ;
+    sh:targetClass :items ;
+    sh:targetObjectsOf :items .
+
+<http://example.com/NodeShape/PurchaseOrderType/shipTo> a sh:NodeShape ;
+    sh:name "shipTo" ;
+    sh:node <http://example.com/NodeShape/USAddress> ;
+    sh:targetClass :shipTo ;
+    sh:targetObjectsOf :shipTo .
+
+<http://example.com/PropertyShape/Items/item/USPrice> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "USPrice" ;
+    sh:path :USPrice ;
+    sh:targetSubjectsOf :USPrice .
+
+<http://example.com/PropertyShape/Items/item/partNum> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:name "partNum" ;
+    sh:path :partNum ;
+    sh:pattern "\\d{3}-[A-Z]{2}" ;
+    sh:targetSubjectsOf :partNum .
+
+<http://example.com/PropertyShape/Items/item/productName> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "productName" ;
+    sh:path :productName ;
+    sh:targetSubjectsOf :productName .
+
+<http://example.com/PropertyShape/Items/item/quantity> a sh:PropertyShape ;
+    sh:datatype xsd:positiveInteger ;
+    sh:maxCount 1 ;
+    sh:maxExclusive 100 ;
+    sh:minCount 1 ;
+    sh:name "quantity" ;
+    sh:path :quantity ;
+    sh:targetSubjectsOf :quantity .
+
+<http://example.com/PropertyShape/Items/item/shipDate> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:maxCount 1 ;
+    sh:minCount 0 ;
+    sh:name "shipDate" ;
+    sh:path :shipDate ;
+    sh:targetSubjectsOf :shipDate .
+
+<http://example.com/PropertyShape/PurchaseOrderType/orderDate> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "orderDate" ;
+    sh:path :orderDate ;
+    sh:targetSubjectsOf :orderDate .
+
+<http://example.com/PropertyShape/USAddress/city> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "city" ;
+    sh:path :city ;
+    sh:targetSubjectsOf :city .
+
+<http://example.com/PropertyShape/USAddress/country> a sh:PropertyShape ;
+    sh:datatype xsd:NMTOKEN ;
+    sh:hasValue "US" ;
+    sh:name "country" ;
+    sh:path :country ;
+    sh:targetSubjectsOf :country .
+
+<http://example.com/PropertyShape/USAddress/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:path :name ;
+    sh:targetSubjectsOf :name .
+
+<http://example.com/PropertyShape/USAddress/state> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "state" ;
+    sh:path :state ;
+    sh:targetSubjectsOf :state .
+
+<http://example.com/PropertyShape/USAddress/street> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "street" ;
+    sh:path :street ;
+    sh:targetSubjectsOf :street .
+
+<http://example.com/PropertyShape/USAddress/zip> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "zip" ;
+    sh:path :zip ;
+    sh:targetSubjectsOf :zip .
+
+<http://example.com/NodeShape/USAddress> a sh:NodeShape ;
+    sh:name "USAddress" ;
+    sh:property <http://example.com/PropertyShape/USAddress/city>,
+        <http://example.com/PropertyShape/USAddress/country>,
+        <http://example.com/PropertyShape/USAddress/name>,
+        <http://example.com/PropertyShape/USAddress/state>,
+        <http://example.com/PropertyShape/USAddress/street>,
+        <http://example.com/PropertyShape/USAddress/zip> .
+

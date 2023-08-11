@@ -1,0 +1,1101 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/OperationalPoint> a sh:NodeShape ;
+    sh:name "OperationalPoint" ;
+    sh:node <http://example.com/NodeShape/OperationalPoint/OPGeographicLocation>,
+        <http://example.com/NodeShape/OperationalPoint/OPName>,
+        <http://example.com/NodeShape/OperationalPoint/OPRailwayLocation>,
+        <http://example.com/NodeShape/OperationalPoint/OPRules>,
+        <http://example.com/NodeShape/OperationalPoint/OPSiding>,
+        <http://example.com/NodeShape/OperationalPoint/OPTafTapCode>,
+        <http://example.com/NodeShape/OperationalPoint/OPTrack>,
+        <http://example.com/NodeShape/OperationalPoint/OPType>,
+        <http://example.com/NodeShape/OperationalPoint/OPTypeGaugeChangeover>,
+        <http://example.com/NodeShape/OperationalPoint/UniqueOPID> ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/ValidityDateEnd>,
+        <http://example.com/PropertyShape/OperationalPoint/ValidityDateStart> ;
+    sh:targetClass <http://example.com/OperationalPoint> ;
+    sh:targetObjectsOf <http://example.com/OperationalPoint> .
+
+<http://example.com/NodeShape/RINFData> a sh:NodeShape ;
+    sh:name "RINFData" ;
+    sh:node <http://example.com/NodeShape/RINFData/MemberStateCode> ;
+    sh:targetClass <http://example.com/RINFData> ;
+    sh:targetObjectsOf <http://example.com/RINFData> ;
+    sh:xone ( "http://example.com/NodeShape/RINFData/SectionOfLine" "http://example.com/NodeShape/RINFData/OperationalPoint" ) .
+
+<http://example.com/NodeShape/SectionOfLine> a sh:NodeShape ;
+    sh:name "SectionOfLine" ;
+    sh:node <http://example.com/NodeShape/SectionOfLine/SOLIMCode>,
+        <http://example.com/NodeShape/SectionOfLine/SOLLength>,
+        <http://example.com/NodeShape/SectionOfLine/SOLLineIdentification>,
+        <http://example.com/NodeShape/SectionOfLine/SOLNature>,
+        <http://example.com/NodeShape/SectionOfLine/SOLOPEnd>,
+        <http://example.com/NodeShape/SectionOfLine/SOLOPStart>,
+        <http://example.com/NodeShape/SectionOfLine/SOLTrack> ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/ValidityDateEnd>,
+        <http://example.com/PropertyShape/SectionOfLine/ValidityDateStart> ;
+    sh:targetClass <http://example.com/SectionOfLine> ;
+    sh:targetObjectsOf <http://example.com/SectionOfLine> .
+
+<http://example.com/NodeShape/OperationalPoint/OPGeographicLocation> a sh:NodeShape ;
+    sh:name "OPGeographicLocation" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPGeographicLocation/Latitude>,
+        <http://example.com/PropertyShape/OperationalPoint/OPGeographicLocation/Longitude> ;
+    sh:targetClass <http://example.com/OPGeographicLocation> ;
+    sh:targetObjectsOf <http://example.com/OPGeographicLocation> .
+
+<http://example.com/NodeShape/OperationalPoint/OPName> a sh:NodeShape ;
+    sh:name "OPName" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPName/Value> ;
+    sh:targetClass <http://example.com/OPName> ;
+    sh:targetObjectsOf <http://example.com/OPName> .
+
+<http://example.com/NodeShape/OperationalPoint/OPRailwayLocation> a sh:NodeShape ;
+    sh:name "OPRailwayLocation" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPRailwayLocation/Kilometer>,
+        <http://example.com/PropertyShape/OperationalPoint/OPRailwayLocation/NationalIdentNum> ;
+    sh:targetClass <http://example.com/OPRailwayLocation> ;
+    sh:targetObjectsOf <http://example.com/OPRailwayLocation> .
+
+<http://example.com/NodeShape/OperationalPoint/OPRules> a sh:NodeShape ;
+    sh:name "OPRules" ;
+    sh:node <http://example.com/NodeShape/OperationalPoint/OPRules/OPRulesParameter> ;
+    sh:targetClass <http://example.com/OPRules> ;
+    sh:targetObjectsOf <http://example.com/OPRules> .
+
+<http://example.com/NodeShape/OperationalPoint/OPRules/OPRulesParameter> a sh:NodeShape ;
+    sh:name "OPRulesParameter" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPRules/OPRulesParameter/ID>,
+        <http://example.com/PropertyShape/OperationalPoint/OPRules/OPRulesParameter/IsApplicable>,
+        <http://example.com/PropertyShape/OperationalPoint/OPRules/OPRulesParameter/OptionalValue>,
+        <http://example.com/PropertyShape/OperationalPoint/OPRules/OPRulesParameter/Value> ;
+    sh:targetClass <http://example.com/OPRulesParameter> ;
+    sh:targetObjectsOf <http://example.com/OPRulesParameter> .
+
+<http://example.com/NodeShape/OperationalPoint/OPSiding> a sh:NodeShape ;
+    sh:name "OPSiding" ;
+    sh:node <http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingIMCode>,
+        <http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingIdentification>,
+        <http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingParameter>,
+        <http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingTunnel> ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPSiding/ValidityDateEnd>,
+        <http://example.com/PropertyShape/OperationalPoint/OPSiding/ValidityDateStart> ;
+    sh:targetClass <http://example.com/OPSiding> ;
+    sh:targetObjectsOf <http://example.com/OPSiding> .
+
+<http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingIMCode> a sh:NodeShape ;
+    sh:name "OPSidingIMCode" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingIMCode/Value> ;
+    sh:targetClass <http://example.com/OPSidingIMCode> ;
+    sh:targetObjectsOf <http://example.com/OPSidingIMCode> .
+
+<http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingIdentification> a sh:NodeShape ;
+    sh:name "OPSidingIdentification" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingIdentification/Value> ;
+    sh:targetClass <http://example.com/OPSidingIdentification> ;
+    sh:targetObjectsOf <http://example.com/OPSidingIdentification> .
+
+<http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingParameter> a sh:NodeShape ;
+    sh:name "OPSidingParameter" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingParameter/ID>,
+        <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable>,
+        <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingParameter/OptionalValue>,
+        <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingParameter/Value> ;
+    sh:targetClass <http://example.com/OPSidingParameter> ;
+    sh:targetObjectsOf <http://example.com/OPSidingParameter> .
+
+<http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingTunnel> a sh:NodeShape ;
+    sh:name "OPSidingTunnel" ;
+    sh:node <http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIMCode>,
+        <http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIdentification>,
+        <http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelParameter> ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/ValidityDateEnd>,
+        <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/ValidityDateStart> ;
+    sh:targetClass <http://example.com/OPSidingTunnel> ;
+    sh:targetObjectsOf <http://example.com/OPSidingTunnel> .
+
+<http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIMCode> a sh:NodeShape ;
+    sh:name "OPSidingTunnelIMCode" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIMCode/Value> ;
+    sh:targetClass <http://example.com/OPSidingTunnelIMCode> ;
+    sh:targetObjectsOf <http://example.com/OPSidingTunnelIMCode> .
+
+<http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIdentification> a sh:NodeShape ;
+    sh:name "OPSidingTunnelIdentification" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIdentification/Value> ;
+    sh:targetClass <http://example.com/OPSidingTunnelIdentification> ;
+    sh:targetObjectsOf <http://example.com/OPSidingTunnelIdentification> .
+
+<http://example.com/NodeShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelParameter> a sh:NodeShape ;
+    sh:name "OPSidingTunnelParameter" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelParameter/ID>,
+        <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelParameter/IsApplicable>,
+        <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelParameter/OptionalValue>,
+        <http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelParameter/Value> ;
+    sh:targetClass <http://example.com/OPSidingTunnelParameter> ;
+    sh:targetObjectsOf <http://example.com/OPSidingTunnelParameter> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTafTapCode> a sh:NodeShape ;
+    sh:name "OPTafTapCode" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTafTapCode/IsApplicable>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTafTapCode/Value> ;
+    sh:targetClass <http://example.com/OPTafTapCode> ;
+    sh:targetObjectsOf <http://example.com/OPTafTapCode> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack> a sh:NodeShape ;
+    sh:name "OPTrack" ;
+    sh:node <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackIMCode>,
+        <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackIdentification>,
+        <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackParameter>,
+        <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackPlatform>,
+        <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackTunnel> ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/ValidityDateEnd>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/ValidityDateStart> ;
+    sh:targetClass <http://example.com/OPTrack> ;
+    sh:targetObjectsOf <http://example.com/OPTrack> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackIMCode> a sh:NodeShape ;
+    sh:name "OPTrackIMCode" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackIMCode/Value> ;
+    sh:targetClass <http://example.com/OPTrackIMCode> ;
+    sh:targetObjectsOf <http://example.com/OPTrackIMCode> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackIdentification> a sh:NodeShape ;
+    sh:name "OPTrackIdentification" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackIdentification/Value> ;
+    sh:targetClass <http://example.com/OPTrackIdentification> ;
+    sh:targetObjectsOf <http://example.com/OPTrackIdentification> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackParameter> a sh:NodeShape ;
+    sh:name "OPTrackParameter" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackParameter/ID>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackParameter/IsApplicable>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackParameter/OptionalValue>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackParameter/Value> ;
+    sh:targetClass <http://example.com/OPTrackParameter> ;
+    sh:targetObjectsOf <http://example.com/OPTrackParameter> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackPlatform> a sh:NodeShape ;
+    sh:name "OPTrackPlatform" ;
+    sh:node <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIMCode>,
+        <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification>,
+        <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter> ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/ValidityDateEnd>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/ValidityDateStart> ;
+    sh:targetClass <http://example.com/OPTrackPlatform> ;
+    sh:targetObjectsOf <http://example.com/OPTrackPlatform> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIMCode> a sh:NodeShape ;
+    sh:name "OPTrackPlatformIMCode" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIMCode/Value> ;
+    sh:targetClass <http://example.com/OPTrackPlatformIMCode> ;
+    sh:targetObjectsOf <http://example.com/OPTrackPlatformIMCode> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification> a sh:NodeShape ;
+    sh:name "OPTrackPlatformIdentification" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification/Value> ;
+    sh:targetClass <http://example.com/OPTrackPlatformIdentification> ;
+    sh:targetObjectsOf <http://example.com/OPTrackPlatformIdentification> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter> a sh:NodeShape ;
+    sh:name "OPTrackPlatformParameter" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/ID>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/IsApplicable>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/OptionalValue>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value> ;
+    sh:targetClass <http://example.com/OPTrackPlatformParameter> ;
+    sh:targetObjectsOf <http://example.com/OPTrackPlatformParameter> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackTunnel> a sh:NodeShape ;
+    sh:name "OPTrackTunnel" ;
+    sh:node <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIMCode>,
+        <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIdentification>,
+        <http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelParameter> ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/ValidityDateEnd>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/ValidityDateStart> ;
+    sh:targetClass <http://example.com/OPTrackTunnel> ;
+    sh:targetObjectsOf <http://example.com/OPTrackTunnel> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIMCode> a sh:NodeShape ;
+    sh:name "OPTrackTunnelIMCode" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIMCode/Value> ;
+    sh:targetClass <http://example.com/OPTrackTunnelIMCode> ;
+    sh:targetObjectsOf <http://example.com/OPTrackTunnelIMCode> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIdentification> a sh:NodeShape ;
+    sh:name "OPTrackTunnelIdentification" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIdentification/Value> ;
+    sh:targetClass <http://example.com/OPTrackTunnelIdentification> ;
+    sh:targetObjectsOf <http://example.com/OPTrackTunnelIdentification> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelParameter> a sh:NodeShape ;
+    sh:name "OPTrackTunnelParameter" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelParameter/ID>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelParameter/IsApplicable>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelParameter/OptionalValue>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelParameter/Value> ;
+    sh:targetClass <http://example.com/OPTrackTunnelParameter> ;
+    sh:targetObjectsOf <http://example.com/OPTrackTunnelParameter> .
+
+<http://example.com/NodeShape/OperationalPoint/OPType> a sh:NodeShape ;
+    sh:name "OPType" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPType/OptionalValue>,
+        <http://example.com/PropertyShape/OperationalPoint/OPType/Value> ;
+    sh:targetClass <http://example.com/OPType> ;
+    sh:targetObjectsOf <http://example.com/OPType> .
+
+<http://example.com/NodeShape/OperationalPoint/OPTypeGaugeChangeover> a sh:NodeShape ;
+    sh:name "OPTypeGaugeChangeover" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/OPTypeGaugeChangeover/IsApplicable>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTypeGaugeChangeover/OptionalValue>,
+        <http://example.com/PropertyShape/OperationalPoint/OPTypeGaugeChangeover/Value> ;
+    sh:targetClass <http://example.com/OPTypeGaugeChangeover> ;
+    sh:targetObjectsOf <http://example.com/OPTypeGaugeChangeover> .
+
+<http://example.com/NodeShape/OperationalPoint/UniqueOPID> a sh:NodeShape ;
+    sh:name "UniqueOPID" ;
+    sh:property <http://example.com/PropertyShape/OperationalPoint/UniqueOPID/Value> ;
+    sh:targetClass <http://example.com/UniqueOPID> ;
+    sh:targetObjectsOf <http://example.com/UniqueOPID> .
+
+<http://example.com/NodeShape/RINFData/MemberStateCode> a sh:NodeShape ;
+    sh:name "MemberStateCode" ;
+    sh:property <http://example.com/PropertyShape/RINFData/MemberStateCode/Code>,
+        <http://example.com/PropertyShape/RINFData/MemberStateCode/Version> ;
+    sh:targetClass <http://example.com/MemberStateCode> ;
+    sh:targetObjectsOf <http://example.com/MemberStateCode> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLIMCode> a sh:NodeShape ;
+    sh:name "SOLIMCode" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLIMCode/Value> ;
+    sh:targetClass <http://example.com/SOLIMCode> ;
+    sh:targetObjectsOf <http://example.com/SOLIMCode> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLLength> a sh:NodeShape ;
+    sh:name "SOLLength" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLLength/Value> ;
+    sh:targetClass <http://example.com/SOLLength> ;
+    sh:targetObjectsOf <http://example.com/SOLLength> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLLineIdentification> a sh:NodeShape ;
+    sh:name "SOLLineIdentification" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLLineIdentification/Value> ;
+    sh:targetClass <http://example.com/SOLLineIdentification> ;
+    sh:targetObjectsOf <http://example.com/SOLLineIdentification> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLNature> a sh:NodeShape ;
+    sh:name "SOLNature" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLNature/OptionalValue>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLNature/Value> ;
+    sh:targetClass <http://example.com/SOLNature> ;
+    sh:targetObjectsOf <http://example.com/SOLNature> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLOPEnd> a sh:NodeShape ;
+    sh:name "SOLOPEnd" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLOPEnd/Value> ;
+    sh:targetClass <http://example.com/SOLOPEnd> ;
+    sh:targetObjectsOf <http://example.com/SOLOPEnd> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLOPStart> a sh:NodeShape ;
+    sh:name "SOLOPStart" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLOPStart/Value> ;
+    sh:targetClass <http://example.com/SOLOPStart> ;
+    sh:targetObjectsOf <http://example.com/SOLOPStart> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack> a sh:NodeShape ;
+    sh:name "SOLTrack" ;
+    sh:node <http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTrackDirection>,
+        <http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTrackIdentification>,
+        <http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTrackParameter>,
+        <http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel> ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/ValidityDateEnd>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/ValidityDateStart> ;
+    sh:targetClass <http://example.com/SOLTrack> ;
+    sh:targetObjectsOf <http://example.com/SOLTrack> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTrackDirection> a sh:NodeShape ;
+    sh:name "SOLTrackDirection" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackDirection/OptionalValue>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackDirection/Value> ;
+    sh:targetClass <http://example.com/SOLTrackDirection> ;
+    sh:targetObjectsOf <http://example.com/SOLTrackDirection> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTrackIdentification> a sh:NodeShape ;
+    sh:name "SOLTrackIdentification" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackIdentification/Value> ;
+    sh:targetClass <http://example.com/SOLTrackIdentification> ;
+    sh:targetObjectsOf <http://example.com/SOLTrackIdentification> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTrackParameter> a sh:NodeShape ;
+    sh:name "SOLTrackParameter" ;
+    sh:node <http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTrackParameter/LocationPoint> ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/ID>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/IsApplicable>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/OptionalValue>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/Set>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/Value> ;
+    sh:targetClass <http://example.com/SOLTrackParameter> ;
+    sh:targetObjectsOf <http://example.com/SOLTrackParameter> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTrackParameter/LocationPoint> a sh:NodeShape ;
+    sh:name "LocationPoint" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/LocationPoint/Kilometer>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/LocationPoint/Latitude>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/LocationPoint/Longitude>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/LocationPoint/Value> ;
+    sh:targetClass <http://example.com/LocationPoint> ;
+    sh:targetObjectsOf <http://example.com/LocationPoint> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel> a sh:NodeShape ;
+    sh:name "SOLTunnel" ;
+    sh:node <http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd>,
+        <http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIMCode>,
+        <http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIdentification>,
+        <http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelParameter>,
+        <http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart> ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/ValidityDateEnd>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/ValidityDateStart> ;
+    sh:targetClass <http://example.com/SOLTunnel> ;
+    sh:targetObjectsOf <http://example.com/SOLTunnel> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd> a sh:NodeShape ;
+    sh:name "SOLTunnelEnd" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd/Kilometer>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd/Latitude>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd/Longitude> ;
+    sh:targetClass <http://example.com/SOLTunnelEnd> ;
+    sh:targetObjectsOf <http://example.com/SOLTunnelEnd> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIMCode> a sh:NodeShape ;
+    sh:name "SOLTunnelIMCode" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIMCode/Value> ;
+    sh:targetClass <http://example.com/SOLTunnelIMCode> ;
+    sh:targetObjectsOf <http://example.com/SOLTunnelIMCode> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIdentification> a sh:NodeShape ;
+    sh:name "SOLTunnelIdentification" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIdentification/Value> ;
+    sh:targetClass <http://example.com/SOLTunnelIdentification> ;
+    sh:targetObjectsOf <http://example.com/SOLTunnelIdentification> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelParameter> a sh:NodeShape ;
+    sh:name "SOLTunnelParameter" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelParameter/ID>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelParameter/IsApplicable>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelParameter/OptionalValue>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelParameter/Value> ;
+    sh:targetClass <http://example.com/SOLTunnelParameter> ;
+    sh:targetObjectsOf <http://example.com/SOLTunnelParameter> .
+
+<http://example.com/NodeShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart> a sh:NodeShape ;
+    sh:name "SOLTunnelStart" ;
+    sh:property <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart/Kilometer>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart/Latitude>,
+        <http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart/Longitude> ;
+    sh:targetClass <http://example.com/SOLTunnelStart> ;
+    sh:targetObjectsOf <http://example.com/SOLTunnelStart> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPGeographicLocation/Latitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Latitude" ;
+    sh:path <http://example.com/Latitude> ;
+    sh:targetSubjectsOf <http://example.com/Latitude> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPGeographicLocation/Longitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Longitude" ;
+    sh:order 9 ;
+    sh:path <http://example.com/Longitude> ;
+    sh:targetSubjectsOf <http://example.com/Longitude> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPName/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPRailwayLocation/Kilometer> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Kilometer" ;
+    sh:path <http://example.com/Kilometer> ;
+    sh:targetSubjectsOf <http://example.com/Kilometer> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPRailwayLocation/NationalIdentNum> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "NationalIdentNum" ;
+    sh:path <http://example.com/NationalIdentNum> ;
+    sh:targetSubjectsOf <http://example.com/NationalIdentNum> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPRules/OPRulesParameter/ID> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "ID" ;
+    sh:order 0 ;
+    sh:path <http://example.com/ID> ;
+    sh:targetSubjectsOf <http://example.com/ID> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPRules/OPRulesParameter/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 3 ;
+    sh:name "IsApplicable" ;
+    sh:path <http://example.com/IsApplicable> ;
+    sh:targetSubjectsOf <http://example.com/IsApplicable> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPRules/OPRulesParameter/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPRules/OPRulesParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 4 ;
+    sh:name "Value" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 1 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingParameter/ID> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "ID" ;
+    sh:order 2 ;
+    sh:path <http://example.com/ID> ;
+    sh:targetSubjectsOf <http://example.com/ID> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 3 ;
+    sh:name "IsApplicable" ;
+    sh:order 3 ;
+    sh:path <http://example.com/IsApplicable> ;
+    sh:targetSubjectsOf <http://example.com/IsApplicable> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingParameter/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 4 ;
+    sh:name "Value" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 1 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelParameter/ID> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "ID" ;
+    sh:order 2 ;
+    sh:path <http://example.com/ID> ;
+    sh:targetSubjectsOf <http://example.com/ID> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelParameter/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 3 ;
+    sh:name "IsApplicable" ;
+    sh:path <http://example.com/IsApplicable> ;
+    sh:targetSubjectsOf <http://example.com/IsApplicable> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelParameter/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/ValidityDateEnd> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateEnd" ;
+    sh:path <http://example.com/ValidityDateEnd> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateEnd> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/OPSidingTunnel/ValidityDateStart> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateStart" ;
+    sh:path <http://example.com/ValidityDateStart> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateStart> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/ValidityDateEnd> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateEnd" ;
+    sh:path <http://example.com/ValidityDateEnd> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateEnd> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPSiding/ValidityDateStart> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateStart" ;
+    sh:path <http://example.com/ValidityDateStart> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateStart> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTafTapCode/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 3 ;
+    sh:name "IsApplicable" ;
+    sh:order 3 ;
+    sh:path <http://example.com/IsApplicable> ;
+    sh:targetSubjectsOf <http://example.com/IsApplicable> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTafTapCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 7 ;
+    sh:name "Value" ;
+    sh:order 2 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 4 ;
+    sh:name "Value" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 1 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackParameter/ID> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "ID" ;
+    sh:order 2 ;
+    sh:path <http://example.com/ID> ;
+    sh:targetSubjectsOf <http://example.com/ID> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackParameter/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 3 ;
+    sh:name "IsApplicable" ;
+    sh:order 3 ;
+    sh:path <http://example.com/IsApplicable> ;
+    sh:targetSubjectsOf <http://example.com/IsApplicable> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackParameter/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 4 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 4 ;
+    sh:name "Value" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 1 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/ID> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "ID" ;
+    sh:order 2 ;
+    sh:path <http://example.com/ID> ;
+    sh:targetSubjectsOf <http://example.com/ID> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 3 ;
+    sh:name "IsApplicable" ;
+    sh:path <http://example.com/IsApplicable> ;
+    sh:targetSubjectsOf <http://example.com/IsApplicable> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/ValidityDateEnd> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateEnd" ;
+    sh:path <http://example.com/ValidityDateEnd> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateEnd> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackPlatform/ValidityDateStart> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateStart" ;
+    sh:path <http://example.com/ValidityDateStart> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateStart> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 4 ;
+    sh:name "Value" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 1 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelParameter/ID> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "ID" ;
+    sh:order 2 ;
+    sh:path <http://example.com/ID> ;
+    sh:targetSubjectsOf <http://example.com/ID> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelParameter/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 3 ;
+    sh:name "IsApplicable" ;
+    sh:path <http://example.com/IsApplicable> ;
+    sh:targetSubjectsOf <http://example.com/IsApplicable> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelParameter/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/ValidityDateEnd> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateEnd" ;
+    sh:path <http://example.com/ValidityDateEnd> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateEnd> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/OPTrackTunnel/ValidityDateStart> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateStart" ;
+    sh:path <http://example.com/ValidityDateStart> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateStart> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/ValidityDateEnd> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateEnd" ;
+    sh:path <http://example.com/ValidityDateEnd> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateEnd> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTrack/ValidityDateStart> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateStart" ;
+    sh:path <http://example.com/ValidityDateStart> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateStart> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPType/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:order 5 ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPType/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 4 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTypeGaugeChangeover/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 3 ;
+    sh:name "IsApplicable" ;
+    sh:order 7 ;
+    sh:path <http://example.com/IsApplicable> ;
+    sh:targetSubjectsOf <http://example.com/IsApplicable> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTypeGaugeChangeover/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:order 8 ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/OperationalPoint/OPTypeGaugeChangeover/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 6 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/UniqueOPID/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 12 ;
+    sh:name "Value" ;
+    sh:order 1 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/OperationalPoint/ValidityDateEnd> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateEnd" ;
+    sh:path <http://example.com/ValidityDateEnd> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateEnd> .
+
+<http://example.com/PropertyShape/OperationalPoint/ValidityDateStart> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateStart" ;
+    sh:path <http://example.com/ValidityDateStart> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateStart> .
+
+<http://example.com/PropertyShape/RINFData/MemberStateCode/Code> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 2 ;
+    sh:name "Code" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Code> ;
+    sh:targetSubjectsOf <http://example.com/Code> .
+
+<http://example.com/PropertyShape/RINFData/MemberStateCode/Version> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Version" ;
+    sh:order 1 ;
+    sh:path <http://example.com/Version> ;
+    sh:targetSubjectsOf <http://example.com/Version> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 4 ;
+    sh:name "Value" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLLength/Value> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Value" ;
+    sh:order 4 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLLineIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 1 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLNature/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:order 6 ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLNature/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 5 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLOPEnd/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 12 ;
+    sh:name "Value" ;
+    sh:order 3 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLOPStart/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 12 ;
+    sh:name "Value" ;
+    sh:order 2 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackDirection/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:order 2 ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackDirection/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 1 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/ID> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "ID" ;
+    sh:path <http://example.com/ID> ;
+    sh:targetSubjectsOf <http://example.com/ID> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 3 ;
+    sh:name "IsApplicable" ;
+    sh:path <http://example.com/IsApplicable> ;
+    sh:targetSubjectsOf <http://example.com/IsApplicable> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/LocationPoint/Kilometer> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Kilometer" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Kilometer> ;
+    sh:targetSubjectsOf <http://example.com/Kilometer> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/LocationPoint/Latitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Latitude" ;
+    sh:path <http://example.com/Latitude> ;
+    sh:targetSubjectsOf <http://example.com/Latitude> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/LocationPoint/Longitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Longitude" ;
+    sh:path <http://example.com/Longitude> ;
+    sh:targetSubjectsOf <http://example.com/Longitude> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/LocationPoint/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/Set> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 1000 ;
+    sh:name "Set" ;
+    sh:path <http://example.com/Set> ;
+    sh:targetSubjectsOf <http://example.com/Set> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTrackParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 1000 ;
+    sh:name "Value" ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd/Kilometer> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Kilometer" ;
+    sh:path <http://example.com/Kilometer> ;
+    sh:targetSubjectsOf <http://example.com/Kilometer> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd/Latitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Latitude" ;
+    sh:path <http://example.com/Latitude> ;
+    sh:targetSubjectsOf <http://example.com/Latitude> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd/Longitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Longitude" ;
+    sh:path <http://example.com/Longitude> ;
+    sh:targetSubjectsOf <http://example.com/Longitude> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 4 ;
+    sh:name "Value" ;
+    sh:order 0 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:order 1 ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelParameter/ID> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "ID" ;
+    sh:path <http://example.com/ID> ;
+    sh:targetSubjectsOf <http://example.com/ID> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelParameter/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 3 ;
+    sh:name "IsApplicable" ;
+    sh:path <http://example.com/IsApplicable> ;
+    sh:targetSubjectsOf <http://example.com/IsApplicable> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelParameter/OptionalValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "OptionalValue" ;
+    sh:path <http://example.com/OptionalValue> ;
+    sh:targetSubjectsOf <http://example.com/OptionalValue> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minLength 450 ;
+    sh:name "Value" ;
+    sh:path <http://example.com/Value> ;
+    sh:targetSubjectsOf <http://example.com/Value> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart/Kilometer> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Kilometer" ;
+    sh:order 4 ;
+    sh:path <http://example.com/Kilometer> ;
+    sh:targetSubjectsOf <http://example.com/Kilometer> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart/Latitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Latitude" ;
+    sh:order 2 ;
+    sh:path <http://example.com/Latitude> ;
+    sh:targetSubjectsOf <http://example.com/Latitude> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart/Longitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:name "Longitude" ;
+    sh:order 3 ;
+    sh:path <http://example.com/Longitude> ;
+    sh:targetSubjectsOf <http://example.com/Longitude> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/ValidityDateEnd> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateEnd" ;
+    sh:path <http://example.com/ValidityDateEnd> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateEnd> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/SOLTunnel/ValidityDateStart> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateStart" ;
+    sh:path <http://example.com/ValidityDateStart> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateStart> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/ValidityDateEnd> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateEnd" ;
+    sh:path <http://example.com/ValidityDateEnd> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateEnd> .
+
+<http://example.com/PropertyShape/SectionOfLine/SOLTrack/ValidityDateStart> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateStart" ;
+    sh:path <http://example.com/ValidityDateStart> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateStart> .
+
+<http://example.com/PropertyShape/SectionOfLine/ValidityDateEnd> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateEnd" ;
+    sh:path <http://example.com/ValidityDateEnd> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateEnd> .
+
+<http://example.com/PropertyShape/SectionOfLine/ValidityDateStart> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "ValidityDateStart" ;
+    sh:path <http://example.com/ValidityDateStart> ;
+    sh:targetSubjectsOf <http://example.com/ValidityDateStart> .
+

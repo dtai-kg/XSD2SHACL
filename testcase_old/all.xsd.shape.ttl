@@ -6,7 +6,7 @@
     sh:property <http://example.com/PropertyShape/firstname>,
         <http://example.com/PropertyShape/lastname> ;
     sh:targetClass <http://example.com/person> ;
-    sh:targetSubjectsOf <http://example.com/person> .
+    sh:targetObjectsOf <http://example.com/person> .
 
 <http://example.com/PropertyShape/firstname> a sh:PropertyShape ;
     sh:datatype xsd:string ;
