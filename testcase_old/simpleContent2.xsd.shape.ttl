@@ -1,0 +1,26 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/shoesize> a sh:NodeShape ;
+    sh:name "shoesize" ;
+    sh:node <http://example.com/NodeShape/shoesizeType> ;
+    sh:property <http://example.com/PropertyShape/shoesize> ;
+    sh:targetClass <http://example.com/shoesize> ;
+    sh:targetObjectsOf <http://example.com/shoesize> .
+
+<http://example.com/NodeShape/shoesizeType> a sh:NodeShape ;
+    sh:name "shoesizeType" ;
+    sh:property <http://example.com/PropertyShape/shoesizeType/country> .
+
+<http://example.com/PropertyShape/shoesize> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "shoesize" ;
+    sh:path <http://example.com/shoesize> .
+
+<http://example.com/PropertyShape/shoesizeType/country> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:name "country" ;
+    sh:path <http://example.com/country> ;
+    sh:targetSubjectsOf <http://example.com/country> .
+

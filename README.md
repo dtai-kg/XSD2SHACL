@@ -37,6 +37,7 @@ The generated shape file will then be located here: testcase/example.xml.shape.t
 - [ ] complexType with simpleContent should be considered as PS, see test case todo1.xsd . NS cannot has datatype.
 - [ ] complexContent with xsd:anyType see test case todo2.xsd
 - [ ] fix restriction on complexType/complexContent
+- [ ] translate import and include
 
 - [ ] fix element without type => type is required ?
 - [ ] attribute language => Add languageIn? Or to which shape? To be disccused 

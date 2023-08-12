@@ -21,6 +21,7 @@ class XSDtoSHACL:
         self.SHACL = Graph()
         self.shapes = []
         self.extensionShapes = []
+        self.contentShapes = {}
         self.groupShapes = []
         self.enumerationShapes = []
         self.choiceShapes = []
@@ -57,11 +58,12 @@ class XSDtoSHACL:
                     return result
         return None
 
-    def transRestriction(self,tag,value):
-        subject = self.shapes[-1]
+    def transRestriction(self,tag,value,subject=None):
+        
+        if subject == None:
+            subject = self.shapes[-1]
 
         if "type" in tag or "restriction" in tag:
-            # print("value:",value)
             if (":" in value) and (value.split(":")[1] in self.type_list):
                 p = self.shaclNS.datatype
                 #o = rdflib.Namespace(self.xsdNSdict[value.split(":")[0]])[value.split(":")[1]]
@@ -178,14 +180,17 @@ class XSDtoSHACL:
         for name in xsd_element.attrib:
             self.transRestriction(name, xsd_element.attrib[name])
 
-        element_type = xsd_element.get("type") #child type, built-in type or xsd simple type
+        element_type = xsd_element.get("type") 
+        # child type, built-in type or xsd simple type
         if element_type == None:
             return xsd_element
         elif (":" in element_type) or (element_type.split(":")[-1] in self.type_list): #TODO: check if this is a built-in type
-            return xsd_element #already translated
+            # already translated
+            return xsd_element 
         else:
-            next_node = self.root.find(f'.//xs:simpleType[@name="{element_type}"]',self.xsdNSdict)
-            return next_node #redirect current process to the next root (simple type)
+            next_node = self.root.find(f'.//{{http://www.w3.org/2001/XMLSchema}}simpleType[@name="{element_type}"]')
+            # redirect current process to the next root (simple type)
+            return next_node 
             
         return xsd_element
 
@@ -193,13 +198,15 @@ class XSDtoSHACL:
         """A function to translate XSD element with complex type to SHACL node shape"""
         element_name = xsd_element.get("name")
         subject = self.NS[f'NodeShape/{element_name}']
+        ps_subject = self.NS[f'PropertyShape/{element_name}']
 
         if self.shapes != [] and element_name not in self.choiceShapes:
             if "NodeShape" in str(self.shapes[-1]):
                 pre_subject_path = self.shapes[-1].split("NodeShape/")[1]
             elif "PropertyShape" in str(self.shapes[-1]):
                 pre_subject_path = self.shapes[-1].split("PropertyShape/")[1]
-            subject = subject = self.NS[f'NodeShape/{pre_subject_path}/{element_name}']
+            subject = self.NS[f'NodeShape/{pre_subject_path}/{element_name}']
+            ps_subject = self.NS[f'PropertyShape/{pre_subject_path}/{element_name}']
             self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
 
         self.transAnnotation(xsd_element,subject)
@@ -210,17 +217,41 @@ class XSDtoSHACL:
         self.SHACL.add((subject,self.shaclNS.targetClass,self.xsdTargetNS[element_name]))
         # self.SHACL.add((subject,self.shaclNS.targetSubjectsOf,self.xsdTargetNS[element_name]))
         self.SHACL.add((subject,self.shaclNS.targetObjectsOf,self.xsdTargetNS[element_name]))
-        #complex type does not have target, element can
+        # complex type does not have target, element can
+
+        self.SHACL.add((subject,self.shaclNS.property,ps_subject))
+        self.SHACL.add((ps_subject,self.rdfSyntax['type'],self.shaclNS.PropertyShape))
+        self.SHACL.add((ps_subject,self.shaclNS.name,Literal(element_name)))
+        self.SHACL.add((ps_subject,self.shaclNS.path,self.xsdTargetNS[element_name]))
+        element_min_occurs = Literal(int(xsd_element.get("minOccurs", "1")))
+        element_max_occurs = Literal(int(xsd_element.get("maxOccurs", "1")))
+        self.SHACL.add((ps_subject,self.shaclNS.minCount,element_min_occurs))
+        self.SHACL.add((ps_subject,self.shaclNS.maxCount,element_max_occurs))
+    
 
         for name in xsd_element.attrib:
             if "type" not in name:
-                self.transRestriction(name, xsd_element.attrib[name])
+                self.transRestriction(name, xsd_element.attrib[name], ps_subject)
 
         element_type = xsd_element.get("type")
         if element_type == None:
+            for i in xsd_element.findall(f".//{{http://www.w3.org/2001/XMLSchema}}complexType/{{http://www.w3.org/2001/XMLSchema}}simpleContent/{{http://www.w3.org/2001/XMLSchema}}extension"):
+                type_name = i.get("base")
+                if "xs" in type_name or "xsd" in type_name or type_name in self.type_list:
+                    self.SHACL.add((ps_subject,self.shaclNS.datatype,self.xsdNS[type_name.split(":")[1]]))
             return xsd_element
         else:
             self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_type}'])) #Will be translated later
+  
+            for i in self.root.findall(f".//*[@name='{name}']/{{http://www.w3.org/2001/XMLSchema}}simpleContent/{{http://www.w3.org/2001/XMLSchema}}extension"):
+                type_name = i.get("base")
+                if "xs" in type_name or "xsd" in type_name or type_name in self.type_list:
+                    self.SHACL.add((ps_subject,self.shaclNS.datatype,self.xsdNS[type_name.split(":")[1]]))
+            for i in self.root.findall(f".//*[@name='{name}']/{{http://www.w3.org/2001/XMLSchema}}complexContent/{{http://www.w3.org/2001/XMLSchema}}extension"):
+                type_name = i.get("base")
+                if "xs" in type_name or "xsd" in type_name or type_name in self.type_list:
+                    self.SHACL.add((ps_subject,self.shaclNS.datatype,self.xsdNS[type_name.split(":")[1]]))
+
             return xsd_element
         return xsd_element
 
@@ -241,7 +272,7 @@ class XSDtoSHACL:
         self.shapes.append(subject)
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
-        #complex type does not have target, element can
+        # complex type does not have target, element can
 
         for name in xsd_element.attrib:
             self.transRestriction(name, xsd_element.attrib[name])
@@ -257,7 +288,7 @@ class XSDtoSHACL:
         self.shapes.append(subject)
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
-        #complex type does not have target, element can
+        # complex type does not have target, element can
 
         for name in xsd_element.attrib:
             self.transRestriction(name, xsd_element.attrib[name])
@@ -270,8 +301,13 @@ class XSDtoSHACL:
         # xsd_type = xsd_element.get("type")
         if element_name in self.extensionShapes:
             return xsd_element
-        elif "xs" in str(element_name) or "xsd" in str(element_name):
-            self.SHACL.add((self.shapes[-1],self.shaclNS.datatype,self.xsdNS[element_name.split(":")[1]]))
+        elif "xs" in element_name or "xsd" in element_name or element_name in self.type_list:
+            # if "PropertyShape" in str(self.shapes[-1]):
+            #     subject = self.shapes[-1]
+            # elif "NodeShape" in str(self.shapes[-1]):
+            #     subject = URIRef(str(self.shapes[-1]).replace("NodeShape","PropertyShape"))
+            if "PropertyShape" in str(self.shapes[-1]):
+                self.SHACL.add((self.shapes[-1],self.shaclNS.datatype,self.xsdNS[element_name.split(":")[1]]))
             return xsd_element
         else:
             self.extensionShapes.append(element_name)
@@ -280,14 +316,14 @@ class XSDtoSHACL:
             subject = self.shapes[-1]
 
             if element_type == 1:
-                #complexType will be translated seperatly so we just need to add the node shape
+                # complexType will be translated seperatly so we just need to add the node shape
                 self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_name}'])) 
                 # self.extensionShape = False
                 return xsd_element
 
             elif element_type == 0:
-                #simpleType will not be translated seperatly so we need to redirect it here
-                #next_node = self.root.find(f'.//xs:simpleType[@name="{element_name}"]',self.xsdNSdict)
+                # simpleType will not be translated seperatly so we need to redirect it here
+                # next_node = self.root.find(f'.//xs:simpleType[@name="{element_name}"]',self.xsdNSdict)
                 next_node = sub_node
                 self.SHACL.add((subject,self.shaclNS.property,self.NS[f'PropertyShape/{element_name}'])) 
                 subject = self.NS[f'PropertyShape/{element_name}']
@@ -299,20 +335,10 @@ class XSDtoSHACL:
                 self.backUp = xsd_element
                 # self.extensionShape = True
                 
-                return next_node #redirect current process to the next root (simple type)       
+                # redirect current process to the next root (simple type)       
+                return next_node 
 
-        # subject = self.NS[f'NodeShape/{element_name}']
-        # if self.shapes != []:
-        #     self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
-        # self.shapes.append(subject)
-        # self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
-        # self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
-        # #complex type does not have target, element can
-
-        # for name in xsd_element.attrib:
-        #     self.transRestriction(name, xsd_element.attrib[name])
-
-        # return xsd_element    
+ 
 
     def transEnumeration(self, xsd_element):
         values = []
@@ -478,8 +504,8 @@ class XSDtoSHACL:
                             next_node = self.root.find(f".//*[@name='{ref}']")
                 else:
                     next_node = self.transGroup(child)
-            elif ("complexType" in tag) or ("simpleType" in tag):
-                pass
+            # elif ("complexType" in tag) or ("simpleType" in tag): 
+            #     pass
             elif ("restriction" in tag):
                 value = child.get("base")
                 self.transRestriction(tag,value)
@@ -497,8 +523,6 @@ class XSDtoSHACL:
             else:
                 value = child.get("value")
                 self.transRestriction(tag,value)
-            print("Current tag", next_node.tag)
-            print("SSSSSSSSS",self.shapes)
             # Translate next node
             self.translate(next_node)
                 
