@@ -3,22 +3,26 @@
 
 <http://example.com/NodeShape/person> a sh:NodeShape ;
     sh:name "person" ;
-    sh:property <http://example.com/PropertyShape/firstname>,
-        <http://example.com/PropertyShape/lastname> ;
+    sh:property <http://example.com/PropertyShape/person>,
+        <http://example.com/PropertyShape/person/firstname>,
+        <http://example.com/PropertyShape/person/lastname> ;
     sh:targetClass <http://example.com/person> ;
     sh:targetObjectsOf <http://example.com/person> .
 
-<http://example.com/PropertyShape/firstname> a sh:PropertyShape ;
+<http://example.com/PropertyShape/person> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:name "person" ;
+    sh:path <http://example.com/person> .
+
+<http://example.com/PropertyShape/person/firstname> a sh:PropertyShape ;
     sh:datatype xsd:string ;
-    sh:maxCount 1 ;
     sh:minCount 0 ;
     sh:name "firstname" ;
     sh:path <http://example.com/firstname> ;
     sh:targetSubjectsOf <http://example.com/firstname> .
 
-<http://example.com/PropertyShape/lastname> a sh:PropertyShape ;
+<http://example.com/PropertyShape/person/lastname> a sh:PropertyShape ;
     sh:datatype xsd:string ;
-    sh:maxCount 1 ;
     sh:minCount 0 ;
     sh:name "lastname" ;
     sh:path <http://example.com/lastname> ;

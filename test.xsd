@@ -1,9 +1,10 @@
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-<xsd:element name="internationalPrice">
-  <xsd:complexType>
-        <xsd:attribute name="currency" type="xsd:string"/>
-        <xsd:attribute name="value"    type="xsd:decimal"/>
-
-  </xsd:complexType>
-</xsd:element>
-</xsd:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name = "test">
+  <xs:simpleType name="TwoCharString">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="2" />
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+</xs:schema>

@@ -2,55 +2,60 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://example.com/NodeShape/PurchaseOrderType> a sh:NodeShape ;
-    sh:name "PurchaseOrderType" ;
-    sh:property <http://example.com/PropertyShape/billTo>,
-        <http://example.com/PropertyShape/orderDate>,
-        <http://example.com/PropertyShape/shipTo> ;
-    sh:xone ( "http://example.com/NodeShape/shipAndBill" "http://example.com/PropertyShape/singleUSAddress" ) .
+<http://example.com/NodeShape/purchase> a sh:NodeShape ;
+    sh:name "purchase" ;
+    sh:node <http://example.com/NodeShape/PurchaseOrderType> ;
+    sh:property <http://example.com/PropertyShape/purchase> ;
+    sh:targetClass <http://example.com/purchase> ;
+    sh:targetObjectsOf <http://example.com/purchase> .
 
 <http://example.com/NodeShape/shipAndBill> a sh:NodeShape ;
     sh:name "shipAndBill" ;
-    sh:property <http://example.com/PropertyShape/billTo>,
-        <http://example.com/PropertyShape/shipTo> .
+    sh:property <http://example.com/PropertyShape/shipAndBill/billTo>,
+        <http://example.com/PropertyShape/shipAndBill/shipTo> .
 
-<http://example.com/PropertyShape/comment> a sh:PropertyShape ;
+<http://example.com/PropertyShape/PurchaseOrderType/singleUSAddress> a sh:PropertyShape ;
     sh:datatype xsd:string ;
-    sh:maxCount 1 ;
-    sh:minCount 1 ;
-    sh:name "comment" ;
-    sh:path <http://example.com/comment> ;
-    sh:targetSubjectsOf <http://example.com/comment> .
-
-<http://example.com/PropertyShape/singleUSAddress> a sh:PropertyShape ;
-    sh:datatype xsd:string ;
-    sh:maxCount 1 ;
     sh:minCount 1 ;
     sh:name "singleUSAddress" ;
     sh:path <http://example.com/singleUSAddress> ;
     sh:targetSubjectsOf <http://example.com/singleUSAddress> .
 
-<http://example.com/PropertyShape/orderDate> a sh:PropertyShape ;
+<http://example.com/NodeShape/PurchaseOrderType> a sh:NodeShape ;
+    sh:name "PurchaseOrderType" ;
+    sh:property <http://example.com/PropertyShape/PurchaseOrderType/orderDate>,
+        <http://example.com/PropertyShape/comment> ;
+    sh:xone ( "http://example.com/NodeShape/shipAndBill" "http://example.com/PropertyShape/PurchaseOrderType/singleUSAddress" ) .
+
+<http://example.com/PropertyShape/PurchaseOrderType/orderDate> a sh:PropertyShape ;
     sh:datatype xsd:date ;
     sh:name "orderDate" ;
     sh:path <http://example.com/orderDate> ;
     sh:targetSubjectsOf <http://example.com/orderDate> .
 
-<http://example.com/PropertyShape/billTo> a sh:PropertyShape ;
+<http://example.com/PropertyShape/comment> a sh:PropertyShape ;
     sh:datatype xsd:string ;
-    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "comment" ;
+    sh:path <http://example.com/comment> ;
+    sh:targetSubjectsOf <http://example.com/comment> .
+
+<http://example.com/PropertyShape/purchase> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:name "purchase" ;
+    sh:path <http://example.com/purchase> .
+
+<http://example.com/PropertyShape/shipAndBill/billTo> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:name "billTo" ;
-    sh:order 1 ;
     sh:path <http://example.com/billTo> ;
     sh:targetSubjectsOf <http://example.com/billTo> .
 
-<http://example.com/PropertyShape/shipTo> a sh:PropertyShape ;
+<http://example.com/PropertyShape/shipAndBill/shipTo> a sh:PropertyShape ;
     sh:datatype xsd:string ;
-    sh:maxCount 1 ;
     sh:minCount 1 ;
     sh:name "shipTo" ;
-    sh:order 0 ;
     sh:path <http://example.com/shipTo> ;
     sh:targetSubjectsOf <http://example.com/shipTo> .
 

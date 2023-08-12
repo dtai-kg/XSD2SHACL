@@ -1,22 +1,12 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://example.com/NodeShape/internationalPrice> a sh:NodeShape ;
-    sh:name "internationalPrice" ;
-    sh:property <http://example.com/PropertyShape/currency>,
-        <http://example.com/PropertyShape/value> ;
-    sh:targetClass <http://example.com/internationalPrice> ;
-    sh:targetObjectsOf <http://example.com/internationalPrice> .
-
-<http://example.com/PropertyShape/currency> a sh:PropertyShape ;
+<http://example.com/PropertyShape/test> a sh:PropertyShape ;
     sh:datatype xsd:string ;
-    sh:name "currency" ;
-    sh:path <http://example.com/currency> ;
-    sh:targetSubjectsOf <http://example.com/currency> .
-
-<http://example.com/PropertyShape/value> a sh:PropertyShape ;
-    sh:datatype xsd:decimal ;
-    sh:name "value" ;
-    sh:path <http://example.com/value> ;
-    sh:targetSubjectsOf <http://example.com/value> .
+    sh:maxLength 4 ;
+    sh:minCount 1 ;
+    sh:minLength 2 ;
+    sh:name "test" ;
+    sh:path <http://example.com/test> ;
+    sh:targetSubjectsOf <http://example.com/test> .
 

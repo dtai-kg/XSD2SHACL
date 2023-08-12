@@ -22,7 +22,6 @@ class XSDtoSHACL:
         self.shapes = []
         self.extensionShapes = []
         self.contentShapes = {}
-        self.groupShapes = []
         self.enumerationShapes = []
         self.choiceShapes = []
         self.order_list = []
@@ -64,7 +63,7 @@ class XSDtoSHACL:
             subject = self.shapes[-1]
 
         if "type" in tag or "restriction" in tag:
-            if (":" in value) and (value.split(":")[1] in self.type_list):
+            if ((":" in value) and (value.split(":")[1] in self.type_list)) or value in self.type_list:
                 p = self.shaclNS.datatype
                 #o = rdflib.Namespace(self.xsdNSdict[value.split(":")[0]])[value.split(":")[1]]
                 o = self.xsdNS[value.split(":")[1]]
@@ -125,9 +124,10 @@ class XSDtoSHACL:
         elif "minLength" in tag:        
             p = self.shaclNS.minLength
             o = Literal(int(value))
+            self.SHACL.add((subject,p,o))
 
         elif "maxLength" in tag:        
-            p = self.shaclNS.minLength
+            p = self.shaclNS.maxLength
             o = Literal(int(value))
             self.SHACL.add((subject,p,o))
  
@@ -149,18 +149,18 @@ class XSDtoSHACL:
     def transEleSimple(self,xsd_element):
         """A function to translate XSD element with simple type to SHACL property shape"""
         element_name = xsd_element.get("name")
-        element_min_occurs = Literal(int(xsd_element.get("minOccurs", "1")))
-        element_max_occurs = Literal(int(xsd_element.get("maxOccurs", "1")))
+
         subject = self.NS[f'PropertyShape/{element_name}']
         # self.translatedShapes[subject] = subject
 
-        if self.shapes != [] and element_name not in self.choiceShapes:
+        if self.shapes != []:
             if "NodeShape" in str(self.shapes[-1]):
                 pre_subject_path = self.shapes[-1].split("NodeShape/")[1]
             elif "PropertyShape" in str(self.shapes[-1]):
                 pre_subject_path = self.shapes[-1].split("PropertyShape/")[1]
-            subject = subject = self.NS[f'PropertyShape/{pre_subject_path}/{element_name}']
-            self.SHACL.add((self.shapes[-1],self.shaclNS.property,subject))
+            subject = self.NS[f'PropertyShape/{pre_subject_path}/{element_name}']
+            if subject not in self.choiceShapes:
+                self.SHACL.add((self.shapes[-1],self.shaclNS.property,subject))
         
         self.transAnnotation(xsd_element,subject)
         self.shapes.append(subject)
@@ -168,8 +168,13 @@ class XSDtoSHACL:
         self.SHACL.add((subject,self.shaclNS.path,self.xsdTargetNS[element_name]))
         self.SHACL.add((subject,self.shaclNS.targetSubjectsOf,self.xsdTargetNS[element_name]))
         if "attribute" not in xsd_element.tag:
+            element_min_occurs = Literal(int(xsd_element.get("minOccurs", "1")))
             self.SHACL.add((subject,self.shaclNS.minCount,element_min_occurs))
-            self.SHACL.add((subject,self.shaclNS.maxCount,element_max_occurs))
+            element_max_occurs = xsd_element.get("maxOccurs", "1")
+            if element_max_occurs != "unbounded" and isinstance(element_max_occurs, int):
+                element_max_occurs = Literal(int(element_max_occurs))    
+                self.SHACL.add((subject,self.shaclNS.maxCount,element_max_occurs))     
+
         elif xsd_element.get("use") == "required":
             self.SHACL.add((subject,self.shaclNS.minCount,Literal(1)))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
@@ -200,14 +205,15 @@ class XSDtoSHACL:
         subject = self.NS[f'NodeShape/{element_name}']
         ps_subject = self.NS[f'PropertyShape/{element_name}']
 
-        if self.shapes != [] and element_name not in self.choiceShapes:
+        if self.shapes != []:
             if "NodeShape" in str(self.shapes[-1]):
                 pre_subject_path = self.shapes[-1].split("NodeShape/")[1]
             elif "PropertyShape" in str(self.shapes[-1]):
                 pre_subject_path = self.shapes[-1].split("PropertyShape/")[1]
             subject = self.NS[f'NodeShape/{pre_subject_path}/{element_name}']
             ps_subject = self.NS[f'PropertyShape/{pre_subject_path}/{element_name}']
-            self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
+            if subject not in self.choiceShapes:
+                self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
 
         self.transAnnotation(xsd_element,subject)
         self.shapes.append(subject)
@@ -224,9 +230,11 @@ class XSDtoSHACL:
         self.SHACL.add((ps_subject,self.shaclNS.name,Literal(element_name)))
         self.SHACL.add((ps_subject,self.shaclNS.path,self.xsdTargetNS[element_name]))
         element_min_occurs = Literal(int(xsd_element.get("minOccurs", "1")))
-        element_max_occurs = Literal(int(xsd_element.get("maxOccurs", "1")))
         self.SHACL.add((ps_subject,self.shaclNS.minCount,element_min_occurs))
-        self.SHACL.add((ps_subject,self.shaclNS.maxCount,element_max_occurs))
+        element_max_occurs = xsd_element.get("maxOccurs", "1")
+        if element_max_occurs != "unbounded" and isinstance(element_max_occurs, int):
+            element_max_occurs = Literal(int(element_max_occurs))    
+            self.SHACL.add((ps_subject,self.shaclNS.maxCount,element_max_occurs))
     
 
         for name in xsd_element.attrib:
@@ -259,14 +267,15 @@ class XSDtoSHACL:
         """A function to translate XSD complex type to SHACL node shape""" 
         element_name = xsd_element.get("name")
         subject = self.NS[f'NodeShape/{element_name}']
-        if (self.shapes != []) and (element_name not in self.choiceShapes):
+        if self.shapes != []:
             if "NodeShape" in str(self.shapes[-1]):
                 pre_subject_path = self.shapes[-1].split("NodeShape/")[1]
             elif "PropertyShape" in str(self.shapes[-1]):
                 pre_subject_path = self.shapes[-1].split("PropertyShape/")[1]
             subject = subject = self.NS[f'NodeShape/{pre_subject_path}/{element_name}']
             # To solve that it is the child node of any element
-            self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
+            if subject not in self.choiceShapes:
+                self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
 
         self.transAnnotation(xsd_element,subject)
         self.shapes.append(subject)
@@ -429,11 +438,13 @@ class XSDtoSHACL:
                 element_type = self.isSimpleComplex(child)
                 if element_type == 0:
                     # values.append(self.NS[f'PropertyShape/{child.get("name")}'])
-                    values.append(self.NS[f'PropertyShape/{pre_subject_path}/{child.get("name")}'])
+                    temp = self.NS[f'PropertyShape/{pre_subject_path}/{child.get("name")}']
+                    values.append(temp)
                 else:
                     # values.append(self.NS[f'NodeShape/{child.get("name")}'])
-                    values.append(self.NS[f'NodeShape/{pre_subject_path}/{child.get("name")}'])
-                self.choiceShapes.append(child.get("name"))
+                    temp = self.NS[f'NodeShape/{pre_subject_path}/{child.get("name")}']
+                    values.append(temp)
+                self.choiceShapes.append(temp)
             elif "group" in tag:
                 temp = child.get("ref")
                 if temp == None:
@@ -491,28 +502,30 @@ class XSDtoSHACL:
                     self.SHACL.add((self.shapes[-1],self.shaclNS.node,self.NS[f'NodeShape/{child.get("ref")}']))
                 else:
                     next_node = self.transComplexType(child)
-            elif ("group" in tag) and ((child.get("name")) or (child.get("ref")) or (child.get("id"))):
+            elif "group" in tag:
                 ref = child.get("ref")
                 if ref:
-                    if ref not in self.choiceShapes:
-                        self.SHACL.add((self.shapes[-1],self.shaclNS.node,self.NS[f'NodeShape/{ref}']))
-                    if ref in self.groupShapes:
+                    if ref in self.choiceShapes:
                         pass
                     else:
-                        next_node = self.root.find(f".//*[@id='{ref}']")
-                        if next_node == None:
-                            next_node = self.root.find(f".//*[@name='{ref}']")
+                        self.SHACL.add((self.shapes[-1],self.shaclNS.node,self.NS[f'NodeShape/{ref}']))
+                    # else:
+                    #     next_node = self.root.find(f".//*[@id='{ref}']")
+                    #     if next_node == None:
+                    #         next_node = self.root.find(f".//*[@name='{ref}']")
                 else:
                     next_node = self.transGroup(child)
-            # elif ("complexType" in tag) or ("simpleType" in tag): 
-            #     pass
+            elif ("complexType" in tag) or ("simpleType" in tag): 
+                #will be translated in the next iteration
+                pass
             elif ("restriction" in tag):
                 value = child.get("base")
                 self.transRestriction(tag,value)
             elif ("enumeration" in tag):
                 self.transEnumeration(child)
             elif ("sequence" in tag):
-                self.order_list = list(reversed(range(len(child.findall("./")))))
+                pass
+                # self.order_list = list(reversed(range(len(child.findall("./")))))
             elif ("choice" in tag):
                 self.transChoice(child)
             elif ("all" in tag):
