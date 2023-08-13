@@ -3,7 +3,7 @@ import rdflib
 from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
 from pyshacl import validate
 import argparse
-from utils import recursiceCheck
+from .utils import recursiceCheck
 
 
 class XSDtoSHACL:
@@ -166,7 +166,7 @@ class XSDtoSHACL:
         self.shapes.append(subject)
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.PropertyShape))
         self.SHACL.add((subject,self.shaclNS.path,self.xsdTargetNS[element_name]))
-        self.SHACL.add((subject,self.shaclNS.targetSubjectsOf,self.xsdTargetNS[element_name]))
+        # self.SHACL.add((subject,self.shaclNS.targetSubjectsOf,self.xsdTargetNS[element_name]))
         if "attribute" not in xsd_element.tag:
             element_min_occurs = Literal(int(xsd_element.get("minOccurs", "1")))
             self.SHACL.add((subject,self.shaclNS.minCount,element_min_occurs))
@@ -177,6 +177,13 @@ class XSDtoSHACL:
 
         elif xsd_element.get("use") == "required":
             self.SHACL.add((subject,self.shaclNS.minCount,Literal(1)))
+            self.SHACL.add((subject,self.shaclNS.maxCount,Literal(1)))
+        elif xsd_element.get("use") == "optional":
+            self.SHACL.add((subject,self.shaclNS.minCount,Literal(0)))
+            self.SHACL.add((subject,self.shaclNS.maxCount,Literal(1)))
+        elif xsd_element.get("use") == "prohibited":
+            self.SHACL.add((subject,self.shaclNS.minCount,Literal(0)))
+            self.SHACL.add((subject,self.shaclNS.maxCount,Literal(0)))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
 
         if self.order_list != []:
@@ -222,7 +229,7 @@ class XSDtoSHACL:
         
         self.SHACL.add((subject,self.shaclNS.targetClass,self.xsdTargetNS[element_name]))
         # self.SHACL.add((subject,self.shaclNS.targetSubjectsOf,self.xsdTargetNS[element_name]))
-        self.SHACL.add((subject,self.shaclNS.targetObjectsOf,self.xsdTargetNS[element_name]))
+        # self.SHACL.add((subject,self.shaclNS.targetObjectsOf,self.xsdTargetNS[element_name]))
         # complex type does not have target, element can
 
         self.SHACL.add((subject,self.shaclNS.property,ps_subject))

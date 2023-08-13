@@ -147,33 +147,25 @@ def identifyAttributeType(root, attribute):
     # Might refer to another attribute
     return None
 
-# def getXPath(root, element):
-#     """
-#     A function to get the XPath of an XSD element
-#     """
-#     # Get the XPath of the parent
-#     parent = element.getparent()
-#     if parent == None:
-#         return ""
-#     else:
-#         parent_xpath = getXPath(parent)
+def update_graph(g,old_subjects):
+    bnodes = []
+    for s,p,o in g:
+        if s in old_subjects:
+            g.remove((s,p,o))
+            if isinstance(o,BNode):
+                bnodes.append(o)
+        elif o in old_subjects:
+            g.remove((s,p,o))
+        if (s in bnodes) or (o in bnodes):
+            if isinstance(o,BNode):
+                bnodes.append(o)
+            if isinstance(s,BNode):
+                bnodes.append(s)
+    for s,p,o in g:
+      if (s in bnodes) or (o in bnodes):
+        g.remove((s,p,o))
 
-#     # Get the XPath of the current element
-#     tag = element.tag.split("}")[-1]
-#     if "element" in tag:
-#         name = element.get("name")
-#         if name == None:
-#             return parent_xpath
-#         else:
-#             return parent_xpath + "/" + name
-#     elif "attribute" in tag:
-#         name = element.get("name")
-#         if name == None:
-#             return parent_xpath
-#         else:
-#             return parent_xpath + "/@" + name
-#     else:
-#         return parent_xpath
+    return g
 
 def parseXSD(XSD_FILE, BASE_PATH, XSD_FILES = [], XSD_TYPES = {}):
     """

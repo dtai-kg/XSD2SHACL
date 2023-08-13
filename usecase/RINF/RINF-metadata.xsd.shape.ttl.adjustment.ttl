@@ -1,0 +1,402 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint> a sh:NodeShape ;
+    sh:name "OperationalPoint" ;
+    sh:node <http://example.com/NodeShape/RINFData/OperationalPoint/OPGeographicLocation>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPName>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPRailwayLocation>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPRules>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPType>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/UniqueOPID> ;
+    sh:targetClass era:BorderPoint,
+        era:NetElement,
+        era:OperationalPoint,
+        geosparql:Geometry,
+        wgs:Point .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine> a sh:NodeShape ;
+    sh:name "SectionOfLine" ;
+    sh:node <http://example.com/NodeShape/RINFData/SectionOfLine/SOLIMCode>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLLength>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLLineIdentification>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLNature>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLOPEnd>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLOPStart>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack> ;
+    sh:targetClass era:NationalRailwayLine,
+        era:NetElement,
+        era:NetRelation,
+        era:SectionOfLine .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPGeographicLocation> a sh:NodeShape ;
+    sh:name "OPGeographicLocation" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPGeographicLocation/Latitude>,
+        <http://example.com/PropertyShape/RINFData/OperationalPoint/OPGeographicLocation/Longitude> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPName> a sh:NodeShape ;
+    sh:name "OPName" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPName/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPRailwayLocation> a sh:NodeShape ;
+    sh:name "OPRailwayLocation" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPRailwayLocation/Kilometer>,
+        <http://example.com/PropertyShape/RINFData/OperationalPoint/OPRailwayLocation/NationalIdentNum> ;
+    sh:targetClass era:LineReference .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPRules> a sh:NodeShape ;
+    sh:name "OPRules" .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding> a sh:NodeShape ;
+    sh:name "OPSiding" ;
+    sh:node <http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingIMCode>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingIdentification>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingTunnel> ;
+    sh:targetClass era:Siding .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingIMCode> a sh:NodeShape ;
+    sh:name "OPSidingIMCode" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingIMCode/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingIdentification> a sh:NodeShape ;
+    sh:name "OPSidingIdentification" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingIdentification/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingTunnel> a sh:NodeShape ;
+    sh:name "OPSidingTunnel" ;
+    sh:node <http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIMCode>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIdentification> ;
+    sh:targetClass era:Tunnel .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIMCode> a sh:NodeShape ;
+    sh:name "OPSidingTunnelIMCode" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIMCode/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIdentification> a sh:NodeShape ;
+    sh:name "OPSidingTunnelIdentification" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIdentification/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack> a sh:NodeShape ;
+    sh:name "OPTrack" ;
+    sh:node <http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackIMCode>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackIdentification>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackTunnel> ;
+    sh:targetClass era:Track .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackIMCode> a sh:NodeShape ;
+    sh:name "OPTrackIMCode" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackIMCode/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackIdentification> a sh:NodeShape ;
+    sh:name "OPTrackIdentification" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackIdentification/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackTunnel> a sh:NodeShape ;
+    sh:name "OPTrackTunnel" ;
+    sh:node <http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIMCode>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIdentification> ;
+    sh:targetClass era:Tunnel .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIMCode> a sh:NodeShape ;
+    sh:name "OPTrackTunnelIMCode" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIMCode/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIdentification> a sh:NodeShape ;
+    sh:name "OPTrackTunnelIdentification" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIdentification/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPType> a sh:NodeShape ;
+    sh:name "OPType" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPType/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/UniqueOPID> a sh:NodeShape ;
+    sh:name "UniqueOPID" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLIMCode> a sh:NodeShape ;
+    sh:name "SOLIMCode" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLIMCode/Value> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLLength> a sh:NodeShape ;
+    sh:name "SOLLength" .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLLineIdentification> a sh:NodeShape ;
+    sh:name "SOLLineIdentification" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLLineIdentification/Value> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLNature> a sh:NodeShape ;
+    sh:name "SOLNature" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLNature/Value> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLOPEnd> a sh:NodeShape ;
+    sh:name "SOLOPEnd" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLOPEnd/Value> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLOPStart> a sh:NodeShape ;
+    sh:name "SOLOPStart" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLOPStart/Value> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack> a sh:NodeShape ;
+    sh:name "SOLTrack" ;
+    sh:node <http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTrackDirection>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTrackIdentification>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel> ;
+    sh:targetClass era:NetElement,
+        era:Track .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTrackDirection> a sh:NodeShape ;
+    sh:name "SOLTrackDirection" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackDirection/Value> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTrackIdentification> a sh:NodeShape ;
+    sh:name "SOLTrackIdentification" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackIdentification/Value> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel> a sh:NodeShape ;
+    sh:name "SOLTunnel" ;
+    sh:node <http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIMCode>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIdentification>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart> ;
+    sh:targetClass era:Tunnel,
+        geosparql:Geometry,
+        wgs:Point .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd> a sh:NodeShape ;
+    sh:name "SOLTunnelEnd" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd/Latitude>,
+        <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd/Longitude> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIMCode> a sh:NodeShape ;
+    sh:name "SOLTunnelIMCode" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIMCode/Value> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIdentification> a sh:NodeShape ;
+    sh:name "SOLTunnelIdentification" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIdentification/Value> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart> a sh:NodeShape ;
+    sh:name "SOLTunnelStart" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart/Latitude>,
+        <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart/Longitude> .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPGeographicLocation/Latitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Latitude" ;
+    sh:path wgs:lat .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPGeographicLocation/Longitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Longitude" ;
+    sh:path wgs:long .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPName/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:path era:opName .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPRailwayLocation/Kilometer> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Kilometer" ;
+    sh:path era:kilometer .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPRailwayLocation/NationalIdentNum> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "NationalIdentNum" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:lineNationalId .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 4 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "Value" ;
+    sh:path era:imCode .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:path era:sidingId .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 4 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "Value" ;
+    sh:path era:imCode .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingTunnel/OPSidingTunnelIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:path era:tunnelIdentification .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 4 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "Value" ;
+    sh:path era:imCode .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:path era:trackId .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 4 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "Value" ;
+    sh:path era:imCode .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackTunnel/OPTrackTunnelIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:path era:tunnelIdentification .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPType/Value> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:opType .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:hasAbstraction .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 4 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "Value" ;
+    sh:path era:imCode .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLLineIdentification/Value> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:lineNationalId .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLNature/Value> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:solNature .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLOPEnd/Value> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:elementB .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLOPStart/Value> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:elementA .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackDirection/Value> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:trackDirection .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:path era:trackId .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd/Latitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Latitude" ;
+    sh:path wgs:lat .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelEnd/Longitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Longitude" ;
+    sh:path wgs:long .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 4 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "Value" ;
+    sh:path era:imCode .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:path era:tunnelIdentification .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart/Latitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Latitude" ;
+    sh:path wgs:lat .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTunnel/SOLTunnelStart/Longitude> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Longitude" ;
+    sh:path wgs:long .
+
