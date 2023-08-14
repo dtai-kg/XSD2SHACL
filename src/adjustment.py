@@ -4,7 +4,7 @@ from rdflib.plugins.sparql import prepareQuery
 import os
 import re
 import json
-from .utils import update_graph
+from .utils import clear_graph, update_graph
 
 class Adjustment:
     def __init__(self):
@@ -65,16 +65,27 @@ class Adjustment:
                 for s, p, o in g.triples((URIRef(sub), self.SHACL.targetClass, None)):
                     if sub not in shape_adjusted:
                         g.remove((s,p,o))
-                if targetClass != [None]:
-                    for c in targetClass:
-                        g.add((URIRef(sub),self.SHACL.targetClass,URIRef(c)))
-                shape_adjusted.append(sub)
+                # if targetClass != [None]:
+                #     for c in targetClass:
+                #         g.add((URIRef(sub),self.SHACL.targetClass,URIRef(c)))
+                # shape_adjusted.append(sub)
             return g, shape_adjusted
 
         def clearPropertyShape(g, sub, shape_list, predicate, shape_adjusted = []):
             if sub in shape_list:
-                g.remove((URIRef(sub), self.SHACL.path, None))
-                g.add((URIRef(sub),self.SHACL.path,URIRef(predicate)))
+                if sub not in shape_adjusted:
+                    g.remove((URIRef(sub), self.SHACL.path, None))
+                    g.add((URIRef(sub),self.SHACL.path,URIRef(predicate)))
+                else:
+                    current_path_subject = (sub+"/"+(predicate.split("/")[-1])).replace("//","/")
+                    # for s, p, o in g.triples((URIRef(sub), None, None)):
+                    #     g.add((URIRef(current_path_subject),p,o))
+                    # for s, p, o in g.triples((None, None, URIRef(sub))):
+                    #     g.remove((s,p,URIRef(current_path_subject)))
+                    g = update_graph(g,[URIRef(sub)],URIRef(current_path_subject))
+                    g.remove((URIRef(current_path_subject), self.SHACL.path, None))
+                    g.add((URIRef(current_path_subject),self.SHACL.path,URIRef(predicate)))
+
                 if self.correctKind == True:
                     g.remove((URIRef(sub), self.SHACL.datatype, None))
                     g.remove((URIRef(sub), self.SHACL.minLength, None))
@@ -102,6 +113,7 @@ class Adjustment:
                 sub = NStemplate+iterator.replace("//","/")
                 sub = URIRef(sub)
                 self.SHACL_g, shape_adjusted = clearNodeShape(self.SHACL_g, str(sub), shape_list, shape_adjusted = shape_adjusted, targetClass = targetClass)
+                self.targetClassAdd = False
                 for pom in poms:
                     predicate = pom[0]
                     if predicate == "http://www.w3.org/2000/01/rdf-schema#label" or predicate ==None:
@@ -112,16 +124,29 @@ class Adjustment:
                         self.correctKind = False
                     NS_list = pom[1].split("/")
 
+                    
                     for i in range(len(NS_list)-1):
                         NS_sub = NStemplate+iterator+"/"+"/".join(NS_list[0:i+1])
                         if NS_sub in shape_list:
+                            self.targetClassAdd = NS_sub
                             self.SHACL_g, shape_adjusted = clearNodeShape(self.SHACL_g, NS_sub, shape_list, shape_adjusted = shape_adjusted)
+                    if self.targetClassAdd != False:
+                        shape_adjusted.append(self.targetClassAdd)
+                        if targetClass != [None]:
+                            for c in targetClass:
+                                self.SHACL_g.add((URIRef(self.targetClassAdd),self.SHACL.targetClass,URIRef(c)))
+                        self.targetClassAdd = False
+                    else:
+                        shape_adjusted.append(sub)
+                        if targetClass != [None]:
+                            for c in targetClass:
+                                self.SHACL_g.add((URIRef(sub),self.SHACL.targetClass,URIRef(c)))
                     
                     NS_sub = PStemplate+iterator+"/"+"/".join(NS_list)
                     if NS_sub in shape_list:
                         self.SHACL_g, shape_adjusted = clearPropertyShape(self.SHACL_g, NS_sub, shape_list, predicate, shape_adjusted = shape_adjusted)
         remove_subjects =[URIRef(i) for i in shape_list if i not in shape_adjusted]  
-        self.SHACL_g = update_graph(self.SHACL_g, remove_subjects)
+        self.SHACL_g = clear_graph(self.SHACL_g, remove_subjects)
         return self.SHACL_g
 
 
@@ -145,7 +170,7 @@ class Adjustment:
                     for ns_prefix, namespace in g.namespaces():
                         self.SHACL_g.bind(ns_prefix, namespace, False)
                     self.parseMapping(g, "yml" in file)
-        # return self.mapping_dict
+        # print(self.mapping_dicts)
             
     
     def parseMapping(self, g, yarrrml = False):
@@ -156,7 +181,7 @@ class Adjustment:
                 tm, iterator, targetClass, subjectTemplate, subjectReference, predicate, objectReference, objectTemplate = r
                 current = mapping_dict.get(tm, {})
 
-                iterator = str(iterator)
+                iterator = str(iterator).split("[")[0]
                 current["iterator"] = iterator
 
                 current_targetClass = current.get("targetClass", [])
@@ -172,14 +197,16 @@ class Adjustment:
                     
                 elif subjectReference is not None and current.get("subject") is None:
                     # subjectReference = (iterator + "/" + str(subjectReference)).replace("//","/").replace("@","")
-                    subjectReference = str(subjectReference).replace("//","/").replace("@","")
+                    # subjectReference = str(subjectReference).replace("//","/").replace("@","")
+                    subjectReference = self.clearReference(str(subjectReference))
                     current["subject"] =  subjectReference
   
 
                 current_pom  = current.get("pom", [])
                 if objectReference is not None:
                     # objectReference = (iterator + "/" + str(objectReference)).replace("//","/").replace("@","")
-                    objectReference = str(objectReference).replace("//","/").replace("@","")
+                    # objectReference = str(objectReference).replace("//","/").replace("@","")
+                    objectReference = self.clearReference(str(objectReference))
                     if (predicate, objectReference) not in current_pom:
                         current_pom.append((predicate, objectReference, "Literal"))
                         # self.path_dict["PS"+objectReference] = predicate
@@ -199,9 +226,19 @@ class Adjustment:
         else:
             return path.split("/")[-1]
 
+    def clearIterator(self, iterator):
+        return iterator.split('[')[0]
+
+    def clearReference(self, reference):
+        matches = reference.split("/")
+        matches = [self.clearIterator(match) for match in matches]
+        result = "/".join(matches)
+        return result.replace("//","/").replace("@","")
+
     def extract_curly_braces_content(self, iterator, input_string):
         pattern = r'\{([^{}]+)\}'  
         matches = re.findall(pattern, input_string)
+        matches = [self.clearIterator(match) for match in matches]
         # result = iterator+"/"+"/".join(matches)
         result = "/".join(matches)
         return result.replace("//","/").replace("@","")

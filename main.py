@@ -18,4 +18,4 @@ if __name__ == "__main__":
         ADJ.loadMapping(SHACL_path, args.rml)
         print("##### Start adjust SHACL shape")
         SHACL_g = ADJ.adjust()
-        SHACL_g.serialize(destination=SHACL_path+".adjustment.ttl", format='turtle')
+        SHACL_g.serialize(destination=SHACL_path+"." +args.rml.split("\\")[-1] +".adjustment.ttl", format='turtle')
