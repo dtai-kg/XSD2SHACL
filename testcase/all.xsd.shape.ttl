@@ -1,0 +1,23 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/person> a sh:NodeShape ;
+    sh:name "person" ;
+    sh:property <http://example.com/PropertyShape/person/firstname>,
+        <http://example.com/PropertyShape/person/lastname> ;
+    sh:targetClass <http://example.com/person> .
+
+<http://example.com/PropertyShape/person/firstname> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 0 ;
+    sh:name "firstname" ;
+    sh:path <http://example.com/firstname> .
+
+<http://example.com/PropertyShape/person/lastname> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 0 ;
+    sh:name "lastname" ;
+    sh:path <http://example.com/lastname> .
+

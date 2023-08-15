@@ -177,9 +177,9 @@ class XSDtoSHACL:
             element_min_occurs = Literal(int(xsd_element.get("minOccurs", "1")))
             self.SHACL.add((subject,self.shaclNS.minCount,element_min_occurs))
             element_max_occurs = xsd_element.get("maxOccurs", "1")
-            if element_max_occurs != "unbounded" and isinstance(element_max_occurs, int):
+            if element_max_occurs != "unbounded" and (isinstance(element_max_occurs, int) or isinstance(element_max_occurs, str)):
                 element_max_occurs = Literal(int(element_max_occurs))    
-                self.SHACL.add((subject,self.shaclNS.maxCount,element_max_occurs))     
+                self.SHACL.add((subject,self.shaclNS.maxCount,element_max_occurs))          
 
         elif xsd_element.get("use") == "required":
             self.SHACL.add((subject,self.shaclNS.minCount,Literal(1)))
@@ -238,16 +238,17 @@ class XSDtoSHACL:
         # self.SHACL.add((subject,self.shaclNS.targetObjectsOf,self.xsdTargetNS[element_name]))
         # complex type does not have target, element can
 
-        self.SHACL.add((subject,self.shaclNS.property,ps_subject))
-        self.SHACL.add((ps_subject,self.rdfSyntax['type'],self.shaclNS.PropertyShape))
-        self.SHACL.add((ps_subject,self.shaclNS.name,Literal(element_name)))
-        self.SHACL.add((ps_subject,self.shaclNS.path,self.xsdTargetNS[element_name]))
-        element_min_occurs = Literal(int(xsd_element.get("minOccurs", "1")))
-        self.SHACL.add((ps_subject,self.shaclNS.minCount,element_min_occurs))
-        element_max_occurs = xsd_element.get("maxOccurs", "1")
-        if element_max_occurs != "unbounded" and isinstance(element_max_occurs, int):
-            element_max_occurs = Literal(int(element_max_occurs))    
-            self.SHACL.add((ps_subject,self.shaclNS.maxCount,element_max_occurs))
+        """Uncomment this if you want to add one more Property Shape for complex element which will be translated to Node Shape"""
+        # self.SHACL.add((subject,self.shaclNS.property,ps_subject))
+        # self.SHACL.add((ps_subject,self.rdfSyntax['type'],self.shaclNS.PropertyShape))
+        # self.SHACL.add((ps_subject,self.shaclNS.name,Literal(element_name)))
+        # self.SHACL.add((ps_subject,self.shaclNS.path,self.xsdTargetNS[element_name]))
+        # element_min_occurs = Literal(int(xsd_element.get("minOccurs", "1")))
+        # self.SHACL.add((ps_subject,self.shaclNS.minCount,element_min_occurs))
+        # element_max_occurs = xsd_element.get("maxOccurs", "1")
+        # if element_max_occurs != "unbounded" and (isinstance(element_max_occurs, int) or isinstance(element_max_occurs, str)):
+        #     element_max_occurs = Literal(int(element_max_occurs))    
+        #     self.SHACL.add((ps_subject,self.shaclNS.maxCount,element_max_occurs))
     
 
         for name in xsd_element.attrib:
