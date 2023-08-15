@@ -8,12 +8,10 @@
         sh:property  [ rdf:type     sh:PropertyShape ;
                        sh:datatype  xs:string ;
                        sh:maxCount  1 ;
-                       sh:minCount  1 ;
                        sh:path      :firstname
                      ] ;
         sh:property  [ rdf:type     sh:PropertyShape ;
                        sh:datatype  xs:string ;
                        sh:maxCount  1 ;
-                       sh:minCount  1 ;
                        sh:path      :lastname
                      ] .

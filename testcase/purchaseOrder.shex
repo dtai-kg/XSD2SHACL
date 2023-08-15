@@ -1,5 +1,6 @@
-List(MaxExclusive(Attributes(Map(value -> "100"))))
-List(Pattern(Attributes(Map(value -> "\d{3}-[A-Z]{2}"))))
+prefix : <http://example.org/>
+PREFIX xs: <http://www.w3.org/2001/XMLSchema#>
+
 <PurchaseOrderType> {
 :shipTo  @<USAddress> {1}  ;
 :billTo  @<USAddress> {1}  ;
