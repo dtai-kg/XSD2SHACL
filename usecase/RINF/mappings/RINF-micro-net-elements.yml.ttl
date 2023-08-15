@@ -1,0 +1,326 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix map: <http://mapping.example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix idlab-fn: <http://example.com/idlab/function/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix eu-country: <http://publications.europa.eu/resource/authority/country/> .
+@prefix era: <http://data.europa.eu/949/> .
+
+map:fn_000 rml:logicalSource map:source_007 ;
+	rr:predicateObjectMap map:pom_010, map:pom_013, map:pomexec_000 .
+
+map:fn_001 rml:logicalSource map:source_007 ;
+	rr:predicateObjectMap map:pom_011, map:pom_012, map:pomexec_001 .
+
+map:gm_000 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_001 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_002 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_003 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_004 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:map_internal-node-link-connectivity-table_000 rml:logicalSource map:source_007 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "internal-node-link-connectivity-table" ;
+	rr:predicateObjectMap map:pom_014, map:pom_015 ;
+	rr:subjectMap map:s_004 .
+
+map:map_internal-node-link-in-out_000 rml:logicalSource map:source_004 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "internal-node-link-in-out" ;
+	rr:predicateObjectMap map:pom_004, map:pom_005 ;
+	rr:subjectMap map:s_001 .
+
+map:map_internal-node-link-no-in_000 rml:logicalSource map:source_006 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "internal-node-link-no-in" ;
+	rr:predicateObjectMap map:pom_008, map:pom_009 ;
+	rr:subjectMap map:s_003 .
+
+map:map_internal-node-link-no-out_000 rml:logicalSource map:source_005 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "internal-node-link-no-out" ;
+	rr:predicateObjectMap map:pom_006, map:pom_007 ;
+	rr:subjectMap map:s_002 .
+
+map:map_sol-tracks_000 rml:logicalSource map:source_002 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "sol-tracks" ;
+	rr:predicateObjectMap map:pom_000, map:pom_001, map:pom_002, map:pom_003 ;
+	rr:subjectMap map:s_000 .
+
+map:om_000 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/NetElement" ;
+	rr:termType rr:IRI .
+
+map:om_001 rml:reference "SOLTrackIdentification/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_002 rml:reference "parent::*/SOLLength/@Value*1000" ;
+	rdf:type rr:ObjectMap ;
+	rr:datatype xsd:double ;
+	rr:termType rr:Literal .
+
+map:om_003 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::*/SOLLineIdentification/@Value}_{parent::*/SOLOPStart/@Value}_{SOLTrackIdentification/@Value}_{parent::*/SOLOPEnd/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_004 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/NetElement" ;
+	rr:termType rr:IRI .
+
+map:om_005 rml:reference "value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_006 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/NetElement" ;
+	rr:termType rr:IRI .
+
+map:om_007 rml:reference "value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_008 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/NetElement" ;
+	rr:termType rr:IRI .
+
+map:om_009 rml:reference "value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_010 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_001 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_011 rml:reference "Connected" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_012 rdf:type rr:ObjectMap ;
+	rr:constant "YES" ;
+	rr:termType rr:Literal .
+
+map:om_013 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/topology/netElements/{INCOMING_LINE}_{INCOMING_REMOTE_OP}_{INCOMING}_{UOPID}_{OUTGOING}_{OUTGOING_REMOTE_OP}_{OUTGOING_LINE}" ;
+	rr:termType rr:IRI .
+
+map:om_014 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/NetElement" ;
+	rr:termType rr:IRI .
+
+map:om_015 rdf:type rr:ObjectMap ;
+	rr:template "{INCOMING_LINE}_{INCOMING_REMOTE_OP}_{INCOMING}_{UOPID}_{OUTGOING}_{OUTGOING_REMOTE_OP}_{OUTGOING_LINE}" ;
+	rr:termType rr:Literal .
+
+map:omexec_000 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_001 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:pm_000 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_001 rdf:type rr:PredicateMap ;
+	rr:constant rdfs:label .
+
+map:pm_002 rdf:type rr:PredicateMap ;
+	rr:constant era:length .
+
+map:pm_003 rdf:type rr:PredicateMap ;
+	rr:constant era:hasImplementation .
+
+map:pm_004 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_005 rdf:type rr:PredicateMap ;
+	rr:constant rdfs:label .
+
+map:pm_006 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_007 rdf:type rr:PredicateMap ;
+	rr:constant rdfs:label .
+
+map:pm_008 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_009 rdf:type rr:PredicateMap ;
+	rr:constant rdfs:label .
+
+map:pm_010 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_011 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_012 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_013 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_014 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_015 rdf:type rr:PredicateMap ;
+	rr:constant rdfs:label .
+
+map:pmexec_000 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_001 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pom_000 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_000 ;
+	rr:predicateMap map:pm_000 .
+
+map:pom_001 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_001 ;
+	rr:predicateMap map:pm_001 .
+
+map:pom_002 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_002 ;
+	rr:predicateMap map:pm_002 .
+
+map:pom_003 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_003 ;
+	rr:predicateMap map:pm_003 .
+
+map:pom_004 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_004 ;
+	rr:predicateMap map:pm_004 .
+
+map:pom_005 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_005 ;
+	rr:predicateMap map:pm_005 .
+
+map:pom_006 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_006 ;
+	rr:predicateMap map:pm_006 .
+
+map:pom_007 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_007 ;
+	rr:predicateMap map:pm_007 .
+
+map:pom_008 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_008 ;
+	rr:predicateMap map:pm_008 .
+
+map:pom_009 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_009 ;
+	rr:predicateMap map:pm_009 .
+
+map:pom_010 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_010 ;
+	rr:predicateMap map:pm_010 .
+
+map:pom_011 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_011 ;
+	rr:predicateMap map:pm_011 .
+
+map:pom_012 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_012 ;
+	rr:predicateMap map:pm_012 .
+
+map:pom_013 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_013 ;
+	rr:predicateMap map:pm_013 .
+
+map:pom_014 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_014 ;
+	rr:predicateMap map:pm_014 .
+
+map:pom_015 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_015 ;
+	rr:predicateMap map:pm_015 .
+
+map:pomexec_000 rr:objectMap map:omexec_000 ;
+	rr:predicateMap map:pmexec_000 .
+
+map:pomexec_001 rr:objectMap map:omexec_001 ;
+	rr:predicateMap map:pmexec_001 .
+
+map:rules_000 <http://rdfs.org/ns/void#exampleResource> map:map_internal-node-link-connectivity-table_000, map:map_internal-node-link-in-out_000, map:map_internal-node-link-no-in_000, map:map_internal-node-link-no-out_000, map:map_sol-tracks_000 ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> .
+
+map:s_000 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_000 ;
+	rr:template "http://data.europa.eu/949/topology/netElements/{parent::*/SOLLineIdentification/@Value}_{parent::*/SOLOPStart/@Value}_{SOLTrackIdentification/@Value}_{parent::*/SOLOPEnd/@Value}" .
+
+map:s_001 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_001 ;
+	rr:template "http://data.europa.eu/949/topology/netElements/{value}" .
+
+map:s_002 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_002 ;
+	rr:template "http://data.europa.eu/949/topology/netElements/{value}" .
+
+map:s_003 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_003 ;
+	rr:template "http://data.europa.eu/949/topology/netElements/{value}" .
+
+map:s_004 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_000 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:SubjectMap ;
+	rr:graphMap map:gm_004 ;
+	rr:termType rr:IRI .
+
+map:source_000 rml:iterator "/RINFData/SectionOfLine" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "xml-source" .
+
+map:source_001 rml:iterator "/RINFData" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "xml-source-root" .
+
+map:source_002 rml:iterator "/RINFData/SectionOfLine/SOLTrack" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "xml-sol-track-source" .
+
+map:source_003 rml:iterator "/RINFData/OperationalPoint" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "xml-op-source" .
+
+map:source_004 rml:iterator "/RINFData/netElement" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/internal-node-link-in-out.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "xml-in-out-netElements" .
+
+map:source_005 rml:iterator "/RINFData/netElement" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/internal-node-link-no-out.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "xml-no-out-netElements" .
+
+map:source_006 rml:iterator "/RINFData/netElement" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/internal-node-link-no-in.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "xml-no-in-netElements" .
+
+map:source_007 rml:referenceFormulation ql:CSV ;
+	rml:source "data/op_internal_connectivity.csv" ;
+	rdf:type rml:LogicalSource .
+

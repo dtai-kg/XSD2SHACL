@@ -1,0 +1,376 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix map: <http://mapping.example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix ht: <http://www.w3.org/2006/http#> .
+@prefix idlab-fn: <http://example.com/idlab/function/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-tenclass: <http://data.europa.eu/949/concepts/ten-classifications/rinf/> .
+@prefix era-ph: <http://data.europa.eu/949/concepts/platform-heights/rinf/> .
+
+map:fn_000 rml:logicalSource map:source_000 ;
+	rr:predicateObjectMap map:pom_009, map:pom_012, map:pomexec_000 .
+
+map:fn_001 rml:logicalSource map:source_000 ;
+	rr:predicateObjectMap map:pom_010, map:pom_011, map:pomexec_001 .
+
+map:fn_002 rml:logicalSource map:source_000 ;
+	rr:predicateObjectMap map:pom_014, map:pom_017, map:pomexec_002 .
+
+map:fn_003 rml:logicalSource map:source_000 ;
+	rr:predicateObjectMap map:pom_015, map:pom_016, map:pomexec_003 .
+
+map:gm_000 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_001 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_002 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_003 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_004 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_005 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_006 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:map_area-boarding-aid_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "area-boarding-aid" ;
+	rr:predicateObjectMap map:pom_018 ;
+	rr:subjectMap map:s_006 .
+
+map:map_assistance-starting-train_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "assistance-starting-train" ;
+	rr:predicateObjectMap map:pom_008, map:pom_013 ;
+	rr:subjectMap map:s_005 .
+
+map:map_platform-height_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "platform-height" ;
+	rr:predicateObjectMap map:pom_007 ;
+	rr:subjectMap map:s_004 .
+
+map:map_platform-length_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "platform-length" ;
+	rr:predicateObjectMap map:pom_006 ;
+	rr:subjectMap map:s_003 .
+
+map:map_platform-reference_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "platform-reference" ;
+	rr:predicateObjectMap map:pom_004 ;
+	rr:subjectMap map:s_001 .
+
+map:map_platform_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "platform" ;
+	rr:predicateObjectMap map:pom_000, map:pom_001, map:pom_002, map:pom_003 ;
+	rr:subjectMap map:s_000 .
+
+map:map_ten-class_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "ten-class" ;
+	rr:predicateObjectMap map:pom_005 ;
+	rr:subjectMap map:s_002 .
+
+map:om_000 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/Platform" ;
+	rr:termType rr:IRI .
+
+map:om_001 rdf:type rr:ObjectMap ;
+	rr:template "{parent::*/parent::*/UniqueOPID/@Value}_{OPTrackPlatformIdentification/@Value}" ;
+	rr:termType rr:Literal .
+
+map:om_002 rml:reference "parent::*/OPTrackIMCode/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_003 rml:reference "OPTrackPlatformIdentification/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_004 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/funtionalInfrastructure/platforms/{parent::*/UniqueOPID/@Value}_{OPTrackPlatform/OPTrackPlatformIdentification/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_005 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/concepts/ten-classifications/rinf/{OPTrackPlatformParameter[@ID='IPL_TENClass' and @IsApplicable='Y']/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_006 rml:reference "OPTrackPlatformParameter[@ID='IPL_Length' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:datatype xsd:double ;
+	rr:termType rr:Literal .
+
+map:om_007 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/concepts/platform-heights/rinf/{OPTrackPlatformParameter[@ID='IPL_Height' and @IsApplicable='Y']/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_008 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_000 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_009 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_001 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_010 rml:reference "OPTrackPlatformParameter[@ID='IPL_AssistanceStartingTrain' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_011 rdf:type rr:ObjectMap ;
+	rr:constant "Y" ;
+	rr:termType rr:Literal .
+
+map:om_012 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_013 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_002 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_014 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_003 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_015 rml:reference "OPTrackPlatformParameter[@ID='IPL_AssistanceStartingTrain'and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_016 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_017 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_018 rml:reference "OPTrackPlatformParameter[@ID='IPL_AreaBoardingAid' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:datatype xsd:integer ;
+	rr:termType rr:Literal .
+
+map:omexec_000 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_001 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_002 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_003 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:pm_000 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_001 rdf:type rr:PredicateMap ;
+	rr:constant rdfs:label .
+
+map:pm_002 rdf:type rr:PredicateMap ;
+	rr:constant era:imCode .
+
+map:pm_003 rdf:type rr:PredicateMap ;
+	rr:constant era:platformId .
+
+map:pm_004 rdf:type rr:PredicateMap ;
+	rr:constant era:platform .
+
+map:pm_005 rdf:type rr:PredicateMap ;
+	rr:constant era:tenClassification .
+
+map:pm_006 rdf:type rr:PredicateMap ;
+	rr:constant era:length .
+
+map:pm_007 rdf:type rr:PredicateMap ;
+	rr:constant era:platformHeight .
+
+map:pm_008 rdf:type rr:PredicateMap ;
+	rr:constant era:assistanceStartingTrain .
+
+map:pm_009 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_010 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_011 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_012 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_013 rdf:type rr:PredicateMap ;
+	rr:constant era:assistanceStartingTrain .
+
+map:pm_014 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_015 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_016 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_017 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_018 rdf:type rr:PredicateMap ;
+	rr:constant era:areaBoardingAid .
+
+map:pmexec_000 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_001 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_002 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_003 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pom_000 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_000 ;
+	rr:predicateMap map:pm_000 .
+
+map:pom_001 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_001 ;
+	rr:predicateMap map:pm_001 .
+
+map:pom_002 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_002 ;
+	rr:predicateMap map:pm_002 .
+
+map:pom_003 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_003 ;
+	rr:predicateMap map:pm_003 .
+
+map:pom_004 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_004 ;
+	rr:predicateMap map:pm_004 .
+
+map:pom_005 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_005 ;
+	rr:predicateMap map:pm_005 .
+
+map:pom_006 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_006 ;
+	rr:predicateMap map:pm_006 .
+
+map:pom_007 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_007 ;
+	rr:predicateMap map:pm_007 .
+
+map:pom_008 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_008 ;
+	rr:predicateMap map:pm_008 .
+
+map:pom_009 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_009 ;
+	rr:predicateMap map:pm_009 .
+
+map:pom_010 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_010 ;
+	rr:predicateMap map:pm_010 .
+
+map:pom_011 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_011 ;
+	rr:predicateMap map:pm_011 .
+
+map:pom_012 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_012 ;
+	rr:predicateMap map:pm_012 .
+
+map:pom_013 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_013 ;
+	rr:predicateMap map:pm_013 .
+
+map:pom_014 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_014 ;
+	rr:predicateMap map:pm_014 .
+
+map:pom_015 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_015 ;
+	rr:predicateMap map:pm_015 .
+
+map:pom_016 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_016 ;
+	rr:predicateMap map:pm_016 .
+
+map:pom_017 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_017 ;
+	rr:predicateMap map:pm_017 .
+
+map:pom_018 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_018 ;
+	rr:predicateMap map:pm_018 .
+
+map:pomexec_000 rr:objectMap map:omexec_000 ;
+	rr:predicateMap map:pmexec_000 .
+
+map:pomexec_001 rr:objectMap map:omexec_001 ;
+	rr:predicateMap map:pmexec_001 .
+
+map:pomexec_002 rr:objectMap map:omexec_002 ;
+	rr:predicateMap map:pmexec_002 .
+
+map:pomexec_003 rr:objectMap map:omexec_003 ;
+	rr:predicateMap map:pmexec_003 .
+
+map:rules_000 <http://rdfs.org/ns/void#exampleResource> map:map_area-boarding-aid_000, map:map_assistance-starting-train_000, map:map_platform-height_000, map:map_platform-length_000, map:map_platform-reference_000, map:map_platform_000, map:map_ten-class_000 ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> .
+
+map:s_000 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_000 ;
+	rr:template "http://data.europa.eu/949/funtionalInfrastructure/platforms/{parent::*/parent::*/UniqueOPID/@Value}_{OPTrackPlatformIdentification/@Value}" .
+
+map:s_001 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_001 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::*/UniqueOPID/@Value}_{OPTrackIdentification/@Value}" .
+
+map:s_002 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_002 ;
+	rr:template "http://data.europa.eu/949/funtionalInfrastructure/platforms/{parent::*/parent::*/UniqueOPID/@Value}_{OPTrackPlatformIdentification/@Value}" .
+
+map:s_003 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_003 ;
+	rr:template "http://data.europa.eu/949/funtionalInfrastructure/platforms/{parent::*/parent::*/UniqueOPID/@Value}_{OPTrackPlatformIdentification/@Value}" .
+
+map:s_004 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_004 ;
+	rr:template "http://data.europa.eu/949/funtionalInfrastructure/platforms/{parent::*/parent::*/UniqueOPID/@Value}_{OPTrackPlatformIdentification/@Value}" .
+
+map:s_005 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_005 ;
+	rr:template "http://data.europa.eu/949/funtionalInfrastructure/platforms/{parent::*/parent::*/UniqueOPID/@Value}_{OPTrackPlatformIdentification/@Value}" .
+
+map:s_006 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_006 ;
+	rr:template "http://data.europa.eu/949/funtionalInfrastructure/platforms/{parent::*/parent::*/UniqueOPID/@Value}_{OPTrackPlatformIdentification/@Value}" .
+
+map:source_000 rml:iterator "/RINFData/OperationalPoint/OPTrack/OPTrackPlatform" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "op_source" .
+
+map:source_001 rml:iterator "/RINFData/OperationalPoint/OPTrack" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "op_source-ref" .
+

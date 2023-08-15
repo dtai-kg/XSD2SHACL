@@ -1,0 +1,794 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix map: <http://mapping.example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix idlab-fn: <http://example.com/idlab/function/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-cls: <http://data.europa.eu/949/concepts/contact-line-systems/rinf/> .
+@prefix era-ess: <http://data.europa.eu/949/concepts/energy-supply-systems/rinf/> .
+
+map:fn_000 rml:logicalSource map:source_003 ;
+	rr:predicateObjectMap map:pom_005, map:pom_008, map:pomexec_000 .
+
+map:fn_001 rml:logicalSource map:source_003 ;
+	rr:predicateObjectMap map:pom_006, map:pom_007, map:pomexec_001 .
+
+map:fn_002 rml:logicalSource map:source_003 ;
+	rr:predicateObjectMap map:pom_010, map:pom_013, map:pomexec_002 .
+
+map:fn_003 rml:logicalSource map:source_003 ;
+	rr:predicateObjectMap map:pom_011, map:pom_012, map:pomexec_003 .
+
+map:fn_004 rml:logicalSource map:source_006 ;
+	rr:predicateObjectMap map:pom_018, map:pom_021, map:pomexec_004 .
+
+map:fn_005 rml:logicalSource map:source_006 ;
+	rr:predicateObjectMap map:pom_019, map:pom_020, map:pomexec_005 .
+
+map:fn_006 rml:logicalSource map:source_006 ;
+	rr:predicateObjectMap map:pom_023, map:pom_026, map:pomexec_006 .
+
+map:fn_007 rml:logicalSource map:source_006 ;
+	rr:predicateObjectMap map:pom_024, map:pom_025, map:pomexec_007 .
+
+map:fn_008 rml:logicalSource map:source_006 ;
+	rr:predicateObjectMap map:pom_028, map:pom_031, map:pomexec_008 .
+
+map:fn_009 rml:logicalSource map:source_006 ;
+	rr:predicateObjectMap map:pom_029, map:pom_030, map:pomexec_009 .
+
+map:fn_010 rml:logicalSource map:source_007 ;
+	rr:predicateObjectMap map:pom_033, map:pom_036, map:pomexec_010 .
+
+map:fn_011 rml:logicalSource map:source_007 ;
+	rr:predicateObjectMap map:pom_034, map:pom_035, map:pomexec_011 .
+
+map:fn_012 rml:logicalSource map:source_007 ;
+	rr:predicateObjectMap map:pom_038, map:pom_041, map:pomexec_012 .
+
+map:fn_013 rml:logicalSource map:source_007 ;
+	rr:predicateObjectMap map:pom_039, map:pom_040, map:pomexec_013 .
+
+map:gm_000 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_001 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_002 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_003 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_004 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_005 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_006 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_007 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:map_contact-line-systems_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "contact-line-systems" ;
+	rr:predicateObjectMap map:pom_000, map:pom_001, map:pom_002 ;
+	rr:subjectMap map:s_000 .
+
+map:map_current-limitation_000 rml:logicalSource map:source_007 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "current-limitation" ;
+	rr:predicateObjectMap map:pom_032, map:pom_037 ;
+	rr:subjectMap map:s_007 .
+
+map:map_energy-supply-system-tsi-compliant_000 rml:logicalSource map:source_003 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "energy-supply-system-tsi-compliant" ;
+	rr:predicateObjectMap map:pom_004, map:pom_009 ;
+	rr:subjectMap map:s_002 .
+
+map:map_energy-supply-system_000 rml:logicalSource map:source_002 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "energy-supply-system" ;
+	rr:predicateObjectMap map:pom_003 ;
+	rr:subjectMap map:s_001 .
+
+map:map_maximum-current-standstill_000 rml:logicalSource map:source_008 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "maximum-current-standstill" ;
+	rr:predicateObjectMap map:pom_016 ;
+	rr:subjectMap map:s_005 .
+
+map:map_maximum-train-current_000 rml:logicalSource map:source_005 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "maximum-train-current" ;
+	rr:predicateObjectMap map:pom_015 ;
+	rr:subjectMap map:s_004 .
+
+map:map_regenerative-braking_000 rml:logicalSource map:source_006 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "regenerative-braking" ;
+	rr:predicateObjectMap map:pom_017, map:pom_022, map:pom_027 ;
+	rr:subjectMap map:s_006 .
+
+map:map_umax2_000 rml:logicalSource map:source_004 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "umax2" ;
+	rr:predicateObjectMap map:pom_014 ;
+	rr:subjectMap map:s_003 .
+
+map:om_000 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/ContactLineSystem" ;
+	rr:termType rr:IRI .
+
+map:om_001 rml:reference "@Set" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_002 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/concepts/contact-line-systems/rinf/{@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_003 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/concepts/energy-supply-systems/rinf/{@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_004 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_000 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_005 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_001 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_006 rml:reference "@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_007 rdf:type rr:ObjectMap ;
+	rr:constant "Y" ;
+	rr:termType rr:Literal .
+
+map:om_008 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_009 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_002 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_010 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_003 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_011 rml:reference "@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_012 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_013 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_014 rml:reference "@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:datatype xsd:integer ;
+	rr:termType rr:Literal .
+
+map:om_015 rml:reference "@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:datatype xsd:integer ;
+	rr:termType rr:Literal .
+
+map:om_016 rml:reference "@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:datatype xsd:double ;
+	rr:termType rr:Literal .
+
+map:om_017 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_004 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_018 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_005 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_019 rml:reference "@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_020 rdf:type rr:ObjectMap ;
+	rr:constant "Y" ;
+	rr:termType rr:Literal .
+
+map:om_021 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_022 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_006 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_023 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_007 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_024 rml:reference "@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_025 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_026 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_027 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_008 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_028 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_009 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_029 rml:reference "@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_030 rdf:type rr:ObjectMap ;
+	rr:constant "allowed under conditions" ;
+	rr:termType rr:Literal .
+
+map:om_031 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_032 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_010 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_033 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_011 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_034 rml:reference "@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_035 rdf:type rr:ObjectMap ;
+	rr:constant "Y" ;
+	rr:termType rr:Literal .
+
+map:om_036 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_037 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_012 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_038 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_013 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_039 rml:reference "@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_040 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_041 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:omexec_000 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_001 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_002 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_003 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_004 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_005 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_006 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_007 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_008 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_009 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_010 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_011 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_012 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_013 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:pm_000 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_001 rdf:type rr:PredicateMap ;
+	rr:constant rdfs:label .
+
+map:pm_002 rdf:type rr:PredicateMap ;
+	rr:constant era:contactLineSystemType .
+
+map:pm_003 rdf:type rr:PredicateMap ;
+	rr:constant era:energySupplySystem .
+
+map:pm_004 rdf:type rr:PredicateMap ;
+	rr:constant era:energySupplySystemTSICompliant .
+
+map:pm_005 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_006 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_007 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_008 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_009 rdf:type rr:PredicateMap ;
+	rr:constant era:energySupplySystemTSICompliant .
+
+map:pm_010 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_011 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_012 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_013 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_014 rdf:type rr:PredicateMap ;
+	rr:constant era:umax2 .
+
+map:pm_015 rdf:type rr:PredicateMap ;
+	rr:constant era:maxTrainCurrent .
+
+map:pm_016 rdf:type rr:PredicateMap ;
+	rr:constant era:maxCurrentStandstillPantograph .
+
+map:pm_017 rdf:type rr:PredicateMap ;
+	rr:constant era:hasRegenerativeBrake .
+
+map:pm_018 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_019 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_020 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_021 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_022 rdf:type rr:PredicateMap ;
+	rr:constant era:hasRegenerativeBrake .
+
+map:pm_023 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_024 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_025 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_026 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_027 rdf:type rr:PredicateMap ;
+	rr:constant era:conditionalRegenerativeBrake .
+
+map:pm_028 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_029 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_030 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_031 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_032 rdf:type rr:PredicateMap ;
+	rr:constant era:currentLimitationRequired .
+
+map:pm_033 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_034 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_035 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_036 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_037 rdf:type rr:PredicateMap ;
+	rr:constant era:currentLimitationRequired .
+
+map:pm_038 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_039 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_040 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_041 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pmexec_000 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_001 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_002 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_003 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_004 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_005 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_006 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_007 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_008 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_009 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_010 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_011 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_012 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_013 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pom_000 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_000 ;
+	rr:predicateMap map:pm_000 .
+
+map:pom_001 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_001 ;
+	rr:predicateMap map:pm_001 .
+
+map:pom_002 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_002 ;
+	rr:predicateMap map:pm_002 .
+
+map:pom_003 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_003 ;
+	rr:predicateMap map:pm_003 .
+
+map:pom_004 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_004 ;
+	rr:predicateMap map:pm_004 .
+
+map:pom_005 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_005 ;
+	rr:predicateMap map:pm_005 .
+
+map:pom_006 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_006 ;
+	rr:predicateMap map:pm_006 .
+
+map:pom_007 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_007 ;
+	rr:predicateMap map:pm_007 .
+
+map:pom_008 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_008 ;
+	rr:predicateMap map:pm_008 .
+
+map:pom_009 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_009 ;
+	rr:predicateMap map:pm_009 .
+
+map:pom_010 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_010 ;
+	rr:predicateMap map:pm_010 .
+
+map:pom_011 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_011 ;
+	rr:predicateMap map:pm_011 .
+
+map:pom_012 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_012 ;
+	rr:predicateMap map:pm_012 .
+
+map:pom_013 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_013 ;
+	rr:predicateMap map:pm_013 .
+
+map:pom_014 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_014 ;
+	rr:predicateMap map:pm_014 .
+
+map:pom_015 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_015 ;
+	rr:predicateMap map:pm_015 .
+
+map:pom_016 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_016 ;
+	rr:predicateMap map:pm_016 .
+
+map:pom_017 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_017 ;
+	rr:predicateMap map:pm_017 .
+
+map:pom_018 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_018 ;
+	rr:predicateMap map:pm_018 .
+
+map:pom_019 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_019 ;
+	rr:predicateMap map:pm_019 .
+
+map:pom_020 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_020 ;
+	rr:predicateMap map:pm_020 .
+
+map:pom_021 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_021 ;
+	rr:predicateMap map:pm_021 .
+
+map:pom_022 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_022 ;
+	rr:predicateMap map:pm_022 .
+
+map:pom_023 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_023 ;
+	rr:predicateMap map:pm_023 .
+
+map:pom_024 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_024 ;
+	rr:predicateMap map:pm_024 .
+
+map:pom_025 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_025 ;
+	rr:predicateMap map:pm_025 .
+
+map:pom_026 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_026 ;
+	rr:predicateMap map:pm_026 .
+
+map:pom_027 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_027 ;
+	rr:predicateMap map:pm_027 .
+
+map:pom_028 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_028 ;
+	rr:predicateMap map:pm_028 .
+
+map:pom_029 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_029 ;
+	rr:predicateMap map:pm_029 .
+
+map:pom_030 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_030 ;
+	rr:predicateMap map:pm_030 .
+
+map:pom_031 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_031 ;
+	rr:predicateMap map:pm_031 .
+
+map:pom_032 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_032 ;
+	rr:predicateMap map:pm_032 .
+
+map:pom_033 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_033 ;
+	rr:predicateMap map:pm_033 .
+
+map:pom_034 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_034 ;
+	rr:predicateMap map:pm_034 .
+
+map:pom_035 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_035 ;
+	rr:predicateMap map:pm_035 .
+
+map:pom_036 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_036 ;
+	rr:predicateMap map:pm_036 .
+
+map:pom_037 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_037 ;
+	rr:predicateMap map:pm_037 .
+
+map:pom_038 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_038 ;
+	rr:predicateMap map:pm_038 .
+
+map:pom_039 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_039 ;
+	rr:predicateMap map:pm_039 .
+
+map:pom_040 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_040 ;
+	rr:predicateMap map:pm_040 .
+
+map:pom_041 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_041 ;
+	rr:predicateMap map:pm_041 .
+
+map:pomexec_000 rr:objectMap map:omexec_000 ;
+	rr:predicateMap map:pmexec_000 .
+
+map:pomexec_001 rr:objectMap map:omexec_001 ;
+	rr:predicateMap map:pmexec_001 .
+
+map:pomexec_002 rr:objectMap map:omexec_002 ;
+	rr:predicateMap map:pmexec_002 .
+
+map:pomexec_003 rr:objectMap map:omexec_003 ;
+	rr:predicateMap map:pmexec_003 .
+
+map:pomexec_004 rr:objectMap map:omexec_004 ;
+	rr:predicateMap map:pmexec_004 .
+
+map:pomexec_005 rr:objectMap map:omexec_005 ;
+	rr:predicateMap map:pmexec_005 .
+
+map:pomexec_006 rr:objectMap map:omexec_006 ;
+	rr:predicateMap map:pmexec_006 .
+
+map:pomexec_007 rr:objectMap map:omexec_007 ;
+	rr:predicateMap map:pmexec_007 .
+
+map:pomexec_008 rr:objectMap map:omexec_008 ;
+	rr:predicateMap map:pmexec_008 .
+
+map:pomexec_009 rr:objectMap map:omexec_009 ;
+	rr:predicateMap map:pmexec_009 .
+
+map:pomexec_010 rr:objectMap map:omexec_010 ;
+	rr:predicateMap map:pmexec_010 .
+
+map:pomexec_011 rr:objectMap map:omexec_011 ;
+	rr:predicateMap map:pmexec_011 .
+
+map:pomexec_012 rr:objectMap map:omexec_012 ;
+	rr:predicateMap map:pmexec_012 .
+
+map:pomexec_013 rr:objectMap map:omexec_013 ;
+	rr:predicateMap map:pmexec_013 .
+
+map:rules_000 <http://rdfs.org/ns/void#exampleResource> map:map_contact-line-systems_000, map:map_current-limitation_000, map:map_energy-supply-system-tsi-compliant_000, map:map_energy-supply-system_000, map:map_maximum-current-standstill_000, map:map_maximum-train-current_000, map:map_regenerative-braking_000, map:map_umax2_000 ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> .
+
+map:s_000 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_000 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/contactLineSystems/{parent::*/parent::*/SOLLineIdentification/@Value}_{parent::*/parent::*/SOLOPStart/@Value}_{parent::*/SOLTrackIdentification/@Value}_{parent::*/parent::*/SOLOPEnd/@Value}_{@Set}" .
+
+map:s_001 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_001 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/contactLineSystems/{parent::*/parent::*/SOLLineIdentification/@Value}_{parent::*/parent::*/SOLOPStart/@Value}_{parent::*/SOLTrackIdentification/@Value}_{parent::*/parent::*/SOLOPEnd/@Value}_{@Set}" .
+
+map:s_002 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_002 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/contactLineSystems/{parent::*/parent::*/SOLLineIdentification/@Value}_{parent::*/parent::*/SOLOPStart/@Value}_{parent::*/SOLTrackIdentification/@Value}_{parent::*/parent::*/SOLOPEnd/@Value}_{@Set}" .
+
+map:s_003 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_003 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/contactLineSystems/{parent::*/parent::*/SOLLineIdentification/@Value}_{parent::*/parent::*/SOLOPStart/@Value}_{parent::*/SOLTrackIdentification/@Value}_{parent::*/parent::*/SOLOPEnd/@Value}_{@Set}" .
+
+map:s_004 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_004 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/contactLineSystems/{parent::*/parent::*/SOLLineIdentification/@Value}_{parent::*/parent::*/SOLOPStart/@Value}_{parent::*/SOLTrackIdentification/@Value}_{parent::*/parent::*/SOLOPEnd/@Value}_{@Set}" .
+
+map:s_005 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_005 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/contactLineSystems/{parent::*/parent::*/SOLLineIdentification/@Value}_{parent::*/parent::*/SOLOPStart/@Value}_{parent::*/SOLTrackIdentification/@Value}_{parent::*/parent::*/SOLOPEnd/@Value}_{@Set}" .
+
+map:s_006 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_006 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/contactLineSystems/{parent::*/parent::*/SOLLineIdentification/@Value}_{parent::*/parent::*/SOLOPStart/@Value}_{parent::*/SOLTrackIdentification/@Value}_{parent::*/parent::*/SOLOPEnd/@Value}_{@Set}" .
+
+map:s_007 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_007 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/contactLineSystems/{parent::*/parent::*/SOLLineIdentification/@Value}_{parent::*/parent::*/SOLOPStart/@Value}_{parent::*/SOLTrackIdentification/@Value}_{parent::*/parent::*/SOLOPEnd/@Value}_{@Set}" .
+
+map:source_000 rml:iterator "/RINFData/SectionOfLine" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "cls-source" .
+
+map:source_001 rml:iterator "/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter[@ID='ECS_SystemType' and @IsApplicable='Y']" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "source-cls" .
+
+map:source_002 rml:iterator "/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter[@ID='ECS_VoltFreq' and @IsApplicable='Y']" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "source-ess" .
+
+map:source_003 rml:iterator "/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter[@ID='ECS_TSIVoltFreq' and @IsApplicable='Y']" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "source-tsi-compliant" .
+
+map:source_004 rml:iterator "/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter[@ID='ECS_Umax2' and @IsApplicable='Y']" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "source-umax2" .
+
+map:source_005 rml:iterator "/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter[@ID='ECS_MaxTrainCurrent' and @IsApplicable='Y']" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "source-train-current" .
+
+map:source_006 rml:iterator "/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter[@ID='ECS_RegenerativeBraking' and @IsApplicable='Y']" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "source-braking" .
+
+map:source_007 rml:iterator "/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter[@ID='ERS_PowerLimitOnBoard' and @IsApplicable='Y']" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "source-limitation" .
+
+map:source_008 rml:iterator "/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter[@ID='ECS_MaxStandstillCurrent' and @IsApplicable='Y']" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "source-standstill" .
+

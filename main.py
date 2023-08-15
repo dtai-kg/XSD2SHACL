@@ -15,6 +15,7 @@ if __name__ == "__main__":
 
     if args.rml:
         ADJ = Adjustment()
+        print("##### Start load SHACL shape")
         ADJ.loadMapping(SHACL_path, args.rml)
         print("##### Start adjust SHACL shape")
         SHACL_g = ADJ.adjust()

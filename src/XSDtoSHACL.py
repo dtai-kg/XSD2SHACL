@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import os
 import rdflib
 from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
 from pyshacl import validate
@@ -26,6 +27,7 @@ class XSDtoSHACL:
         self.choiceShapes = []
         self.order_list = []
         self.backUp = None
+        self.processed_files = []
 
     def isSimpleComplex(self,xsd_element,xsd_type=None):
         """A function to determine whether the type of element is SimpleType or ComplexType"""
@@ -37,6 +39,7 @@ class XSDtoSHACL:
                     return 1
                 elif "simpleType" in child.tag:
                     return 0
+            return 0
         elif "xs" in xsd_type or "xsd" in xsd_type or xsd_type in self.type_list:
             return 0 #built-in type
         else:
@@ -63,10 +66,13 @@ class XSDtoSHACL:
             subject = self.shapes[-1]
 
         if "type" in tag or "restriction" in tag:
-            if ((":" in value) and (value.split(":")[1] in self.type_list)) or value in self.type_list:
+            if ((":" in value) and (value.split(":")[1] in self.type_list)):
                 p = self.shaclNS.datatype
-                #o = rdflib.Namespace(self.xsdNSdict[value.split(":")[0]])[value.split(":")[1]]
                 o = self.xsdNS[value.split(":")[1]]
+                self.SHACL.add((subject,p,o))
+            elif value in self.type_list:
+                p = self.shaclNS.datatype
+                o = self.xsdNS[value]
                 self.SHACL.add((subject,p,o))
 
         elif "default" in tag:
@@ -484,13 +490,16 @@ class XSDtoSHACL:
             next_node = child
             if ("element" in tag) or (("attribute" in tag) and ("attributeGroup" not in tag)):
                 if child.get("ref"):
-                    # next_node = self.root.find(f".//*[@name='{child.get('ref')}']")
-                    ref_node = self.root.find(f".//*[@name='{child.get('ref')}']")
-                    element_type = self.isSimpleComplex(ref_node)
-                    if element_type == 0:
-                        self.SHACL.add((self.shapes[-1],self.shaclNS.property,self.NS[f'PropertyShape/{child.get("ref")}']))
-                    elif element_type == 1:
-                        self.SHACL.add((self.shapes[-1],self.shaclNS.node,self.NS[f'NodeShape/{child.get("ref")}']))
+                    ref = child.get("ref")
+                    if ":" in ref:
+                        ref = ref.split(":")[-1]
+                    ref_node = self.root.find(f".//*[@name='{ref}']")
+                    if ref_node != None:
+                        element_type = self.isSimpleComplex(ref_node)
+                        if element_type == 0:
+                            self.SHACL.add((self.shapes[-1],self.shaclNS.property,self.NS[f'PropertyShape/{ref}']))
+                        elif element_type == 1:
+                            self.SHACL.add((self.shapes[-1],self.shaclNS.node,self.NS[f'NodeShape/{ref}']))
                 else:
                     element_type = self.isSimpleComplex(child)
                     if element_type == 0:
@@ -546,7 +555,9 @@ class XSDtoSHACL:
             # Translate next node
             self.translate(next_node)
                 
-            if (("element" in tag) and (child.get("name"))) or (("attribute" in tag) and ("attributeGroup" not in tag)) or (("complexType" in tag) and (child.get("name"))) or (("attributeGroup" in tag) and (child.get("name"))) or (("group" in tag) and (child.get("name") or child.get("id"))):
+            if (("element" in tag) and (child.get("name"))) or (("attribute" in tag) and ("attributeGroup" not in tag) and not child.get("ref")) or (("complexType" in tag) and (child.get("name"))) or (("attributeGroup" in tag) and (child.get("name"))) or (("group" in tag) and (child.get("name") or child.get("id"))):
+                # print(child, child.attrib)
+                # print(self.shapes)
                 self.shapes.pop()
         if self.backUp != None:
             self.shapes.pop()
@@ -565,7 +576,45 @@ class XSDtoSHACL:
 
         self.SHACL.serialize(destination=file_name, format='turtle')
 
+    def parseXSD(self, ref_root):
+
+        # Process xs:include
+        for include_import_elem in ref_root.findall(".//xs:include", namespaces={"xs": "http://www.w3.org/2001/XMLSchema"}):
+            included_imported_xsd_path = include_import_elem.get("schemaLocation")
+            if included_imported_xsd_path and included_imported_xsd_path not in self.processed_files:
+                try:
+                    next_ref_root = ET.parse(os.path.join(self.BASE_PATH, included_imported_xsd_path)).getroot()
+                    self.processed_files.append(included_imported_xsd_path)
+                except:
+                    print("Parse include error file:",included_imported_xsd_path)
+                    self.processed_files.append(included_imported_xsd_path)
+                    continue
+
+                for child in next_ref_root.findall("./"):
+                    self.root.append(child)
+                self.parseXSD(next_ref_root)
+
+        # Process xs:import
+        for include_import_elem in ref_root.findall(".//xs:import", namespaces={"xs": "http://www.w3.org/2001/XMLSchema"}):
+            included_imported_xsd_path = include_import_elem.get("schemaLocation")
+            if included_imported_xsd_path and included_imported_xsd_path not in self.processed_files:
+                try:
+                    next_ref_root = ET.parse(os.path.join(self.BASE_PATH, included_imported_xsd_path)).getroot()
+                    self.processed_files.append(included_imported_xsd_path)
+                except:
+                    print("Parse error import file:",included_imported_xsd_path)
+                    self.processed_files.append(included_imported_xsd_path)
+                    continue
+
+                for child in next_ref_root.findall("./"):
+                    self.root.append(child)
+                self.parseXSD(next_ref_root)
+
+
+        
+    
     def evaluate_file(self, xsd_file):
+        self.BASE_PATH = os.path.dirname(xsd_file)
         self.xsdTree = ET.parse(xsd_file)
         self.root = self.xsdTree.getroot()
 
@@ -573,19 +622,30 @@ class XSDtoSHACL:
 
         self.xsdNSdict = dict([node for (_, node) in ET.iterparse(xsd_file, events=['start-ns'])])
 
+        print("Start parsing")
+        self.parseXSD(self.root)
+        print("Processed_files",self.processed_files)
+        # tree = ET.ElementTree(self.root)
+        # tree.write("parse_merge.xsd", encoding="utf-8", xml_declaration=True)
+        # return None
+
         for key in self.root.attrib:
             if key == "targetNamespace":
                 self.xsdTargetNS = Namespace(self.root.attrib[key])
     
-
+        print("Start translating")
         self.translate(self.root)
 
-        shaclValidation = Graph()
-        shaclValidation.parse("https://www.w3.org/ns/shacl-shacl")
+        # print("Start validating")
 
-        r = validate(self.SHACL, shacl_graph=shaclValidation)
-        if not r[0]:
-            print(r[2])
+        # shaclValidation = Graph()
+        # shaclValidation.parse("https://www.w3.org/ns/shacl-shacl")
+
+        # r = validate(self.SHACL, shacl_graph=shaclValidation)
+        # if not r[0]:
+        #     print(r[2])
+
+        print("Start writing to file")
 
         self.writeShapeToFile(xsd_file + ".shape.ttl")
         # print(self.SHACL.serialize(format="turtle"))

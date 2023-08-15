@@ -1,0 +1,372 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix map: <http://mapping.example.com/> .
+@prefix cat: <http://www.w3.org/ns/dcat#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix idlab-fn: <http://example.com/idlab/function/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-tenclass: <http://data.europa.eu/949/concepts/ten-classifications/rinf/> .
+@prefix era-linecat: <http://data.europa.eu/949/concepts/line-category/rinf/> .
+@prefix era-fc: <http://data.europa.eu/949/concepts/freight-corridor/rinf/> .
+@prefix era-gaugings: <http://data.europa.eu/949/concepts/gaugings/rinf/> .
+@prefix era-ntg: <http://data.europa.eu/949/concepts/nominal-track-gauges/rinf/> .
+
+map:gm_000 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_001 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_002 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_003 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_004 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_005 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_006 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_007 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_008 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_009 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_010 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_011 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:map_ec-verification_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "ec-verification" ;
+	rr:predicateObjectMap map:pom_006 ;
+	rr:subjectMap map:s_003 .
+
+map:map_ei-demonstration_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "ei-demonstration" ;
+	rr:predicateObjectMap map:pom_007 ;
+	rr:subjectMap map:s_004 .
+
+map:map_freight-corridor_000 rml:logicalSource map:source_004 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "freight-corridor" ;
+	rr:predicateObjectMap map:pom_010 ;
+	rr:subjectMap map:s_007 .
+
+map:map_gauging-check-locations_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "gauging-check-locations" ;
+	rr:predicateObjectMap map:pom_012 ;
+	rr:subjectMap map:s_009 .
+
+map:map_gauging-transversal-document_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "gauging-transversal-document" ;
+	rr:predicateObjectMap map:pom_013 ;
+	rr:subjectMap map:s_010 .
+
+map:map_gauging_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "gauging" ;
+	rr:predicateObjectMap map:pom_011 ;
+	rr:subjectMap map:s_008 .
+
+map:map_line-cat_000 rml:logicalSource map:source_003 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "line-cat" ;
+	rr:predicateObjectMap map:pom_009 ;
+	rr:subjectMap map:s_006 .
+
+map:map_link-track-to-operational-border-point_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "link-track-to-operational-border-point" ;
+	rr:predicateObjectMap map:pom_005 ;
+	rr:subjectMap map:s_002 .
+
+map:map_link-track-to-operational-point_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "link-track-to-operational-point" ;
+	rr:predicateObjectMap map:pom_004 ;
+	rr:subjectMap map:s_001 .
+
+map:map_nominal-track-gauge_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "nominal-track-gauge" ;
+	rr:predicateObjectMap map:pom_014 ;
+	rr:subjectMap map:s_011 .
+
+map:map_op-track_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "op-track" ;
+	rr:predicateObjectMap map:pom_000, map:pom_001, map:pom_002, map:pom_003 ;
+	rr:subjectMap map:s_000 .
+
+map:map_ten-class_000 rml:logicalSource map:source_002 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "ten-class" ;
+	rr:predicateObjectMap map:pom_008 ;
+	rr:subjectMap map:s_005 .
+
+map:om_000 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/Track" ;
+	rr:termType rr:IRI .
+
+map:om_001 rml:reference "OPTrackIdentification/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_002 rml:reference "OPTrackIMCode/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_003 rml:reference "OPTrackIdentification/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_004 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::*/UniqueOPID/@Value}_{OPTrackIdentification/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_005 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::*/UniqueOPID/@Value}_{OPTrackIdentification/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_006 rml:reference "OPTrackParameter[@ID='IDE_ECVerification' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_007 rml:reference "OPTrackParameter[@ID='IDE_EIDemonstration' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_008 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/concepts/ten-classifications/rinf/{@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_009 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/concepts/line-category/rinf/{@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_010 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/concepts/freight-corridor/rinf/{@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_011 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/concepts/gaugings/rinf/{@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_012 rml:reference "OPTrackParameter[@ID='ILL_GaugeCheckLoc' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_013 rml:reference "OPTrackParameter[@ID='ILL_GaugeCheckDocRef' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_014 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/concepts/nominal-track-gauges/rinf/{OPTrack/OPTrackParameter[@ID='ITP_NomGauge' and @IsApplicable='Y']/@Value}" ;
+	rr:termType rr:IRI .
+
+map:pm_000 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_001 rdf:type rr:PredicateMap ;
+	rr:constant rdfs:label .
+
+map:pm_002 rdf:type rr:PredicateMap ;
+	rr:constant era:imCode .
+
+map:pm_003 rdf:type rr:PredicateMap ;
+	rr:constant era:trackId .
+
+map:pm_004 rdf:type rr:PredicateMap ;
+	rr:constant era:track .
+
+map:pm_005 rdf:type rr:PredicateMap ;
+	rr:constant era:track .
+
+map:pm_006 rdf:type rr:PredicateMap ;
+	rr:constant era:verificationINF .
+
+map:pm_007 rdf:type rr:PredicateMap ;
+	rr:constant era:demonstrationINF .
+
+map:pm_008 rdf:type rr:PredicateMap ;
+	rr:constant era:tenClassification .
+
+map:pm_009 rdf:type rr:PredicateMap ;
+	rr:constant era:lineCategory .
+
+map:pm_010 rdf:type rr:PredicateMap ;
+	rr:constant era:freightCorridor .
+
+map:pm_011 rdf:type rr:PredicateMap ;
+	rr:constant era:gaugingProfile .
+
+map:pm_012 rdf:type rr:PredicateMap ;
+	rr:constant era:gaugingCheckLocation .
+
+map:pm_013 rdf:type rr:PredicateMap ;
+	rr:constant era:gaugingTransversalDocument .
+
+map:pm_014 rdf:type rr:PredicateMap ;
+	rr:constant era:wheelSetGauge .
+
+map:pom_000 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_000 ;
+	rr:predicateMap map:pm_000 .
+
+map:pom_001 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_001 ;
+	rr:predicateMap map:pm_001 .
+
+map:pom_002 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_002 ;
+	rr:predicateMap map:pm_002 .
+
+map:pom_003 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_003 ;
+	rr:predicateMap map:pm_003 .
+
+map:pom_004 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_004 ;
+	rr:predicateMap map:pm_004 .
+
+map:pom_005 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_005 ;
+	rr:predicateMap map:pm_005 .
+
+map:pom_006 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_006 ;
+	rr:predicateMap map:pm_006 .
+
+map:pom_007 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_007 ;
+	rr:predicateMap map:pm_007 .
+
+map:pom_008 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_008 ;
+	rr:predicateMap map:pm_008 .
+
+map:pom_009 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_009 ;
+	rr:predicateMap map:pm_009 .
+
+map:pom_010 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_010 ;
+	rr:predicateMap map:pm_010 .
+
+map:pom_011 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_011 ;
+	rr:predicateMap map:pm_011 .
+
+map:pom_012 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_012 ;
+	rr:predicateMap map:pm_012 .
+
+map:pom_013 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_013 ;
+	rr:predicateMap map:pm_013 .
+
+map:pom_014 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_014 ;
+	rr:predicateMap map:pm_014 .
+
+map:rules_000 <http://rdfs.org/ns/void#exampleResource> map:map_ec-verification_000, map:map_ei-demonstration_000, map:map_freight-corridor_000, map:map_gauging-check-locations_000, map:map_gauging-transversal-document_000, map:map_gauging_000, map:map_line-cat_000, map:map_link-track-to-operational-border-point_000, map:map_link-track-to-operational-point_000, map:map_nominal-track-gauge_000, map:map_op-track_000, map:map_ten-class_000 ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> .
+
+map:s_000 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_000 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::*/UniqueOPID/@Value}_{OPTrackIdentification/@Value}" .
+
+map:s_001 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_001 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{parent::*/UniqueOPID/@Value}/{(parent::*/@ValidityDateStart,'0000-00-00')[1]}_{(parent::*/@ValidityDateEnd,'0000-00-00')[1]}" .
+
+map:s_002 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_002 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{parent::*/parent::*/MemberStateCode/@Code}/{parent::*/UniqueOPID[matches(@Value,'^EU0')]/@Value}/{(@ValidityDateStart,'0000-00-00')[1]}_{(@ValidityDateEnd,'0000-00-00')[1]}" .
+
+map:s_003 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_003 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::*/UniqueOPID/@Value}_{OPTrackIdentification/@Value}" .
+
+map:s_004 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_004 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::*/UniqueOPID/@Value}_{OPTrackIdentification/@Value}" .
+
+map:s_005 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_005 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::OPTrack/parent::*/UniqueOPID/@Value}_{parent::OPTrack/OPTrackIdentification/@Value}" .
+
+map:s_006 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_006 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::OPTrack/parent::*/UniqueOPID/@Value}_{parent::OPTrack/OPTrackIdentification/@Value}" .
+
+map:s_007 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_007 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::OPTrack/parent::*/UniqueOPID/@Value}_{parent::OPTrack/OPTrackIdentification/@Value}" .
+
+map:s_008 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_008 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::OPTrack/parent::*/UniqueOPID/@Value}_{parent::OPTrack/OPTrackIdentification/@Value}" .
+
+map:s_009 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_009 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::*/UniqueOPID/@Value}_{OPTrackIdentification/@Value}" .
+
+map:s_010 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_010 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::*/UniqueOPID/@Value}_{OPTrackIdentification/@Value}" .
+
+map:s_011 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_011 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/tracks/{parent::*/UniqueOPID/@Value}_{OPTrackIdentification/@Value}" .
+
+map:source_000 rml:iterator "/RINFData/OperationalPoint/OPTrack" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "op-source" .
+
+map:source_001 rml:iterator "/RINFData/OperationalPoint/OPTrack/OPTrackParameter[@ID=\"ILL_Gauging\" and @IsApplicable=\"Y\"]" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "op-gauging-source" .
+
+map:source_002 rml:iterator "/RINFData/OperationalPoint/OPTrack/OPTrackParameter[@ID=\"IPP_TENClass\" and @IsApplicable=\"Y\"]" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "ten-class-source" .
+
+map:source_003 rml:iterator "/RINFData/OperationalPoint/OPTrack/OPTrackParameter[@ID=\"IPP_LineCat\" and @IsApplicable=\"Y\"]" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "line-cat-source" .
+
+map:source_004 rml:iterator "/RINFData/OperationalPoint/OPTrack/OPTrackParameter[@ID=\"IPP_FreightCorridor\" and @IsApplicable=\"Y\"]" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "freight-corridor-source" .
+

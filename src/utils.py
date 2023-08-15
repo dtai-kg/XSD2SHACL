@@ -19,9 +19,9 @@ def identifyXSD(element):
         allowed_tags = ["annotation"]
         if False in [child.tag.split("}")[-1] in allowed_tags for child in element.findall("*")]:
             raise Exception("Invalid XSD file: any or anyAttribute or field or import or include or notation or selector should only contain annotation")
-    elif "appinfo" == tag or "documentation" == tag:
-        for child in element:
-            raise Exception("Invalid XSD file: appinfo or documentation should not contain any child")
+    # elif "appinfo" == tag or "documentation" == tag:
+    #     for child in element:
+    #         raise Exception("Invalid XSD file: appinfo or documentation should not contain any child")
     elif "attribute" == tag:
         allowed_tags = ["annotation", "simpleType"]
         if False in [child.tag.split("}")[-1] in allowed_tags for child in element.findall("*")]:

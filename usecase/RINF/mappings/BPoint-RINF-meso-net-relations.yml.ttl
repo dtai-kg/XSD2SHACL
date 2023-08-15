@@ -1,0 +1,120 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix map: <http://mapping.example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix idlab-fn: <http://example.com/idlab/function/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix eu-country: <http://publications.europa.eu/resource/authority/country/> .
+@prefix era: <http://data.europa.eu/949/> .
+
+map:gm_000 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_001 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:map_sol-end_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "sol-end" ;
+	rr:predicateObjectMap map:pom_003, map:pom_004, map:pom_005 ;
+	rr:subjectMap map:s_001 .
+
+map:map_sol-start_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "sol-start" ;
+	rr:predicateObjectMap map:pom_000, map:pom_001, map:pom_002 ;
+	rr:subjectMap map:s_000 .
+
+map:om_000 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/NetRelation" ;
+	rr:termType rr:IRI .
+
+map:om_001 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/topology/netElements/{SOLOPStart/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_002 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/topology/netElements/{SOLLineIdentification/@Value}_{SOLOPStart/@Value}_{SOLOPEnd/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_003 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/NetRelation" ;
+	rr:termType rr:IRI .
+
+map:om_004 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/topology/netElements/{SOLLineIdentification/@Value}_{SOLOPStart/@Value}_{SOLOPEnd/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_005 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/topology/netElements/{SOLOPEnd/@Value}" ;
+	rr:termType rr:IRI .
+
+map:pm_000 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_001 rdf:type rr:PredicateMap ;
+	rr:constant era:elementA .
+
+map:pm_002 rdf:type rr:PredicateMap ;
+	rr:constant era:elementB .
+
+map:pm_003 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_004 rdf:type rr:PredicateMap ;
+	rr:constant era:elementA .
+
+map:pm_005 rdf:type rr:PredicateMap ;
+	rr:constant era:elementB .
+
+map:pom_000 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_000 ;
+	rr:predicateMap map:pm_000 .
+
+map:pom_001 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_001 ;
+	rr:predicateMap map:pm_001 .
+
+map:pom_002 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_002 ;
+	rr:predicateMap map:pm_002 .
+
+map:pom_003 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_003 ;
+	rr:predicateMap map:pm_003 .
+
+map:pom_004 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_004 ;
+	rr:predicateMap map:pm_004 .
+
+map:pom_005 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_005 ;
+	rr:predicateMap map:pm_005 .
+
+map:rules_000 <http://rdfs.org/ns/void#exampleResource> map:map_sol-end_000, map:map_sol-start_000 ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> .
+
+map:s_000 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_000 ;
+	rr:template "http://data.europa.eu/949/topology/netRelations/{SOLOPStart/@Value}_{SOLLineIdentification/@Value}_{SOLOPStart/@Value}_{SOLOPEnd/@Value}" .
+
+map:s_001 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_001 ;
+	rr:template "http://data.europa.eu/949/topology/netRelations/{SOLLineIdentification/@Value}_{SOLOPStart/@Value}_{SOLOPEnd/@Value}_{SOLOPEnd/@Value}" .
+
+map:source_000 rml:iterator "/RINFData/SectionOfLine" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/borderPointsDataset.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "sol_source" .
+
+map:source_001 rml:iterator "/RINFData/OperationalPoint" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/borderPointsDataset.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "op_source" .
+
