@@ -1,0 +1,1703 @@
+@prefix era-sh: <http://data.europa.eu/949/shapes/> .
+@prefix ex: <http://example.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix era-sn: <http://data.europa.eu/949/concepts/sol-natures/> .
+@prefix era-ph: <http://data.europa.eu/949/concepts/platform-heights/> .
+@prefix era-tenclass: <http://data.europa.eu/949/concepts/ten-classifications/> .
+@prefix era-gaugings: <http://data.europa.eu/949/concepts/gaugings/> .
+@prefix era-ntg: <http://data.europa.eu/949/concepts/nominal-track-gauges/> .
+@prefix era-tds: <http://data.europa.eu/949/concepts/train-detection/> .
+@prefix era-tdssc: <http://data.europa.eu/949/concepts/train-detection-specific-checks/> .
+@prefix era-tsi: <http://data.europa.eu/949/concepts/tsi-compliances/> .
+@prefix era-malvc: <http://data.europa.eu/949/concepts/min-axle-loads-per-vehicle-category/> .
+@prefix era-mas: <http://data.europa.eu/949/concepts/max-amount-sandings/> .
+@prefix era-lc: <http://data.europa.eu/949/concepts/load-capabilities/> .
+@prefix era-pnsb: <http://data.europa.eu/949/concepts/profile-num-swap-bodies/> .
+@prefix era-pnst: <http://data.europa.eu/949/concepts/profile-num-semi-trailers/> .
+@prefix era-ri: <http://data.europa.eu/949/concepts/rail-inclinations/> .
+@prefix era-mb: <http://data.europa.eu/949/concepts/magnetic-braking/> .
+@prefix era-pth: <http://data.europa.eu/949/concepts/pantograph-heads/> .
+@prefix era-csm: <http://data.europa.eu/949/concepts/contact-strip-materials/> .
+@prefix era-etcsinfill: <http://data.europa.eu/949/concepts/etcs-infills/> .
+@prefix era-esc: <http://data.europa.eu/949/concepts/etcs-system-compatibilities/> .
+@prefix era-etcsmvers: <http://data.europa.eu/949/concepts/etcs-m-versions/> .
+@prefix era-gsmrv: <http://data.europa.eu/949/concepts/gsmr-versions/> .
+@prefix era-gsmrnumactivemob: <http://data.europa.eu/949/concepts/gsmr-number-active-mobiles/> .
+@prefix era-gsmroptfunc: <http://data.europa.eu/949/concepts/gsmr-optional-functions/> .
+@prefix era-gsmr: <http://data.europa.eu/949/concepts/gsmr-networks/> .
+@prefix era-rsc: <http://data.europa.eu/949/concepts/radio-system-compatibilities/> .
+@prefix era-vrsc: <http://data.europa.eu/949/concepts/voice-radio-system-compatibilities/> .
+@prefix era-rscd: <http://data.europa.eu/949/concepts/radio-system-compatibilities-data/> .
+@prefix era-tpls: <http://data.europa.eu/949/concepts/train-protection-legacy-systems/> .
+@prefix era-lrs: <http://data.europa.eu/949/concepts/legacy-radio-systems/> .
+@prefix era-etcssituation: <http://data.europa.eu/949/concepts/etcs-situation/> .
+@prefix era-opcw: <http://data.europa.eu/949/concepts/other-protection-control-warning/> .
+@prefix era-trd: <http://data.europa.eu/949/concepts/track-running-directions/> .
+@prefix era-ec: <http://data.europa.eu/949/concepts/eddy-current-braking/> .
+@prefix era-ha: <http://data.europa.eu/949/concepts/hot-axle/> .
+@prefix era-cls: <http://data.europa.eu/949/concepts/contact-line-systems/> .
+@prefix era-cph: <http://data.europa.eu/949/concepts/compliant-pantograph-heads/> .
+@prefix era-oph: <http://data.europa.eu/949/concepts/other-pantograph-heads/> .
+
+#############################
+# Rules for Sections of Line
+#############################
+
+# Missing constraint checks:
+## #1.1.0.0.0 Each network shall be described using as many SoLs as necessary. Each SoL is generated and identified by OP IDs at start and at end. A SoL only belongs to one Line. RINF data are valid with zero or more SoLs declared in it.
+
+era-sh:SectionOfLineShape  
+    a sh:NodeShape ;
+    sh:targetClass era:SectionOfLine .
+
+#imCode: # 1.1.0.0.0.1
+era-sh:SectionOfLineShape sh:property era-sh:infrastructureManager-imCode .
+era-sh:infrastructureManager-imCode
+    a sh:PropertyShape ;
+    rdfs:comment "Each SoL can only be submitted by one infrastructure manager, represented by a four-digit code" ;
+    era:rinfIndex "1.1.0.0.0.1" ;
+    sh:path ( era:infrastructureManager era:imCode ) ;           
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:minLength 4 ;
+    sh:maxLength 4 ;
+#    sh:pattern "\\c{4}";
+    sh:severity sh:Warning ;
+    sh:message "imCode (1.1.0.0.0.1): Each SoL can be referred to only one infrastructure manager, which MUST be represented with a four-digit code. This error may be due to having a SoL with no infrastructure manager associated, with more than one infrastructure managers, or with a code that has a different length"@en .
+
+#lineNationalId: # 1.1.0.0.0.2
+era-sh:SectionOfLineShape sh:property era-sh:lineNationalId .
+era-sh:lineNationalId
+    a sh:PropertyShape ;
+    rdfs:comment "Each SoL can belong to only one national line. In case when SoL is the track connecting between OPs within big node (resulting from division of big station into several smaller) the line can be identified using the name of this track." ;
+    era:rinfIndex "1.1.0.0.0.2" ;
+    sh:path era:lineNationalId ;           
+#   sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Violation ;
+    sh:message "lineNationalId (1.1.0.0.0.2): Each SoL can belong to only one national line."@en .
+
+#opStart: # 1.1.0.0.0.3
+era-sh:SectionOfLineShape sh:property era-sh:opStart .
+era-sh:opStart
+    a sh:PropertyShape ;
+    rdfs:comment "Each SoL may have only one start OP, and each OP has unique OP ID within the MS. The “uniqueOPID” is defined in parameter 1.2.0.0.0.2. Each SoL has the principal direction of the traffic defined by increasing kilometres running from the start OP to the end OP. That is why the start OP is always located at lowest kilometre of the line within the SoL. Data collected in the UK in miles will be transformed to km for uploading to the RINF application. \n The OP ID must exist in the MS file of RINF. The value of this parameter must be different from 1.1.0.0.0.4. No validation will be performed by RINF application regarding which is the start and which the end OP. This requires national verification." ;
+    era:rinfIndex "1.1.0.0.0.3" ;
+    sh:path era:opStart ; 
+    sh:disjoint era:opEnd ; # value must be different to opEnd
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Violation ;
+    sh:message "opStart (1.1.0.0.0.3): There must be exactly one OP, and its value must be different from opEnd"@en .
+
+#opStart: # 1.1.0.0.0.3
+era-sh:SectionOfLineShape sh:sparql era-sh:opStartExists .
+era-sh:opStartExists
+    a sh:SPARQLConstraint ;   
+    rdfs:comment "Each SoL may have only one start OP, and each OP has unique OP ID within the MS. The “uniqueOPID” is defined in parameter 1.2.0.0.0.2. Each SoL has the principal direction of the traffic defined by increasing kilometres running from the start OP to the end OP. That is why the start OP is always located at lowest kilometre of the line within the SoL. Data collected in the UK in miles will be transformed to km for uploading to the RINF application.\n The OP ID must exist in the MS file of RINF. The value of this parameter must be different from 1.1.0.0.0.4. No validation will be performed by RINF application regarding which is the start and which the end OP. This requires national verification." ;
+    era:rinfIndex "1.1.0.0.0.3" ;
+    sh:severity sh:Violation ;
+    sh:message "opStart (1.1.0.0.0.3): The OP must exist. There is a problem with SoL {$this} ({?solLabel}) and its OP start {?opStart}, which does not exist"@en ;
+    sh:prefixes era:;
+    sh:select """
+    PREFIX era: <http://data.europa.eu/949/>
+    SELECT DISTINCT $this ?solLabel ?opStart
+			WHERE {
+                $this era:opStart ?opStart .
+				OPTIONAL{$this rdfs:label ?solLabel} .
+                FILTER NOT EXISTS {?opStart ?p ?o} .
+   			}
+			""" .
+
+#opEnd: # 1.1.0.0.0.4
+era-sh:SectionOfLineShape sh:property era-sh:opEnd .
+era-sh:opEnd
+    a sh:PropertyShape ;
+    rdfs:comment "Each SoL may have only one end OP, and each OP has unique OP ID within the MS. The “uniqueOPID” is defined in parameter 1.2.0.0.0.2. Each SoL has the principal direction of the traffic defined by increasing kilometres running from the start OP to the end OP. That is why the start OP is always located at lowest kilometre of the line within the SoL. Data collected in the UK in miles will be transformed to km for uploading to the RINF application. \n The OP ID must exist in the MS file of RINF. The value of this parameter must be different from 1.1.0.0.0.3. No validation will be performed by RINF application regarding which is the start and which the end OP. This requires national verification." ;
+    era:rinfIndex "1.1.0.0.0.4" ;
+    sh:path era:opEnd ; 
+    sh:disjoint era:opStart ; # value must be different to opStart
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Violation ;
+    sh:message "opEnd (1.1.0.0.0.4): There must be exactly one OP, and its value must be different from opStart"@en .
+
+#opEnd: # 1.1.0.0.0.4
+era-sh:SectionOfLineShape sh:sparql era-sh:opEndExists .
+era-sh:opEndExists
+    a sh:SPARQLConstraint ;   
+    rdfs:comment "Each SoL may have only one start OP, and each OP has unique OP ID within the MS. The “uniqueOPID” is defined in parameter 1.2.0.0.0.2. Each SoL has the principal direction of the traffic defined by increasing kilometres running from the start OP to the end OP. That is why the start OP is always located at lowest kilometre of the line within the SoL. Data collected in the UK in miles will be transformed to km for uploading to the RINF application.\n The OP ID must exist in the MS file of RINF. The value of this parameter must be different from 1.1.0.0.0.3. No validation will be performed by RINF application regarding which is the start and which the end OP. This requires national verification." ;
+    era:rinfIndex "1.1.0.0.0.4" ;
+    sh:severity sh:Violation ;
+    sh:message "opEnd (1.1.0.0.0.4): The OP must exist. There is a problem with SoL {$this} ({?solLabel}) and its OP end {?opEnd}, which does not exist"@en ;
+    sh:prefixes era:;
+    sh:select """
+    PREFIX era: <http://data.europa.eu/949/>
+    SELECT DISTINCT $this ?solLabel ?opEnd
+			WHERE {
+                $this era:opEnd ?opEnd .
+				OPTIONAL{$this rdfs:label ?solLabel} .
+                FILTER NOT EXISTS {?opEnd ?p ?o} .
+   			}
+			""" .
+
+#length: # 1.1.0.0.0.5
+era-sh:SectionOfLineShape sh:property era-sh:solLength .
+era-sh:solLength
+    a sh:PropertyShape ;
+    rdfs:comment "General description: The length of SoL is theoretical distance between centre points of Ops which are selected in such a way to represent the average value for all tracks within the SoL. It is advised to include distances applied by IM for commercial purposes. \n Validation: No validation will be performed by RINF application regarding the length of SoL. This requires national verification." ;
+    era:rinfIndex "1.1.0.0.0.5" ;
+    sh:path era:length ; 
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:double ;
+    sh:severity sh:Warning ;
+    sh:message "SOL length (1.1.0.0.0.5): Although no validation is to be done by the RINF application, either there is no length for the specified SoL, or more than one length has been defined, or the datatype cannot be converted into an xsd:double."@en .
+
+#solNature: # 1.1.0.0.0.6
+era-sh:SectionOfLineShape sh:property era-sh:solNature .
+era-sh:solNature
+    a sh:PropertyShape ;
+    rdfs:comment "General description: -- \n Validation: If the value of this parameter is \"Link\", then for all tracks belonging to this SoL, all the parameters of the following groups of parameters are not applicable:\n 1.1.1.1 Infrastructure subsystem \n 1.1.1.2 Energy subsystem \n 1.1.1.3 Control-command and signalling subsystem" ;
+    era:rinfIndex "1.1.0.0.0.6" ;
+    sh:path era:solNature ; 
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Violation ;
+    sh:message "SoL nature (1.1.0.0.0.6): Either no SOL nature is specified for this SoL, or more than one SoL natures have been specified, or the value is not one of the predefined value and cannot be converted into a SKOS concept on this list: http://data.europa.eu/949/concepts/sol-natures/SoLNatures."@en .
+
+#solNature: # 1.1.0.0.0.6
+era-sh:SectionOfLineShape sh:sparql era-sh:solNatureApplicability .
+era-sh:solNatureApplicability
+    a sh:SPARQLConstraint ;   
+    rdfs:comment "No general description provided \n Validation: If the value of this parameter is \"Link\", then for all tracks belonging to this SoL, all the parameters of the following groups of parameters are not applicable:\n 1.1.1.1 Infrastructure subsystem \n 1.1.1.2 Energy subsystem \n 1.1.1.3 Control-command and signalling subsystem" ;
+    era:rinfIndex "1.1.0.0.0.6" ;
+    sh:severity sh:Violation ;
+    sh:message "SoL nature (1.1.0.0.0.6): The SoL {$this} ({?solLabel}), with opStart {?opStartID} and opEnd {?opEndID}, has a SOLnature of type Link, and at least one of its tracks has values for at least one of the groups of parameters 1.1.1.1, 1.1.1.2 or 1.1.1.3. This happens at least with the track {?track} ({?trackLabel}), with property {?p} (RINF index {?index})."@en ;
+    sh:prefixes era:;
+    sh:select """
+    PREFIX era: <http://data.europa.eu/949/>
+    SELECT DISTINCT $this ?solLabel ?opStartID ?opEndID ?p ?index ?track ?trackLabel
+			WHERE {
+                 $this era:solNature <http://data.europa.eu/949/concepts/sol-natures/rinf/10> .
+				OPTIONAL{$this rdfs:label ?solLabel} .
+                $this era:track ?track .
+                $this era:opStart ?opStart . ?opStart era:uopid ?opStartID .
+                $this era:opEnd ?opEnd . ?opEnd era:uopid ?opEndID .
+				OPTIONAL{?track rdfs:label ?trackLabel} .
+                ?track ?p ?y .
+                FILTER NOT EXISTS {?track era:notApplicable ?p} .
+   	            ?p era:rinfIndex ?index .
+                FILTER(strstarts(?index,'1.1.1.1') || strstarts(?index,'1.1.1.2') || strstarts(?index,'1.1.1.3'))
+            }
+			""" .
+
+
+
+
+
+# trackId: # 1.1.1.0.0.1
+era-sh:SectionOfLineShape sh:property era-sh:TrackIds .
+era-sh:TrackIds 
+    a sh:PropertyShape ;
+    rdfs:comment "Each track shall have unique identification or number within the SoL. This number cannot be used for naming any other track in the same SoL." ;
+    era:rinfIndex "1.1.1.0.0.1" ;
+    sh:path ( era:track era:trackID );           
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Violation ;
+    sh:message "All tracks in a SoL should have a track id, and only one track id is permitted for a track."@en .
+
+era-sh:SectionOfLineShape sh:sparql era-sh:TrackIdsType.
+era-sh:TrackIdsType 
+    a sh:SPARQLConstraint ;   
+    rdfs:comment "Each track shall have unique identification or number within the SoL." ;
+    era:rinfIndex "1.1.1.0.0.1" ;
+    sh:severity sh:Violation ;
+    sh:message "Track Ids should be strings. There is a problem with SoL {$this} ({?solLabel}) and its track {?track} ({?trackLabel}). This track has the following value: {?value}"@en ;
+    sh:prefixes era:;
+    sh:select """
+    PREFIX era: <http://data.europa.eu/949/>
+    SELECT DISTINCT $this ?solLabel ?track ?trackLabel ?value
+			WHERE {
+                $this era:track ?track .
+    			OPTIONAL{?track rdfs:label ?trackLabel} .
+				OPTIONAL{$this rdfs:label ?solLabel} .
+                ?track era:trackID ?value .
+                FILTER(datatype(?value)!=xsd:string) .
+   			}
+			""" .
+
+era-sh:SectionOfLineShape sh:sparql era-sh:TrackIdsMaxCount.
+era-sh:TrackIdsMaxCount 
+    a sh:SPARQLConstraint ;   
+    rdfs:comment "Each track shall have unique identification or number within the SoL." ;
+    era:rinfIndex "1.1.1.0.0.1" ;
+    sh:severity sh:Violation ;
+    sh:message "There should be at most one Track ID. There is a problem with SoL {$this} ({?solLabel}) and its track {?track} ({?trackLabel}). This track has at least two different values for this property: {?value1} and {?value2}"@en ;
+    sh:prefixes era:;
+    sh:select """
+    PREFIX era: <http://data.europa.eu/949/>
+    SELECT DISTINCT $this ?solLabel ?track ?trackLabel ?value1 ?value2
+			WHERE {
+                $this era:track ?track .
+    			OPTIONAL{?track rdfs:label ?trackLabel} .
+				OPTIONAL{$this rdfs:label ?solLabel} .
+                ?track era:trackID ?value1 .
+                ?track era:trackID ?value2 .
+                FILTER(?value1!=?value2) .
+   			}
+			""" .
+
+era-sh:SectionOfLineShape sh:sparql era-sh:TrackIdsMinCount.
+era-sh:TrackIdsMinCount 
+    a sh:SPARQLConstraint ;   
+    rdfs:comment "Each track shall have unique identification or number within the SoL." ;
+    era:rinfIndex "1.1.1.0.0.1" ;
+    sh:severity sh:Violation ;
+    sh:message "There should be at least one Track ID. There is a problem with SoL {$this} ({?solLabel}) and its track {?track} ({?trackLabel}). This track has no values for this property"@en ;
+    sh:prefixes era:;
+    sh:select """
+    PREFIX era: <http://data.europa.eu/949/>
+    SELECT DISTINCT $this ?solLabel ?track ?trackLabel ?value
+			WHERE {
+                $this era:track ?track .
+    			OPTIONAL{?track rdfs:label ?trackLabel} .
+				OPTIONAL{$this rdfs:label ?solLabel} .
+                FILTER NOT EXISTS{?track era:trackID ?value} .
+   			}
+			""" .
+
+#era-sh:SectionOfLineShape sh:sparql era-sh:TrackIdsGeneral.
+era-sh:TrackIdsGeneral
+    a sh:SPARQLConstraint ;   
+    rdfs:comment "Each track shall have unique identification or number within the SoL." ;
+    era:rinfIndex "1.1.1.0.0.1" ;
+    sh:severity sh:Violation ;
+    sh:message "All tracks in a SoL should have a track id, and only one track id is permitted for a track. There is a problem with SoL {$this} ({?solLabel}) and its track {?track} ({?trackLabel}). This track has the following problem: {?problem}"@en ;
+    sh:prefixes era:;
+    sh:select """
+    PREFIX era: <http://data.europa.eu/949/>
+    SELECT DISTINCT $this ?solLabel ?track ?trackLabel ?problem
+			WHERE {
+                $this era:track ?track .
+    			OPTIONAL{?track rdfs:label ?trackLabel} .
+				OPTIONAL{$this rdfs:label ?solLabel} .
+                {SELECT DISTINCT $this ?track COUNT(DISTINCT ?propertyValue) AS ?numValues WHERE {
+                    $this era:track ?track .
+                    ?track era:trackID ?propertyValue}} .
+                {SELECT DISTINCT $this ?track ?propertyValue WHERE {
+                    $this era:track ?track .
+                    ?track era:trackID ?propertyValue}} .
+                BIND(IF(?numValues<1,"Less than one value", 
+                     IF(?numValues>1,"More than one value",
+                     IF(?numValues=1 && datatype(?propertyValue)!=xsd:string,"Value is not a string","Correct"))) AS ?problem).
+			}
+			""" .
+
+
+# trackId: # 1.1.1.0.0.1
+era-sh:SectionOfLineShape sh:sparql era-sh:NoRepeatedTrackIds.
+era-sh:NoRepeatedTrackIds 
+    a sh:SPARQLConstraint ;   
+    rdfs:comment "Each track shall have unique identification or number within the SoL. This number cannot be used for naming any other track in the same SoL." ;
+    era:rinfIndex "1.1.1.0.0.1" ;
+    sh:severity sh:Violation ;
+    sh:message "NoRepeatedTrackIds: Each track shall have unique identification or number within the SoL. This number cannot be used for naming any other track in the same SoL. There is a problem with SoL {$this} ({?solLabel}) and tracks {?track1} ({?track1Label}) and {?track2} ({?track2Label}), since they have the same identifier: {?value}"@en ;
+    sh:prefixes era:;
+    sh:select """
+    PREFIX era: <http://data.europa.eu/949/>
+    SELECT $this ?solLabel ?track1 ?track1Label ?track2 ?track2Label ?value
+			WHERE {
+                $this era:track ?track1 .
+                $this era:track ?track2 .
+                ?track1 era:trackID ?value .
+                ?track2 era:trackID ?value .
+                FILTER(?track1!=?track2)
+				OPTIONAL{$this rdfs:label ?solLabel} .
+				OPTIONAL{?track1 rdfs:label ?track1Label} .
+				OPTIONAL{?track2 rdfs:label ?track2Label} .
+			}
+			""" .
+
+
+
+
+
+#
+# sol-track : 
+era-sh:trackShape  
+    a sh:NodeShape ;
+    sh:targetClass era:Track .
+#
+# hasAbstraction: #TODO: Don't know how to do this one
+#
+#	sh:property [                 # _:b2
+#		sh:path era:hasAbstraction ;           # constrains the values of era:hasAbstraction
+#		sh:minCount 1 ;
+#       sh:maxCount 1 ;
+#		sh:nodeKind sh:IRI ;
+#		sh:message "message"@en ;
+#	] ;
+
+
+# trackDirection: # 1.1.1.0.0.2
+era-sh:trackShape sh:property era-sh:TrackDirection.
+era-sh:TrackDirection
+	a sh:PropertyShape ;   
+	rdfs:comment "The normal running direction is: 1) the same as the direction defined by the start and end of the SoL 2) the opposite to the direction defined by the start and end of the SoL 3) both directions defined for SoL." ;
+	era:rinfIndex "1.1.1.0.0.2" ;
+	sh:path era:trackDirection ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; 
+	skos:inScheme era-pnsb::TrackRunningDirections ; #TODO: Check if this is correct
+	sh:severity sh:Violation ;
+	sh:message "trackDirection (1.1.1.0.0.2): Each track must have one running direction."@en .
+
+# verificationINF: # 1.1.1.1.1.1
+era-sh:trackShape sh:property era-sh:VerificationINF.
+era-sh:VerificationINF
+	a sh:PropertyShape ;
+	rdfs:comment "Unique number for EC declarations following format requirements specified in the 'Document about practical arrangements for transmitting interoperability documents'." ;
+	era:rinfIndex "1.1.1.1.1.1" ;
+	sh:path era:verificationINF ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Z]{2}/[0-9]{14}/(19[0-9][0-9]|20[0-9][0-9]|2100)/[0-9]{6}$" ;
+	sh:severity sh:Violation ;
+	sh:message "verificationINF (1.1.1.1.1.1): The verificationINF must be a string following the format 'XX/XXXXXXXXXXXXXX/YYYY/DDDDDD' where XX is the country code, XXXXXXXXXXXXXX is the unique number for EC declarations, YYYY is the year of the declaration (1900-2100) and DDDDDD is the sequential number of the declaration."@en .
+
+# demonstrationINF: # 1.1.1.1.1.2
+era-sh:trackShape sh:property era-sh:DemonstrationINF.
+era-sh:DemonstrationINF
+	a sh:PropertyShape ;
+	rdfs:comment "Unique number for EI declarations following format requirements specified in the 'Document about practical arrangements for transmitting interoperability documents'." ;
+	era:rinfIndex "1.1.1.1.1.2" ;
+	sh:path era:demonstrationINF ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Z]{2}/[0-9]{14}/(19[0-9][0-9]|20[0-9][0-9]|2100)/[0-9]{6}$" ;
+	sh:severity sh:Violation ;
+	sh:message "demonstrationINF (1.1.1.1.1.2): The demonstrationINF must be a string following the format 'XX/XXXXXXXXXXXXXX/YYYY/DDDDDD' where XX is the country code, XXXXXXXXXXXXXX is the unique number for EI declarations, YYYY is the year of the declaration (1900-2100) and DDDDDD is the sequential number of the declaration."@en .
+
+# tenClassification: # 1.1.1.1.2.1
+era-sh:trackShape sh:property era-sh:TenClassification.
+era-sh:TenClassification
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the part of the trans-European network the line belongs to." ;
+	era:rinfIndex "1.1.1.1.2.1" ;
+	sh:path era:tenClassification ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; 
+	skos:inScheme era-tenclass:TENClassifications ; #TODO: Check if this is correct
+	sh:severity sh:Violation ;
+	sh:message "tenClassification (1.1.1.1.2.1): Each track must be part of at least one TEN. This error may be due to having a Platfrom without being part of a TEN or having an illegal TEN value."@en .
+
+# tenGISId: # 1.1.1.1.2.1.2
+era-sh:trackShape sh:property era-sh:TenGISId.
+era-sh:TenGISId
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the GIS identity (GIS ID) of the section of TEN-T database to which the track belongs." ;
+	era:rinfIndex "1.1.1.1.2.1.2" ;
+	sh:path era:tenGISId ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "tenGISId (1.1.1.1.2.1.2): The track must have (GIS ID) of the section of TEN-T database to which the track belongs."@en .
+
+# loadCapability: # 1.1.1.1.2.4
+era-sh:trackShape sh:property era-sh:LoadCapability.
+era-sh:LoadCapability
+	a sh:PropertyShape ;
+	rdfs:comment "A combination of the line category and speed at the weakest point of the track." ;
+	era:rinfIndex "1.1.1.1.2.4" ;
+	sh:path era:loadCapability ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; 
+#	skos:inScheme era-lc:LoadCapabilities ; #TODO: Check if this is correct
+	sh:severity sh:Violation ;
+	sh:message "loadCapability (1.1.1.1.2.4): Each track must have a load capability."@en .
+
+# nationalLoadCapability: # 1.1.1.1.2.4.1
+era-sh:trackShape sh:property era-sh:NationalLoadCapability.
+era-sh:NationalLoadCapability
+	a sh:PropertyShape ;
+	rdfs:comment "National classification for load capability." ;
+	era:rinfIndex "1.1.1.1.2.4.1" ;
+	sh:path era:nationalLoadCapability ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:serverity sh:Violation ;
+	sh:message "nationalLoadCapability (1.1.1.1.2.4.1): The track must have a national load capability."@en .
+
+# highSpeedLoadModelCompliance: # 1.1.1.1.2.4.2
+era-sh:trackShape sh:property era-sh:HighSpeedLoadModelCompliance.
+era-sh:HighSpeedLoadModelCompliance
+	a sh:PropertyShape ;
+	rdfs:comment "For sections of line with a maximum permitted speed of 200km/h or more information regarding the procedure to be used to perform the dynamic compatibility check" ;
+	era:rinfIndex "1.1.1.1.2.4.2" ;
+	sh:path era:highSpeedLoadModelCompliance ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "highSpeedLoadModelCompliance (1.1.1.1.2.4.2): The track must define the existence of a high speed load model compliance."@en .
+
+# structureCheckLocation: # 1.1.1.1.2.4.3
+era-sh:trackShape sh:property era-sh:StructureCheckLocation.
+era-sh:StructureCheckLocation
+	a sh:PropertyShape ;
+	rdfs:comment "Localisation of structures requiring specific checks." ;
+	era:rinfIndex "1.1.1.1.2.4.3" ;
+	sh:path era:structureCheckLocation ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:double ;
+	sh:pattern "^([1-9]\\d{1,2}|[0-9])\\.\\d{1,3}$" ;
+	sh:severity sh:Violation ;
+	sh:message "structureCheckLocation (1.1.1.1.2.4.3): The track must define the location of the structure check."@en .
+
+# compatibilityProcedureDocument: # 1.1.1.1.2.4.4
+era-sh:trackShape sh:property era-sh:CompatibilityProcedureDocument.
+era-sh:CompatibilityProcedureDocument
+	a sh:PropertyShape ;
+	rdfs:comment "Document with the procedure for static and dynamic compatibility checks." ;
+	era:rinfIndex "1.1.1.1.2.4.4" ;
+	sh:path era:compatibilityProcedureDocument ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "compatibilityProcedureDocument (1.1.1.1.2.4.4): The track must define the name of the compatibility procedure document."@en .
+
+# maximumPermittedSpeed: # 1.1.1.1.2.5
+era-sh:trackShape sh:property era-sh:MaximumPermittedSpeed.
+era-sh:MaximumPermittedSpeed
+	a sh:PropertyShape ;
+	rdfs:comment "Maximum permitted speed." ;
+	era:rinfIndex "1.1.1.1.2.5" ;
+	sh:path era:maximumPermittedSpeed ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:type xsd:integer ;
+	sh:minInclusive 0 ;
+	sh:maxInclusive 500 ;
+	sh:severity sh:Violation ;
+	sh:message "maximumPermittedSpeed (1.1.1.1.2.5): The track must define the maximum permitted speed."@en .
+
+# minimumTemperature: # 1.1.1.1.2.6
+era-sh:trackShape sh:property era-sh:MinimumTemperature.
+era-sh:MinimumTemperature
+	a sh:PropertyShape ;
+	rdfs:comment "Minimum temperature for unrestricted access to the line according European standard." ;
+	era:rinfIndex "1.1.1.1.2.6" ;
+	sh:path era:minimumTemperature ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:integer ;
+	sh:severity sh:Violation ;
+	sh:message "minimumTemperature (1.1.1.1.2.6): The track must define the minimum temperature."@en .
+
+# maximumTemperature: # 1.1.1.1.2.6
+era-sh:trackShape sh:property era-sh:MaximumTemperature.
+era-sh:MaximumTemperature
+	a sh:PropertyShape ;
+	rdfs:comment "Maximum temperature for unrestricted access to the line according European standard." ;
+	era:rinfIndex "1.1.1.1.2.6" ;
+	sh:path era:maximumTemperature ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:integer ;
+	sh:severity sh:Violation ;
+	sh:message "maximumTemperature (1.1.1.1.2.6): The track must define the maximum temperature."@en .
+
+# maximumAltitude: # 1.1.1.1.2.7
+era-sh:trackShape sh:property era-sh:MaximumAltitude.
+era-sh:MaximumAltitude
+	a sh:PropertyShape ;
+	rdfs:comment "Highest point of the section of line above sea level in reference to Normal Amsterdam's Peil (NAP)." ;
+	era:rinfIndex "1.1.1.1.2.7" ;
+	sh:path era:maximumAltitude ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:type xsd:double ;
+	sh:pattern "^(\\+|\\-)\\d{1,4}$" ;
+	sh:severity sh:Violation ;
+	sh:message "maximumAltitude (1.1.1.1.2.7): The track must define the maximum altitude."@en .
+
+# hasSevereWeatherConditions: # 1.1.1.1.2.8
+era-sh:trackShape sh:property era-sh:HasSevereWeatherConditions.
+era-sh:HasSevereWeatherConditions
+	a sh:PropertyShape ;
+	rdfs:comment "Climatic conditions on the line are severe according to European standard." ;
+	era:rinfIndex "1.1.1.1.2.8" ;
+	sh:path era:hasSevereWeatherConditions ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasSevereWeatherConditions (1.1.1.1.2.8): The track must define the existence of severe weather conditions."@en .
+
+# gaugingProfile: # 1.1.1.1.3.1.1
+era-sh:trackShape sh:property era-sh:GaugingProfile.
+era-sh:GaugingProfile
+	a sh:PropertyShape ;
+	rdfs:comment "Gauges as defined in European standard or other local gauges, including lower or upper part." ;
+	era:rinfIndex "1.1.1.1.3.1.1" ;
+	sh:path era:gaugingProfile ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; 
+	skos:inScheme era-gaugings:GaugingProfiles ;
+	sh:severity sh:Violation ;
+	sh:message "gaugingProfile (1.1.1.1.3.1.1): The track must define the gauging profile."@en .
+
+# gaugingCheckLocation: # 1.1.1.1.3.1.2
+era-sh:trackShape sh:property era-sh:GaugingCheckLocation.
+era-sh:GaugingCheckLocation
+	a sh:PropertyShape ;
+	rdfs:comment "Location of particular points requiring specific checks due to deviations from gauging referred to in 1.1.1.1.3.1.1." ;
+	era:rinfIndex "1.1.1.1.3.1.2" ;
+	sh:path era:gaugingCheckLocation ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:pattern "^([1-9]\\d{1,3}|[0-9])(\\.\\d{1,3})?(\\s.*)?$" ;
+	sh:severity sh:Violation ;
+	sh:message "gaugingCheckLocation (1.1.1.1.3.1.2): The track must define the location of the gauging check."@en .
+
+# gaugingTransversalDocument: # 1.1.1.1.3.1.3
+era-sh:trackShape sh:property era-sh:GaugingTransversalDocument.
+era-sh:GaugingTransversalDocument
+	a sh:PropertyShape ;
+	rdfs:comment "Document with the transversal section of the particular points requiring specific checks." ;
+	era:rinfIndex "1.1.1.1.3.1.3" ;
+	sh:path era:gaugingTransversalDocument ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "gaugingTransversalDocument (1.1.1.1.3.1.3): The track must define the transversal document of the gauging check."@en .
+
+# profileNumberSwapBodies: # 1.1.1.1.3.4
+era-sh:trackShape sh:property era-sh:ProfileNumberSwapBodies.
+era-sh:ProfileNumberSwapBodies
+	a sh:PropertyShape ;
+	rdfs:comment "Coding for combined transport with swap bodies as defined in UIC Code." ;
+	era:rinfIndex "1.1.1.1.3.4" ;
+	sh:path era:profileNumberSwapBodies ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKing sh:IRI ;
+#	sh:class skos:Concept ; 
+	skos:inScheme era-pnsb:ProfileNumberSwapBodies ;
+	sh:severity sh:Violation ;
+	sh:message "profileNumberSwapBodies (1.1.1.1.3.4): The track has a code of swap bodies in the profile."@en .
+
+# profileNumberSemiTrailers: # 1.1.1.1.3.5
+era-sh:trackShape sh:property era-sh:ProfileNumberSemiTrailers.
+era-sh:ProfileNumberSemiTrailers
+	a sh:PropertyShape ;
+	rdfs:comment "Coding for combined transport with semi-trailers as defined in UIC Code." ;
+	era:rinfIndex "1.1.1.1.3.5" ;
+	sh:path era:profileNumberSemiTrailers ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKing sh:IRI ;
+#	sh:class skos:Concept ;
+	skos:inScheme era-pnst:ProfileNumberSemiTrailers ;
+	sh:severity sh:Violation ;
+	sh:message "profileNumberSemiTrailers (1.1.1.1.3.5): The track has a code of semi-trailers in the profile."@en .
+
+# specificInformation: #  1.1.1.1.3.5.1
+era-sh:trackShape sh:property era-sh:SpecificInformation.
+era-sh:SpecificInformation
+	a sh:PropertyShape ;
+	rdfs:comment "Any specific information from the IM." ;
+	era:rinfIndex "1.1.1.1.3.5.1" ;
+	sh:path era:specificInformation ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+#	sh:maxCount 1 ; #TODO: Not specified if repeatable
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "specificInformation (1.1.1.1.3.5.1): The track has specific information."@en .
+
+# gradientProfile: # 1.1.1.1.3.6
+era-sh:trackShape sh:property era-sh:GradientProfile.
+era-sh:GradientProfile
+	a sh:PropertyShape ;
+	rdfs:comment "Sequence of gradient values and locations of change in gradient." ;
+	era:rinfIndex "1.1.1.1.3.6" ;
+	sh:path era:gradientProfile ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:pattern "^((\\+|\\-)([1-9]\\d{1}|[0-9]|00)\\.\\d{1,3}(\\((\\+|\\-)?([1-9]\\d{1,2}|[0-9])\\.\\d{1,3}\\))?)(\\s\\s(\\+|\\-)([1-9]\\d{1}|[0-9])\\.\\d{1,3}(\\((\\+|\\-)?([1-9]\\d{1,2}|[0-9])\\.\\d{1,3}\\))?)*$" ;
+	sh:severity sh:Violation ;
+	sh:message "gradientProfile (1.1.1.1.3.6): The track has a gradient profile."@en .
+
+# minimumHorizontalRadius: # 1.1.1.1.3.7
+era-sh:trackShape sh:property era-sh:MinimumHorizontalRadius.
+era-sh:MinimumHorizontalRadius
+	a sh:PropertyShape ;
+	rdfs:comment "Radius of the smallest horizontal curve of the track in meters." ;
+	era:rinfIndex "1.1.1.1.3.7" ;
+	sh:path era:minimumHorizontalRadius ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:integer;
+	sh:pattern "^([1-9]\\d{1,4}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "minimumHorizontalRadius (1.1.1.1.3.7): The track must have one minimum horizontal radius."@en .
+
+# wheelSetGauge: # 1.1.1.1.4.1
+era-sh:trackShape sh:property era-sh:WheelSetGauge.
+era-sh:WheelSetGauge
+	a sh:PropertyShape ;
+	rdfs:comment "A single value expressed in millimeters that identifies the track gauge." ;
+	era:rinfIndex "1.1.1.1.4.1" ;
+	sh:path era:wheelSetGauge ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#   sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-ntg:NominalTrackGauges ;
+	sh:severity sh:Violation ;
+	sh:message "wheelSetGauge (1.1.1.1.4.1): The track must have one wheel set gauge."@en .	
+
+# cantDeficiency: # 1.1.1.1.4.2
+era-sh:trackShape sh:property era-sh:CantDeficiency.
+era-sh:CantDeficiency
+	a sh:PropertyShape ;
+	rdfs:comment "Maximum cant deficiency expressed in millimeters defined as difference between the applied cant and a higher equilibrium cant the line has been designed for." ;
+	era:rinfIndex "1.1.1.1.4.2" ;
+	sh:path era:cantDeficiency ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:type xsd:integer ;
+	sh:pattern "^(\\+|\\-)([1-9]\\d{1,2}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "cantDeficiency (1.1.1.1.4.2): The track must have one cant deficiency."@en .
+
+# railInclinationMeasurement: #1.1.1.1.4.3
+era-sh:trackShape sh:property era-sh:RailInclinationMeasurement.
+era-sh:RailInclinationMeasurement
+	a sh:PropertyShape ;
+	rdfs:comment "An angle defining the inclination of the head of a rail relatie to the running surface." ;
+	era:rinfIndex "1.1.1.1.4.3" ;
+	sh:path era:railInclinationMeasurement ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:integer ;
+	sh:pattern "^([1-9]\\d{0,1}|0)$";
+	sh:severity sh:Violation ;
+	sh:message "railInclinationMeasurement (1.1.1.1.4.3): The track must have one rail inclination measurement."@en .
+
+# hasBallast: # 1.1.1.1.4.4
+era-sh:trackShape sh:property era-sh:HasBallast.
+era-sh:HasBallast
+	a sh:PropertyShape ;
+	rdfs:comment "Specifies whether the track construction is with sleepers embedded in ballast or not." ;
+	era:rinfIndex "1.1.1.1.4.4" ;
+	sh:path era:hasBallast ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasBallast (1.1.1.1.4.4): The track must define the existence of ballast."@en .
+
+# tsiSwitchCrossing: # 1.1.1.1.5.1
+era-sh:trackShape sh:property era-sh:TSISwitchCrossing.
+era-sh:TSISwitchCrossing
+	a sh:PropertyShape ;
+	rdfs:comment "Switches and crossings are maintained to in service limit dimension as specified in TSI." ;
+	era:rinfIndex "1.1.1.1.5.1" ;
+	sh:path era:tsiSwitchCrossing ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "tsiSwitchCrossing (1.1.1.1.5.1): The track must define the existence of TSI switches and crossings."@en .
+
+# minimumWheelDiameter: # 1.1.1.1.5.2
+era-sh:trackShape sh:property era-sh:MinimumWheelDiameter.
+era-sh:MinimumWheelDiameter
+	a sh:PropertyShape ;
+	rdfs:comment "Maximum unguided length of fixed obtuse crossings is based on a minimum wheel diameter in service expressed in millimiters." ;
+	era:rinfIndex "1.1.1.1.5.2" ;
+	sh:path era:minimumWheelDiameter ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:integer ;
+	sh:pattern "^([1-9]\\d{1,2}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "minimumWheelDiameter (1.1.1.1.5.2): The track must have one minimum wheel diameter."@en .
+
+# maximumTrainDeceleration: # 1.1.1.1.6.1
+era-sh:trackShape sh:property era-sh:MaximumTrainDeceleration.
+era-sh:MaximumTrainDeceleration
+	a sh:PropertyShape ;
+	rdfs:comment "Limit for longitudinal track resistance given as a maximum allowed train deceleration and expressed in m/s2." ;
+	era:rinfIndex "1.1.1.1.6.1" ;
+	sh:path era:maximumTrainDeceleration ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:double ;
+	sh:pattern "^[0-9]\\.[0-9]$" ;
+	sh:severity sh:Violation ;
+	sh:message "maximumTrainDeceleration (1.1.1.1.6.1): The track must have one maximum train deceleration."@en .
+
+# eddyCurrentBraking: # 1.1.1.1.6.2
+era-sh:trackShape sh:property era-sh:EddyCurrentBraking.
+era-sh:EddyCurrentBraking
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of limitations on the use of eddy current brakes." ;
+	era:rinfIndex "1.1.1.1.6.2" ;
+	sh:path era:eddyCurrentBraking ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#   sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-ec:EddyCurrentBraking ;
+	sh:severity sh:Violation ;
+	sh:message "eddyCurrentBraking (1.1.1.1.6.2): The track must have one eddy current braking."@en .
+
+# magneticBraking: # 1.1.1.1.6.3
+era-sh:trackShape sh:property era-sh:MagneticBraking.
+era-sh:MagneticBraking
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of limitations of the use of magnetic brakes" ;
+	era:rinfIndex "1.1.1.1.6.3" ;
+	sh:path era:magneticBraking ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#   sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-mb:MagneticBraking ;
+	sh:severity sh:Violation ;
+	sh:message "magneticBraking (1.1.1.1.6.3): The track must have one magnetic braking."@en .
+
+# eddyCurrentBrakingConditionsDocument: # 1.1.1.1.6.4
+era-sh:trackShape sh:property era-sh:EddyCurrentBrakingConditionsDocument.
+era-sh:EddyCurrentBrakingConditionsDocument
+	a sh:PropertyShape ;
+	rdfs:comment "Electronic document available in two EU languages from the IM stored by the Agency with conditions for the use of eddy current brakes identified in 1.1.1.1.6.2." ;
+	era:rinfIndex "1.1.1.1.6.4" ;
+	sh:path era:eddyCurrentBrakingConditionsDocument ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "eddyCurrentBrakingConditionsDocument (1.1.1.1.6.4): The track must have one eddy current braking conditions document."@en .
+
+# magneticBrakingConditionsDocument: # 1.1.1.1.6.5
+era-sh:trackShape sh:property era-sh:MagneticBrakingConditionsDocument.
+era-sh:MagneticBrakingConditionsDocument
+	a sh:PropertyShape ;
+	rdfs:comment "Electronic documents available in two EU languages from the IM stored by the Agency with conditions for the use of magnetic brakes identified in 1.1.1.1.6.3." ;
+	era:rinfIndex "1.1.1.1.6.5" ;
+	sh:path era:magneticBrakingConditionsDocument ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "magneticBrakingConditionsDocument (1.1.1.1.6.5): The track must have one magnetic braking conditions document."@en .
+
+# flangeLubeForbidden: # 1.1.1.1.7.1
+era-sh:trackShape sh:property era-sh:FlangeLubeForbidden.
+era-sh:FlangeLubeForbidden
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether the use of on-board device for flange lubrication is forbidden." ;
+	era:rinfIndex "1.1.1.1.7.1" ;
+	sh:path era:flangeLubeForbidden ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "flangeLubeForbidden (1.1.1.1.7.1): The track must define if flange lube forbidden."@en .
+
+# hasLevelCrossings: # 1.1.1.1.7.2
+era-sh:trackShape sh:property era-sh:HasLevelCrossings.
+era-sh:HasLevelCrossings
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether level crossings (including pedestrian track crossing) exist onf the section line." ;
+	era:rinfIndex "1.1.1.1.7.2" ;
+	sh:path era:hasLevelCrossings ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasLevelCrossings (1.1.1.1.7.2): The track must define the existence of level crossings."@en .
+
+# accelerationLevelCrossing: # 1.1.1.1.7.3
+era-sh:trackShape sh:property era-sh:AccelerationLevelCrossing.
+era-sh:AccelerationLevelCrossing
+	a sh:PropertyShape ;
+	rdfs:comment "Existence of limit for acceleration of train if stopping or recovering speed close to a level crossing expressed in a specific reference acceleration curve." ;
+	era:rinfIndex "1.1.1.1.7.3" ;
+	sh:path era:accelerationLevelCrossing ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "accelerationLevelCrossing (1.1.1.1.7.3): The track must have one acceleration level crossing."@en .
+
+# hasHotAxleBoxDetector: # 1.1.1.1.7.4
+era-sh:trackShape sh:property era-sh:HasHotAxleBoxDetector.
+era-sh:HasHotAxleBoxDetector
+	a sh:PropertyShape ;
+	rdfs:comment "Existance of trackside hot axle box detector." ;
+	era:rinfIndex "1.1.1.1.7.4" ;
+	sh:path era:hasHotAxleBoxDetector ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasHotAxleBoxDetector (1.1.1.1.7.4): The track must define the existence of hot axle box detector."@en .
+
+# hotAxleBoxDetectorTSICompliant: # 1.1.1.1.7.5
+era-sh:trackShape sh:property era-sh:HotAxleBoxDetectorTSICompliant.
+era-sh:HotAxleBoxDetectorTSICompliant
+	a sh:PropertyShape ;
+	rdfs:comment "Trackside HABD compilant to TSI means that the HABD is compilant with EN 15437:2009 and specific cases mentioned in TSIs." ;
+	era:rinfIndex "1.1.1.1.7.5" ;
+	sh:path era:hotAxleBoxDetectorTSICompliant ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hotAxleBoxDetectorTSICompliant (1.1.1.1.7.5): The track must define if hot axle box detector is TSI compliant."@en .
+
+# hotAxleBoxDetectorIdentification: # 1.1.1.1.7.6
+era-sh:trackShape sh:property era-sh:HotAxleBoxDetectorIdentification.
+era-sh:HotAxleBoxDetectorIdentification
+	a sh:PropertyShape ;
+	rdfs:comment "Applicable if trackside HABD is not TSI compliant. Identification of the trackside HABD." ;
+	era:rinfIndex "1.1.1.1.7.6" ;
+	sh:path era:hotAxleBoxDetectorIdentification ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "hotAxleBoxDetectorIdentification (1.1.1.1.7.6): The track must define the identification of the hot axle box detector."@en .
+
+# hotAxleBoxDetectorGeneration: # 1.1.1.1.7.7
+era-sh:trackShape sh:property era-sh:HotAxleBoxDetectorGeneration.
+era-sh:HotAxleBoxDetectorGeneration
+	a sh:PropertyShape ;
+	rdfs:comment "Applicable if trackside HABD is not TSI compliant. Generation of the trackside HABD." ;
+	era:rinfIndex "1.1.1.1.7.7" ;
+	sh:path era:hotAxleBoxDetectorGeneration ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	#TODO: Single selection from predefined list (waiting for update of documentation)
+	sh:severity sh:Violation ;
+	sh:message "hotAxleBoxDetectorGeneration (1.1.1.1.7.7): The track must have one generation of the hot axle box detector."@en .
+
+# hotAxleBoxDetectorLocation: # 1.1.1.1.7.8
+era-sh:trackShape sh:property era-sh:HotAxleBoxDetectorLocation.
+era-sh:HotAxleBoxDetectorLocation
+	a sh:PropertyShape ;
+	rdfs:comment "Applicable if trackside HABD is not TSI compliant. Location of the trackside HABD." ;
+	era:rinfIndex "1.1.1.1.7.8" ;
+	sh:path era:hotAxleBoxDetectorLocation ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:double ;
+	sh:pattern "^([1-9]\\d{1,3}|[0-9])\\.\\d{1,3}$" ;
+	sh:severity sh:Violation ;
+	sh:message "hotAxleBoxDetectorLocation (1.1.1.1.7.8): The track must have the location of the hot axle box detector(s)."@en .
+
+# hotAxleBoxDetectorDirection: # 1.1.1.1.7.9
+era-sh:trackShape sh:property era-sh:HotAxleBoxDetectorDirection.
+era-sh:HotAxleBoxDetectorDirection
+	a sh:PropertyShape ;
+	rdfs:comment "Direction of measurement of the trackside HABD." ;
+	era:rinfIndex "1.1.1.1.7.9" ;
+	sh:path era:hotAxleBoxDetectorDirection ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#   sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-ha:HotAxleBoxDetectorDirections ;
+	sh:severity sh:Violation ;
+	sh:message "hotAxleBoxDetectorDirection (1.1.1.1.7.9): The track must have the direction of measurement of the hot axle box detector."@en .
+
+# redLightsRequired: # 1.1.1.1.7.10 
+era-sh:trackShape sh:property era-sh:RedLightsRequired.
+era-sh:RedLightsRequired
+	a sh:PropertyShape ;
+	rdfs:comment "Sections where two steady red lights are required in accordance with Implementing Regulations (EU) 2019/773." ;
+	era:rinfIndex "1.1.1.1.7.10" ;
+	sh:path era:redLightsRequired ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "redLightsRequired (1.1.1.1.7.10): The track must define if two steady red lights are required."@en .
+
+# isQuietRoute: # 1.1.1.1.7.11
+era-sh:trackShape sh:property era-sh:IsQuietRoute.
+era-sh:IsQuietRoute
+	a sh:PropertyShape ;
+	rdfs:comment "Belonging to a 'quiet route' in accordance with Article 5b of Regulation (EU) 1304/2014." ;
+	era:rinfIndex "1.1.1.1.7.11" ;
+	sh:path era:isQuietRoute ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "isQuietRoute (1.1.1.1.7.11): The track must define if it belongs to a 'quiet route'."@en .
+
+# verificationENE: # 1.1.1.2.1.1
+era-sh:trackShape sh:property era-sh:VerificationENE.
+era-sh:VerificationENE
+	a sh:PropertyShape ;
+	rdfs:comment "Unique number for EC declarations following format requirements specified in the 'Document about practical arrangents for transmitting interoperability documents'." ;
+	era:rinfIndex "1.1.1.2.1.1" ;
+	sh:path era:verificationENE ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Z]{2}/\\d{14}/((19|20)\\d{2}|2100)/\\d{6}$" ;
+	sh:severity sh:Violation ;
+	sh:message "verificationENE (1.1.1.2.1.1): The track must have a number for EC declarations following format CC/XXXXXXXXXXXXXX/YYYY/NNNNNN where CC is country code, XXXXX... is a number, YYYY is a year between 1900 and 2100, NNNNNN is the number for the EC declaration."@en .
+
+# demonstrationENE: #1.1.1.2.1.2
+era-sh:trackShape sh:property era-sh:DemonstrationENE.
+era-sh:DemonstrationENE
+	a sh:PropertyShape ;
+	rdfs:comment "Unique number for EI declarations following the same format requirements as specified in the 'Document about practical arrangents for transmitting interoperability documents'." ;
+	era:rinfIndex "1.1.1.2.1.2" ;
+	sh:path era:demonstrationENE ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Z]{2}/\\d{14}/((19|20)\\d{2}|2100)/\\d{6}$" ;
+	sh:severity sh:Violation ;
+	sh:message "demonstrationENE (1.1.1.2.1.2): The track must have a number for EI declarations following format CC/XXXXXXXXXXXXXX/YYYY/NNNNNN where CC is country code, XXXXX... is a number, YYYY is a year between 1900 and 2100, NNNNNN is the number for the EI declaration."@en .
+
+# contactLineSystem: # 1.1.1.2.2.1.1
+era-sh:trackShape sh:property era-sh:ContactLineSystem.
+era-sh:ContactLineSystem
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the type of the contact line system." ;
+	era:rinfIndex "1.1.1.2.2.1.1" ;
+	sh:path era:contactLineSystem ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-cls:ContactLineSystems ;
+	sh:severity sh:Violation ;
+	sh:message "contactLineSystem (1.1.1.2.2.1.1): The track must have an indication of the type of the contact line system."@en .
+
+# maximumContactWireHeight: # 1.1.1.2.2.5 
+era-sh:trackShape sh:property era-sh:MaximumContactWireHeight.
+era-sh:MaximumContactWireHeight
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the maximum contact wire height expressed in meters." ;
+	era:rinfIndex "1.1.1.2.2.5" ;
+	sh:path era:maximumContactWireHeight ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:double ;
+	sh:pattern "^[0-9]\\.\\d{1,2}$" ;
+	sh:severity sh:Violation ;
+	sh:message "maximumContactWireHeight (1.1.1.2.2.5): The track must have an indication of the maximum contact wire height expressed in meters."@en .
+
+# minimumContactWireHeight: # 1.1.1.2.2.6
+era-sh:trackShape sh:property era-sh:MinimumContactWireHeight.
+era-sh:MinimumContactWireHeight
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the minimum contact wire height expressed in meters." ;
+	era:rinfIndex "1.1.1.2.2.6" ;
+	sh:path era:minimumContactWireHeight ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:double ;
+	sh:pattern "^[0-9]\\.\\d{1,2}$" ;
+	sh:severity sh:Violation ;
+	sh:message "minimumContactWireHeight (1.1.1.2.2.6): The track must have an indication of the minimum contact wire height expressed in meters."@en .
+
+# pantographHead: # 1.1.1.2.3.1
+era-sh:trackShape sh:property era-sh:PantographHead.
+era-sh:PantographHead
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of which TSI compilant pantograph head are allowed to be used." ;
+	era:rinfIndex "1.1.1.2.3.1" ;
+	sh:path era:pantographHead ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-cph:CompilantPantographHeads ;
+	sh:severity sh:Violation ;
+	sh:message "pantographHead (1.1.1.2.3.1): The track must have an indication of the type of the pantograph head."@en .
+
+# otherPantographHead: # 1.1.1.2.3.2
+era-sh:trackShape sh:property era-sh:OtherPantographHead.
+era-sh:OtherPantographHead
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of which pantograph heads are allowed to be used." ;
+	era:rinfIndex "1.1.1.2.3.2" ;
+	sh:path era:otherPantographHead ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-oph:OtherPantographHeads ;
+	sh:severity sh:Violation ;
+	sh:message "otherPantographHead (1.1.1.2.3.2): The track must have an indication of the type of the pantograph head."@en .
+
+# raisedPantographsDistanceAndSpeed: # 1.1.1.2.3.3
+era-sh:trackShape sh:property era-sh:RaisedPantographsDistanceAndSpeed.
+era-sh:RaisedPantographsDistanceAndSpeed
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of maximum number of raised pantographs per train allowed and minumum spacing centre line to centre line of adjacent pantograph heads, expressed in meters, at the given speed." ;
+	era:rinfIndex "1.1.1.2.3.3" ;
+	sh:path era:raisedPantographsDistanceAndSpeed ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:pattern "^\\d{1}\\s\\d{3}\\s\\d{3}$" ;
+	sh:severity sh:Violation ;
+	sh:message "raisedPantographsDistanceAndSpeed (1.1.1.2.3.3): The track must have an indication of the maximum number of raised pantographs per train allowed and minumum spacing centre line to centre line of adjacent pantograph heads, expressed in meters, at the given speed."@en .
+
+# contactStripMaterial: # 1.1.1.2.3.4
+era-sh:trackShape sh:property era-sh:ContactStripMaterial.
+era-sh:ContactStripMaterial
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the material of the contact strip." ;
+	era:rinfIndex "1.1.1.2.3.4" ;
+	sh:path era:contactStripMaterial ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error	
+	skos:inScheme era-csm:ContactStripMaterials ;
+	sh:severity sh:Violation ;
+	sh:message "contactStripMaterial (1.1.1.2.3.4): The track must have an indication of the material of the contact strip."@en .
+
+# phaseSeparation: # 1.1.1.2.4.1.1
+era-sh:trackShape sh:property era-sh:PhaseSeparation.
+era-sh:PhaseSeparation
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of existence of phase separation and required information." ;
+	era:rinfIndex "1.1.1.2.4.1.1" ;
+	sh:path era:phaseSeparation ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "phaseSeparation (1.1.1.2.4.1.1): The track must define the existence of phase separation and required information."@en .
+
+# phaseInfo: # 1.1.1.2.4.1.2
+era-sh:trackShape sh:property era-sh:PhaseInfo.
+era-sh:PhaseInfo
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of required several information on phase separation." ;
+	era:rinfIndex "1.1.1.2.4.1.2" ;
+	sh:path era:phaseInfo ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:pattern "^length ([1-9]\\d{1,2}|[0-9]) \\+ switch off breaker (Y|N) \\+ lower pantograph (Y|N)$" ;
+	sh:severity sh:Violation ;
+	sh:message "phaseInfo (1.1.1.2.4.1.2): The track must define the required several information on phase separation."@en .
+
+# hasSystemSeparation: # 1.1.1.2.4.2.1
+era-sh:trackShape sh:property era-sh:HasSystemSeparation.
+era-sh:HasSystemSeparation
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of existence of system separation." ;
+	era:rinfIndex "1.1.1.2.4.2.1" ;
+	sh:path era:hasSystemSeparation ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasSystemSeparation (1.1.1.2.4.2.1): The track must define the existence of system separation."@en .
+
+# systemSeparationInfo: # 1.1.1.2.4.2.2
+era-sh:trackShape sh:property era-sh:SystemSeparationInfo.
+era-sh:SystemSeparationInfo
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of required several information on system separation." ;
+	era:rinfIndex "1.1.1.2.4.2.2" ;
+	sh:path era:systemSeparationInfo ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:pattern "^length ([1-9]\\d{1,2}|[0-9]) \\+ switch off breaker (Y|N) \\+ lower pantograph (Y|N) .*$" ;
+	sh:severity sh:Violation ;
+	sh:message "systemSeparationInfo (1.1.1.2.4.2.2): The track must define the required several information on system separation."@en .
+
+# distSignToPhaseEnd: # 1.1.1.2.4.3
+era-sh:trackShape sh:property era-sh:DistSignToPhaseEnd.
+era-sh:DistSignToPhaseEnd
+	a sh:PropertyShape ;
+	rdfs:comment "Specific for route compatibility check on French network. Distance between the signboard authorizing the driver to 'raise pantograph' or 'close the circuit breaker' after passing the phase separation and the end of the phase separation section." ;
+	era:rinfIndex "1.1.1.2.4.3" ;
+	sh:path era:distSignToPhaseEnd ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:integer ;
+	sh:pattern "^([1-9]\\d{1,2}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "distSignToPhaseEnd (1.1.1.2.4.3): The track must define the specific for route compatibility check on French network."@en .
+
+# permittedContactForce: # 1.1.1.2.5.2
+era-sh:trackShape sh:property era-sh:PermittedContactForce.
+era-sh:PermittedContactForce
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of contact force allowed expressed in newtons." ;
+	era:rinfIndex "1.1.1.2.5.2" ;
+	sh:path era:permittedContactForce ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "permittedContactForce (1.1.1.2.5.2): The track must define the contact force allowed expressed in newtons."@en .
+
+# automaticDroppingDeviceRequired: # 1.1.1.2.5.3
+era-sh:trackShape sh:property era-sh:AutomaticDroppingDeviceRequired.
+era-sh:AutomaticDroppingDeviceRequired
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the requirement of automatic dropping device." ;
+	era:rinfIndex "1.1.1.2.5.3" ;
+	sh:path era:automaticDroppingDeviceRequired ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "automaticDroppingDeviceRequired (1.1.1.2.5.3): The track must define the requirement of automatic dropping device."@en .
+
+# verificationCCS: # 1.1.1.3.1.1
+era-sh:trackShape sh:property era-sh:VerificationCCS.
+era-sh:VerificationCCS
+	a sh:PropertyShape ;
+	rdfs:comment "Unique number for EC declarations following format requirements specified in the 'Document about practical arrangements for transmitting interoperability documents'." ;
+	era:rinfIndex "1.1.1.3.1.1" ;
+	sh:path era:verificationCCS ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Z]{2}/\\d{14}/((19|20)\\d{2}|2100)/\\d{6}$" ;
+	sh:severity sh:Violation ;
+	sh:message "verificationCCS (1.1.1.3.1.1): The track must define the unique number for EC declarations following format requirements specified in the 'Document about practical arrangements for transmitting interoperability documents'."@en .
+
+# etcsInfillLineAccess: # 1.1.1.3.2.3
+era-sh:trackShape sh:property era-sh:EtcsInfillLineAccess.
+era-sh:EtcsInfillLineAccess
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the access to the ETCS infill line." ;
+	era:rinfIndex "1.1.1.3.2.3" ;
+	sh:path era:etcsInfillLineAccess ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "etcsInfillLineAccess (1.1.1.3.2.3): The track must define the access to the ETCS infill line."@en .
+
+# etcsInfill: # 1.1.1.3.2.4
+era-sh:trackShape sh:property era-sh:EtcsInfill.
+era-sh:EtcsInfill
+	a sh:PropertyShape ;
+	rdfs:comment "Information about installed trackside equipment capable to transmit infill information by loop or GSM-R for level 1 installation." ;
+	era:rinfIndex "1.1.1.3.2.4" ;
+	sh:path era:etcsInfill ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ;  #TODO: Check error
+	skos:inScheme era-etcsinfill:ETCSInfills ;
+	sh:severity sh:Violation ;
+	sh:message "etcsInfill (1.1.1.3.2.4): The track must define the information about installed trackside equipment capable to transmit infill information by loop or GSM-R for level 1 installation."@en .	
+
+# etcsNationalPacket44: # 1.1.1.3.2.5
+era-sh:trackShape sh:property era-sh:EtcsNationalPacket44.
+era-sh:EtcsNationalPacket44
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether data for national application is transmitted between track and train." ;
+	era:rinfIndex "1.1.1.3.2.5" ;
+	sh:path era:etcsNationalPacket44 ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "etcsNationalPacket44 (1.1.1.3.2.5): The track must define the indication whether data for national application is transmitted between track and train."@en .
+
+# hasETCSRestrictionsConditions: # 1.1.1.3.2.6
+era-sh:trackShape sh:property era-sh:HasETCSRestrictionsConditions.
+era-sh:HasETCSRestrictionsConditions
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether restrictions or conditions due to partial compilance with the CCS TSI exist." ;
+	era:rinfIndex "1.1.1.3.2.6" ;
+	sh:path era:hasETCSRestrictionsConditions ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasETCSRestrictionsConditions (1.1.1.3.2.6): The track must define the indication whether restrictions or conditions due to partial compilance with the CCS TSI exist."@en .
+
+# trainIntegrityOnBoardRequired: # 1.1.1.3.2.8
+era-sh:trackShape sh:property era-sh:TrainIntegrityOnBoardRequired.
+era-sh:TrainIntegrityOnBoardRequired
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether TIMS is required to access the line for safety reasons." ;
+	era:rinfIndex "1.1.1.3.2.8" ;
+	sh:path era:trainIntegrityOnBoardRequired ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "trainIntegrityOnBoardRequired (1.1.1.3.2.8): The track must define the indication whether TIMS is required to access the line for safety reasons."@en .
+
+# etcsSystemCompatibility: # 1.1.1.3.2.9
+era-sh:trackShape sh:property era-sh:EtcsSystemCompatibility.
+era-sh:EtcsSystemCompatibility
+	a sh:PropertyShape ;
+	rdfs:comment "ETCS requirements used for demonstrating technical compatibility." ;
+	era:rinfIndex "1.1.1.3.2.9" ;
+	sh:path era:etcsSystemCompatibility ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ;  #TODO: Check error
+	skos:inScheme era-esc:ETCSSystemCompatibilities ;
+	sh:severity sh:Violation ;
+	sh:message "etcsSystemCompatibility (1.1.1.3.2.9): The track must define the requirements of the ETCS system compatibility."@en .
+
+# etcsMVersion: # 1.1.1.3.2.10
+era-sh:trackShape sh:property era-sh:EtcsMVersion.
+era-sh:EtcsMVersion
+	a sh:PropertyShape ;
+	rdfs:comment "ETCS_M version according to SRS 7.5.1.9" ;
+	era:rinfIndex "1.1.1.3.2.10" ;
+	sh:path era:etcsMVersion ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-etcsmvers:ETCSMVersions ;
+	sh:severity sh:Violation ;
+	sh:message "etcsMVersion (1.1.1.3.2.10): The track must define the ETCS_M version."@en .
+
+# gsmRVersion: # 1.1.1.3.3.1
+era-sh:trackShape sh:property era-sh:GsmRVersion.
+era-sh:GsmRVersion
+	a sh:PropertyShape ;
+	rdfs:comment "GSM-R version installed lineside" ;
+	era:rinfIndex "1.1.1.3.3.1" ;
+	sh:path era:gsmRVersion ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-gsmrv:GSMRVersions ;
+	sh:severity sh:Violation ;
+	sh:message "gsmRVersion (1.1.1.3.3.1): The track must define the GSM-R version installed lineside."@en .
+
+# gsmRActiveMobiles: # 1.1.1.3.3.2
+era-sh:trackShape sh:property era-sh:GsmRActiveMobiles.
+era-sh:GsmRActiveMobiles
+	a sh:PropertyShape ;
+	rdfs:comment "Number of active mobiles in GSM-R network" ;
+	era:rinfIndex "1.1.1.3.3.2" ;
+	sh:path era:gsmRActiveMobiles ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-gsmrnumactivemob:NumberActiveMobiles ;
+	sh:severity sh:Violation ;
+	sh:message "gsmRActiveMobiles (1.1.1.3.3.2): The track must define the number of active mobiles in GSM-R network."@en .
+
+# gsmROptionalFunctions: # 1.1.1.3.3.3
+era-sh:trackShape sh:property era-sh:GsmROptionalFunctions.
+era-sh:GsmROptionalFunctions
+	a sh:PropertyShape ;
+	rdfs:comment "Use of optional GSM-R functions which might improve operation on the line. They are for information only and not for network access criteria." ;
+	era:rinfIndex "1.1.1.3.3.3" ;
+	sh:path era:gsmROptionalFunctions ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-gsmroptfunc:OptionalFunctions ;
+	sh:severity sh:Violation ;
+	sh:message "gsmROptionalFunctions (1.1.1.3.3.3): The track must define the use of optional GSM-R functions."@en .
+
+# gsmRAdditionalInfo: # 1.1.1.3.3.3.1
+era-sh:trackShape sh:property era-sh:GsmRAdditionalInfo.
+era-sh:GsmRAdditionalInfo
+	a sh:PropertyShape ;
+	rdfs:comment "Additional information on network characteristics." ;
+	era:rinfIndex "1.1.1.3.3.3.1" ;
+	sh:path era:gsmRAdditionalInfo ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "gsmRAdditionalInfo (1.1.1.3.3.3.1): The track must define additional information on network characteristics."@en .
+
+# gprsForETCS: # 1.1.1.3.3.3.2
+era-sh:trackShape sh:property era-sh:GprsForETCS.
+era-sh:GprsForETCS
+	a sh:PropertyShape ;
+	rdfs:comment "Indication if GPRS can be used for ETCS." ;
+	era:rinfIndex "1.1.1.3.3.3.2" ;
+	sh:path era:gprsForETCS ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "gprsForETCS (1.1.1.3.3.3.2): The track must define the use of GPRS for ETCS."@en .
+
+# gprsImplementationArea: # 1.1.1.3.3.3.3
+era-sh:trackShape sh:property era-sh:GprsImplementationArea.
+era-sh:GprsImplementationArea
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the area in which GPRS can be used for ETCS." ;
+	era:rinfIndex "1.1.1.3.3.3.3" ;
+	sh:path era:gprsImplementationArea ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "gprsImplementationArea (1.1.1.3.3.3.3): The track must define the area in which GPRS can be used for ETCS."@en .
+
+# usesGroup555: # 1.1.1.3.3.4
+era-sh:trackShape sh:property era-sh:UsesGroup555.
+era-sh:UsesGroup555
+	a sh:PropertyShape ;
+	rdfs:comment "Indication if group 555 is needed." ;
+	era:rinfIndex "1.1.1.3.3.4" ;
+	sh:path era:usesGroup555 ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "usesGroup555 (1.1.1.3.3.3.4): The track must define the use of group 555."@en .
+
+# gsmrNetworkCoverage: # 1.1.1.3.3.5
+era-sh:trackShape sh:property era-sh:GsmrNetworkCoverage.
+era-sh:GsmrNetworkCoverage
+	a sh:PropertyShape ;
+	rdfs:comment "Name of the own GSM-R network and list of GSM-R networks which are covered by a roaming agreement (for CS services)." ;
+	era:rinfIndex "1.1.1.3.3.5" ;
+	sh:path era:gsmrNetworkCoverage ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-gsmr:GSMRNetworks ;
+	sh:severity sh:Violation ;
+	sh:message "gsmrNetworkCoverage (1.1.1.3.3.5): The track must define the name of the own GSM-R network and list of GSM-R networks which are covered by a roaming agreement (for CS services)."@en .
+
+# publicNetworkRoaming: # 1.1.1.3.3.6
+era-sh:trackShape sh:property era-sh:PublicNetworkRoaming.
+era-sh:PublicNetworkRoaming
+	a sh:PropertyShape ;
+	rdfs:comment "Existence of roaming to a public network (if roaming to a public network is configured, please indicate so)." ;
+	era:rinfIndex "1.1.1.3.3.6" ;
+	sh:path era:publicNetworkRoaming ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "publicNetworkRoaming (1.1.1.3.3.6): The track must define the existence of roaming to a public network."@en .
+
+# publicNetworkRoamingDetails: # 1.1.1.3.3.7
+era-sh:trackShape sh:property era-sh:PublicNetworkRoamingDetails.
+era-sh:PublicNetworkRoamingDetails
+	a sh:PropertyShape ;
+	rdfs:comment "If roaming to public networks is configured, please indicate to which networks, for which users and in which areas." ;
+	era:rinfIndex "1.1.1.3.3.7" ;
+	sh:path era:publicNetworkRoamingDetails ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "publicNetworkRoamingDetails (1.1.1.3.3.7): The track must define the existence of roaming to a public network."@en .
+
+# gsmRNoCoverage: # 1.1.1.3.3.8
+era-sh:trackShape sh:property era-sh:GsmRNoCoverage.
+era-sh:GsmRNoCoverage
+	a sh:PropertyShape ;
+	rdfs:comment "Indication if there is a no GSM-R coverage." ;
+	era:rinfIndex "1.1.1.3.3.8" ;
+	sh:path era:gsmRNoCoverage ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "gsmRNoCoverage (1.1.1.3.3.8): The track must define the indication if there is a no GSM-R coverage."@en .
+
+# voiceRadioCompatible: # 1.1.1.3.3.9
+era-sh:trackShape sh:property era-sh:VoiceRadioCompatible.
+era-sh:VoiceRadioCompatible
+	a sh:PropertyShape ;
+	rdfs:comment "Radio requirements used for demonstrating technical compatibility voice." ;
+	era:rinfIndex "1.1.1.3.3.3.9" ;
+	sh:path era:voiceRadioCompatible ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error	
+	skos:inScheme era-vrsc:VoiceRadioSystemCompatibilities ;
+	sh:severity sh:Violation ;
+	sh:message "voiceRadioCompatible (1.1.1.3.3.9): The track must define the radio requirements used for demonstrating technical compatibility voice."@en .
+
+# dataRadioCompatible: # 1.1.1.3.3.10
+era-sh:trackShape sh:property era-sh:DataRadioCompatible.
+era-sh:DataRadioCompatible
+	a sh:PropertyShape ;
+	rdfs:comment "Radio requirements used for demonstrating technical compatibility voice." ;
+	era:rinfIndex "1.1.1.3.3.10" ;
+	sh:path era:dataRadioCompatible ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error	
+	skos:inScheme era-rscd:RadioSystemCompatibilitiesData ;
+	sh:severity sh:Violation ;
+	sh:message "dataRadioCompatible (1.1.1.3.3.10): The track must define the radio requirements used for demonstrating technical compatibility data."@en .
+
+# hasTSITrainDetection: # 1.1.1.3.4.1
+era-sh:trackShape sh:property era-sh:HasTSITrainDetection.
+era-sh:HasTSITrainDetection
+	a sh:PropertyShape ;
+	rdfs:comment "Indication if there is any train detection system installed and fully compilant with the CCS TSI requirements." ;
+	era:rinfIndex "1.1.1.3.4.1" ;
+	sh:path era:hasTSITrainDetection ;
+	sh:minCount 0 ;	#TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasTSITrainDetection (1.1.1.3.4.1): The track must define the indication if there is any train detection system installed and fully compilant with the CCS TSI requirements."@en .
+
+# protectionLegacySystem: # 1.1.1.3.5.3
+era-sh:trackShape sh:property era-sh:ProtectionLegacySystem.
+era-sh:ProtectionLegacySystem
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of which class B system is installed." ;
+	era:rinfIndex "1.1.1.3.5.3" ;
+	sh:path era:protectionLegacySystem ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error	
+	skos:inScheme era-tpls:TrainProtectionLegacySystems ;
+	sh:severity sh:Violation ;
+	sh:message "protectionLegacySystem (1.1.1.3.5.3): The track must define the indication of which class B system is installed."@en .	
+
+# legacyRadioSystem: # 1.1.1.3.6.1
+era-sh:trackShape sh:property era-sh:LegacyRadioSystem.
+era-sh:LegacyRadioSystem
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of radio legacy systems installed." ;
+	era:rinfIndex "1.1.1.3.6.1" ;
+	sh:path era:legacyRadioSystem ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-lrs:LegacyRadioSystems ;
+	sh:severity sh:Violation ;
+	sh:message "legacyRadioSystem (1.1.1.3.6.1): The track must define the indication of radio legacy systems installed."@en .
+
+# trainDetectionSystem: # 1.1.1.3.7.1.1
+era-sh:trackShape sh:property era-sh:TrainDetectionSystem.
+era-sh:TrainDetectionSystem
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of types of train detection system installed." ;
+	era:rinfIndex "1.1.1.3.7.1.1" ;
+	sh:path era:trainDetectionSystem ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tds:TrainDetectionSystems ;
+	sh:severity sh:Violation ;
+	sh:message "trainDetectionSystem (1.1.1.3.7.1.1): The track must define the indication of types of train detection system installed."@en .
+
+# trainDetectionSystemSpecificCheckDocument: # 1.1.1.3.7.1.3
+era-sh:trackShape sh:property era-sh:TrainDetectionSystemSpecificCheckDocument.
+era-sh:TrainDetectionSystemSpecificCheckDocument
+	a sh:PropertyShape ;
+	rdfs:comment "Electronic document available in two EU languages from the IM stored by the Agency with precise procedures for the specific check to be performed for train detection systems identified in 1.1.1.3.7.1.2." ;
+	era:rinfIndex "1.1.1.3.7.1.3" ;
+	sh:path era:trainDetectionSystemSpecificCheckDocument ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "trainDetectionSystemSpecificCheckDocument (1.1.1.3.7.1.3): The track must define the electronic document available in two EU languages."@en .
+
+# frenchTrainDetectionSystemLimitation: # 1.1.1.3.7.1.4
+era-sh:trackShape sh:property era-sh:FrenchTrainDetectionSystemLimitation.
+era-sh:FrenchTrainDetectionSystemLimitation
+	a sh:PropertyShape ;
+	rdfs:comment "Section with train detection limitation." ;
+	era:rinfIndex "1.1.1.3.7.1.4" ;
+	sh:path era:frenchTrainDetectionSystemLimitation ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tds:TrainDetectionSystemLimitations ;
+	sh:severity sh:Violation ;
+	sh:message "frenchTrainDetectionSystemLimitation (1.1.1.3.7.1.4): The track must define the section with train detection limitation."@en .
+
+# switchProtectControlWarning: # 1.1.1.3.8.1
+era-sh:trackShape sh:property era-sh:SwitchProtectControlWarning.
+era-sh:SwitchProtectControlWarning
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether a switch over between different systems whilst running exist." ;
+	era:rinfIndex "1.1.1.3.8.1" ;
+	sh:path era:switchProtectControlWarning ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "switchProtectControlWarning (1.1.1.3.8.1): The track must define the indication whether a switch over between different systems whilst running exist."@en .
+
+# switchRadioSystem: # 1.1.1.3.8.2
+era-sh:trackShape sh:property era-sh:SwitchRadioSystem.
+era-sh:SwitchRadioSystem
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether a switch over between different radio systems and no communication system whilst running exist." ;
+	era:rinfIndex "1.1.1.3.8.2" ;
+	sh:path era:switchRadioSystem ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "switchRadioSystem (1.1.1.3.8.2): The track must define the indication whether a switch over between different radio systems and no communication system whilst running exist."@en .
+
+# TSIMagneticFields: # 1.1.1.3.9.1
+era-sh:trackShape sh:property era-sh:TSIMagneticFields.
+era-sh:TSIMagneticFields
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the magnetic fields of the TSI." ;
+	era:rinfIndex "1.1.1.3.9.1" ;
+	sh:path era:TSIMagneticFields ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "TSIMagneticFields (1.1.1.3.9.1): The track must define the indication of the magnetic fields of the TSI."@en .
+
+# TSITractionHarmonics: # 1.1.1.3.9.2
+era-sh:trackShape sh:property era-sh:TSITractionHarmonics.
+era-sh:TSITractionHarmonics
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the traction harmonics of the TSI." ;
+	era:rinfIndex "1.1.1.3.9.2" ;
+	sh:path era:TSITractionHarmonics ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "TSITractionHarmonics (1.1.1.3.9.2): The track must define the indication of the traction harmonics of the TSI."@en .
+
+# etcsDegradedSituation: # 1.1.1.3.10.1
+era-sh:trackShape sh:property era-sh:ETCSDegradedSituation.
+era-sh:ETCSDegradedSituation
+	a sh:PropertyShape ;
+	rdfs:comment "ERTMS/ ETCS application level for degraded situation related to the track side equipment." ;
+	era:rinfIndex "1.1.1.3.10.1" ;
+	sh:path era:etcsDegradedSituation ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-etcssituation:ETCSSituations ;
+	sh:severity sh:Violation ;
+	sh:message "etcsDegradedSituation (1.1.1.3.10.1): The track must define the ERTMS/ ETCS application level for degraded situation related to the track side equipment."@en .
+
+# otherTrainProtection: # 1.1.1.3.10.2
+era-sh:trackShape sh:property era-sh:OtherTrainProtection.
+era-sh:OtherTrainProtection
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of existence of other systems than ETCS for degraded situation." ;
+	era:rinfIndex "1.1.1.3.10.2" ;
+	sh:path era:otherTrainProtection ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-opcw:OtherProtectionControlWarnings ;
+	sh:severity sh:Violation ;
+	sh:message "otherTrainProtection (1.1.1.3.10.2): The track must define the indication of existence of other systems than ETCS for degraded situation."@en .
+
+# maximumBrakingDistance: # 1.1.1.3.11.1
+era-sh:trackShape sh:property era-sh:MaximumBrakingDistance.
+era-sh:MaximumBrakingDistance
+	a sh:PropertyShape ;
+	rdfs:comment "The maximum value of the braking distance [in metres] of a train shall be given for the maximum line speed." ;
+	era:rinfIndex "1.1.1.3.11.1" ;
+	sh:path era:maximumBrakingDistance ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:integer ;
+	sh:pattern "^([1-9]\\d{1,4}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "maximumBrakingDistance (1.1.1.3.11.1): The track must define the maximum value of the braking distance [in metres] of a train."@en .
+
+# hasAdditionalBrakingInformation: # 1.1.1.3.11.2
+era-sh:trackShape sh:property era-sh:HasAdditionalBrakingInformation.
+era-sh:HasAdditionalBrakingInformation
+	a sh:PropertyShape ;
+	rdfs:comment "Availability by the IM of additional information as defined in 4.2.2.6.2 (2) Regulation XXX-OPE TSI." ;
+	era:rinfIndex "1.1.1.3.11.2" ;
+	sh:path era:hasAdditionalBrakingInformation ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasAdditionalBrakingInformation (1.1.1.3.11.2): The track must define the availability by the IM of additional information."@en .
+
+# additionalBrakingInformationDocument: # 1.1.1.3.11.3
+era-sh:trackShape sh:property era-sh:AdditionalBrakingInformationDocument.
+era-sh:AdditionalBrakingInformationDocument
+	a sh:PropertyShape ;
+	rdfs:comment "Documents available by the IM relating to braking performance." ;
+	era:rinfIndex "1.1.1.3.11.3" ;
+	sh:path era:additionalBrakingInformationDocument ;	
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "additionalBrakingInformationDocument (1.1.1.3.11.3): The track must define the documents available by the IM relating to braking performance."@en .
+
+# tiltingSupported: # 1.1.1.3.12.1
+era-sh:trackShape sh:property era-sh:TiltingSupported.
+era-sh:TiltingSupported
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether tilting functions are supported by the track." ;
+	era:rinfIndex "1.1.1.3.12.1" ;
+	sh:path era:tiltingSupported ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "tiltingSupported (1.1.1.3.12.1): The track must define the indication whether tilting functions are supported by the track."@en .
+
+# localRulesOrRestrictions: # 1.1.1.4.1
+era-sh:trackShape sh:property era-sh:LocalRulesOrRestrictions.
+era-sh:LocalRulesOrRestrictions
+	a sh:PropertyShape ;
+	rdfs:comment "Existence of rules and restrictions of a strictly local nature." ;
+	era:rinfIndex "1.1.1.4.1" ;
+	sh:path era:localRulesOrRestrictions ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "localRulesOrRestrictions (1.1.1.4.1): The track must define the existence of rules and restrictions of a strictly local nature."@en .
+
+# localRulesOrRestrictionsDoc: # 1.1.1.4.2
+era-sh:trackShape sh:property era-sh:LocalRulesOrRestrictionsDoc.
+era-sh:LocalRulesOrRestrictionsDoc
+	a sh:PropertyShape ;
+	rdfs:comment "Documents regarding the rules or restrictions of a strictly local nature available by the IM." ;
+	era:rinfIndex "1.1.1.4.2" ;
+	sh:path era:localRulesOrRestrictionsDoc ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "localRulesOrRestrictionsDoc (1.1.1.4.2): The track must define the documents regarding the rules or restrictions of a strictly local nature available by the IM."@en .

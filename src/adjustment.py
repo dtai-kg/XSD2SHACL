@@ -21,10 +21,11 @@ class Adjustment:
         self.correctKind = False
 
         self.mapping_dicts = []
+        self.FnO_dict = {}
 
 
         self.query_yarrrml = prepareQuery("""
-                                        SELECT ?tm ?iterator ?targetClass ?subjectTemplate ?subjectReference ?predicate ?objectReference ?objectTemplate 
+                                        SELECT ?tm ?iterator ?targetClass ?subjectTemplate ?subjectReference ?predicate ?objectReference ?objectTemplate ?objectFN ?om ?datatype
                                         WHERE {
                                             ?tm a rr:TriplesMap ;
                                                 rml:logicalSource [ rml:iterator ?iterator ] ;
@@ -37,11 +38,12 @@ class Adjustment:
                                                 ?tm rr:predicateObjectMap [rr:predicateMap ?pm ;
                                                                             rr:objectMap ?om ].
                                                 ?pm rr:constant ?predicate.
-                                            {  { ?om rml:reference ?objectReference } UNION { ?om rr:template ?objectTemplate } } }
+                                            {  { ?om rml:reference ?objectReference } UNION { ?om rr:template ?objectTemplate } UNION { ?om <http://semweb.mmlab.be/ns/fnml#functionValue> ?objectFN } } }
+                                            OPTIONAL { ?om rr:datatype ?datatype. }
                                         }
                                     """, initNs={"rr": self.RR, "rml": self.RML})
         self.query_rml = prepareQuery("""
-                                        SELECT ?tm ?iterator ?targetClass_Position1 ?targetClass_Position2 ?subjectTemplate ?subjectReference ?predicate ?objectReference ?objectTemplate 
+                                        SELECT ?tm ?iterator ?targetClass_Position1 ?targetClass_Position2 ?subjectTemplate ?subjectReference ?predicate ?objectReference ?objectTemplate ?objectFN ?om ?datatype
                                         WHERE {
                                             ?tm a rr:TriplesMap ;
                                                 rml:logicalSource [ rml:iterator ?iterator ] ;
@@ -54,15 +56,58 @@ class Adjustment:
                                             OPTIONAL {      
                                                 ?tm rr:predicateObjectMap [rr:predicate ?predicate ;
                                                                             rr:objectMap ?om ].
-                                            {  { ?om rml:reference ?objectReference } UNION { ?om rr:template ?objectTemplate }} }
+                                            {  { ?om rml:reference ?objectReference } UNION { ?om rr:template ?objectTemplate } UNION { ?om <http://semweb.mmlab.be/ns/fnml#functionValue> ?objectFN }} }
+                                            OPTIONAL { ?om rr:datatype ?datatype. }
                                         }
                                     """, initNs={"rr": self.RR, "rml": self.RML})
 
+    def parseFunction(self, g):
+        RR = Namespace("http://www.w3.org/ns/r2rml#")
+        def findFnObject(g,fm,datatype):
+            RR = Namespace("http://www.w3.org/ns/r2rml#")
+            RML = Namespace("http://semweb.mmlab.be/ns/rml#")
+            new_datatype = None
+            for pom in g.objects(fm,RR["predicateObjectMap"]):
+                for om in g.objects(pom,RR["objectMap"]):
+                    for obj in g.objects(om,RML["reference"]):
+                        for new_datatype in g.triples((om,RR["datatype"],None)):
+                            pass
+                        if datatype != None:
+                            return (str(obj), "Literal",datatype)
+                        return (str(obj), "Literal",new_datatype)
+                    for obj in g.objects(om,RR["template"]):
+                        for new_datatype in g.triples((om,RR["datatype"],None)):
+                            pass
+                        if datatype != None:
+                            return (str(obj), "IRI",datatype)
+                        return (str(obj), "IRI",new_datatype)
+                    for obj in g.objects(om,URIRef("http://semweb.mmlab.be/ns/fnml#functionValue")): 
+                        for new_datatype in g.triples((om,RR["datatype"],None)):
+                            pass
+                        if datatype != None:
+                            r = findFnObject(g,obj,datatype)
+                        else:
+                            r = findFnObject(g,obj,new_datatype)
+            return None
+        
+        for om,_,fm in g.triples((None,URIRef("http://semweb.mmlab.be/ns/fnml#functionValue"),None)):
+            d = None
+            for _,_,new_datatype in g.triples((om,RR["datatype"],None)):
+                d = new_datatype
+            obj = findFnObject(g,fm,d)
+            if obj:
+                if obj[1] == "Literal":
+                    objectReference = self.clearReference(obj[0])
+                    self.FnO_dict[om] = (objectReference, "Literal",obj[-1])
+                elif obj[1] == "IRI":
+                    objectTemplate = self.extract_curly_braces_content("", obj[0])
+                    self.FnO_dict[om] = (objectTemplate, "IRI",obj[-1])
+    
     def adjust(self):
 
         def clearNodeShape(g, sub, shape_list, shape_adjusted = [], targetClass = []):
             if sub in shape_list:
-                for s, p, o in g.triples((URIRef(sub), self.SHACL.targetClass, None)):
+                for s, p, o in g.triples((sub, self.SHACL.targetClass, None)):
                     if sub not in shape_adjusted:
                         g.remove((s,p,o))
                 # if targetClass != [None]:
@@ -74,31 +119,45 @@ class Adjustment:
         def clearPropertyShape(g, sub, shape_list, predicate, shape_adjusted = []):
             if sub in shape_list:
                 if sub not in shape_adjusted:
-                    g.remove((URIRef(sub), self.SHACL.path, None))
-                    g.add((URIRef(sub),self.SHACL.path,URIRef(predicate)))
+                    sub_new = sub
+                    g.remove((sub, self.SHACL.path, None))
+                    g.add((sub,self.SHACL.path,URIRef(predicate)))
                 else:
-                    current_path_subject = (sub+"/"+(predicate.split("/")[-1])).replace("//","/")
+                    current_path_subject = (str(sub)+"/"+(predicate.split("/")[-1])).replace("//","/")
                     # for s, p, o in g.triples((URIRef(sub), None, None)):
                     #     g.add((URIRef(current_path_subject),p,o))
                     # for s, p, o in g.triples((None, None, URIRef(sub))):
                     #     g.remove((s,p,URIRef(current_path_subject)))
-                    g = update_graph(g,[URIRef(sub)],URIRef(current_path_subject))
+
+                    sub_new = URIRef(current_path_subject)
+                    g = update_graph(g,[sub],URIRef(current_path_subject))
                     g.remove((URIRef(current_path_subject), self.SHACL.path, None))
                     g.add((URIRef(current_path_subject),self.SHACL.path,URIRef(predicate)))
 
-                if self.correctKind == True:
-                    g.remove((URIRef(sub), self.SHACL.datatype, None))
-                    g.remove((URIRef(sub), self.SHACL.minLength, None))
-                    g.remove((URIRef(sub), self.SHACL.maxLength, None))              
-                    g.add((URIRef(sub),self.SHACL.nodeKind,self.SHACL.IRI))          
-                shape_adjusted.append(sub)
+                # print(predicate, self.correctKind)
+                # for i in g.triples((sub_new, self.SHACL.nodeKind, None)):
+                #     print(i)
+                
+                if self.correctKind != False:
+                    
+                    # g.remove((sub_new, self.SHACL.datatype, None))
+                    # g.remove((sub_new, self.SHACL.minLength, None))
+                    # g.remove((sub_new, self.SHACL.maxLength, None))   
+                    g.remove((sub_new, self.SHACL.nodeKind, None))           
+                    g.add((sub_new,self.SHACL.nodeKind,self.correctKind))    
+
+                if self.datatype != False:
+                    g.remove((sub_new, self.SHACL.datatype, None))
+                    g.add((sub_new,self.SHACL.datatype,self.datatype))
+                     
+                shape_adjusted.append(sub_new)
             return g, shape_adjusted
 
         shape_list = []
         for s, p, o in self.SHACL_g.triples((None, self.RDF.type, self.SHACL.NodeShape)):
-            shape_list.append(str(s))
+            shape_list.append(s)
         for s, p, o in self.SHACL_g.triples((None, self.RDF.type, self.SHACL.PropertyShape)):
-            shape_list.append(str(s))
+            shape_list.append(s)
 
 
         NStemplate = "http://example.com/NodeShape"
@@ -112,23 +171,32 @@ class Adjustment:
                     
                 sub = NStemplate+iterator.replace("//","/")
                 sub = URIRef(sub)
-                self.SHACL_g, shape_adjusted = clearNodeShape(self.SHACL_g, str(sub), shape_list, shape_adjusted = shape_adjusted, targetClass = targetClass)
+                self.SHACL_g, shape_adjusted = clearNodeShape(self.SHACL_g, sub, shape_list, shape_adjusted = shape_adjusted, targetClass = targetClass)
                 self.targetClassAdd = False
+                self.datatype = False
                 for pom in poms:
                     predicate = pom[0]
                     if predicate == "http://www.w3.org/2000/01/rdf-schema#label" or predicate ==None:
                         continue
                     if pom[2] == "IRI":
-                        self.correctKind = True
+                        self.correctKind = self.SHACL.IRI
+                    elif pom[2] == "Literal":
+                        self.correctKind = self.SHACL.Literal
                     else:
                         self.correctKind = False
                     NS_list = pom[1].split("/")
 
-                    
+                    if pom[3] != None:
+                        self.datatype = pom[3]
+                    else:
+                        self.datatype = False
+
+
+                    # For finding the minimum node shape to add targetClass 
                     for i in range(len(NS_list)-1):
-                        NS_sub = NStemplate+iterator+"/"+"/".join(NS_list[0:i+1])
+                        NS_sub = URIRef(NStemplate+iterator+"/"+"/".join(NS_list[0:i+1]))
                         if NS_sub in shape_list:
-                            self.targetClassAdd = NS_sub
+                            self.targetClassAdd = URIRef(NS_sub)
                             self.SHACL_g, shape_adjusted = clearNodeShape(self.SHACL_g, NS_sub, shape_list, shape_adjusted = shape_adjusted)
                     if self.targetClassAdd != False:
                         shape_adjusted.append(self.targetClassAdd)
@@ -142,10 +210,16 @@ class Adjustment:
                             for c in targetClass:
                                 self.SHACL_g.add((URIRef(sub),self.SHACL.targetClass,URIRef(c)))
                     
-                    NS_sub = PStemplate+iterator+"/"+"/".join(NS_list)
+                    NS_sub = URIRef(PStemplate+iterator+"/"+"/".join(NS_list))
                     if NS_sub in shape_list:
                         self.SHACL_g, shape_adjusted = clearPropertyShape(self.SHACL_g, NS_sub, shape_list, predicate, shape_adjusted = shape_adjusted)
-        remove_subjects =[URIRef(i) for i in shape_list if i not in shape_adjusted]  
+        for s, p, o in self.SHACL_g.triples((None, self.RDF.nodeKind, self.SHACL.IRI)):
+            g.remove((s, self.SHACL.datatype, None))
+            g.remove((s, self.SHACL.minLength, None))
+            g.remove((s, self.SHACL.maxLength, None))    
+
+        
+        remove_subjects =[i for i in shape_list if i not in shape_adjusted]  
         self.SHACL_g = clear_graph(self.SHACL_g, remove_subjects)
         return self.SHACL_g
 
@@ -160,6 +234,7 @@ class Adjustment:
             g = Graph().parse(mapping_path, format="ttl")
             for ns_prefix, namespace in g.namespaces():
                 self.SHACL_g.bind(ns_prefix, namespace, False)
+            self.parseFunction(g)
             self.parseMapping(g, "yml" in mapping_path)
         else:
             # Load the mapping file from the directory
@@ -169,8 +244,10 @@ class Adjustment:
                     g = Graph().parse(mapping_path + "/" + file, format="ttl")
                     for ns_prefix, namespace in g.namespaces():
                         self.SHACL_g.bind(ns_prefix, namespace, False)
+                    self.parseFunction(g)
                     self.parseMapping(g, "yml" in file)
         # print(self.mapping_dicts)
+        # print(self.FnO_dict)
             
     
     def parseMapping(self, g, yarrrml = False):
@@ -178,9 +255,9 @@ class Adjustment:
         if yarrrml == True:
             result = g.query(self.query_yarrrml)
             for r in result:
-                tm, iterator, targetClass, subjectTemplate, subjectReference, predicate, objectReference, objectTemplate = r
+                tm, iterator, targetClass, subjectTemplate, subjectReference, predicate, objectReference, objectTemplate, objectFN, om, datatype = r
                 current = mapping_dict.get(tm, {})
-
+                
                 iterator = str(iterator).split("[")[0]
                 current["iterator"] = iterator
 
@@ -207,15 +284,22 @@ class Adjustment:
                     # objectReference = (iterator + "/" + str(objectReference)).replace("//","/").replace("@","")
                     # objectReference = str(objectReference).replace("//","/").replace("@","")
                     objectReference = self.clearReference(str(objectReference))
-                    if (predicate, objectReference) not in current_pom:
-                        current_pom.append((predicate, objectReference, "Literal"))
+                    if (predicate, objectReference, "Literal", datatype) not in current_pom:
+                        current_pom.append((predicate, objectReference, "Literal",datatype))
                         # self.path_dict["PS"+objectReference] = predicate
-                else:
+                elif objectTemplate is not None:
                     # objectTemplate = self.extract_curly_braces_content(iterator, str(objectTemplate))
                     objectTemplate = self.extract_curly_braces_content("", str(objectTemplate))
-                    if (predicate, objectTemplate) not in current_pom:
-                        current_pom.append((predicate, objectTemplate, "IRI"))
+                    if (predicate, objectTemplate, "IRI",datatype) not in current_pom:
+                        current_pom.append((predicate, objectTemplate, "IRI",datatype))
                         # self.path_dict["PS"+objectTemplate] = predicate
+                elif objectFN is not None:
+                    if om:
+                        objectFN = self.FnO_dict.get(om, None)
+                        if objectFN:
+                            if (predicate, objectFN[0], objectFN[1],objectFN[-1]) not in current_pom:
+                                current_pom.append((predicate, objectFN[0], objectFN[1],objectFN[-1]))
+                                # self.path_dict["PS"+objectFN] = predicate
                 current["pom"] = current_pom
                 mapping_dict[tm] = current
         self.mapping_dicts.append(mapping_dict)
@@ -224,10 +308,10 @@ class Adjustment:
         if path.startswith("http"):
             return path
         else:
-            return path.split("/")[-1]
+            return path.split("/")[-1].split("*")[0]
 
     def clearIterator(self, iterator):
-        return iterator.split('[')[0]
+        return iterator.split('[')[0].split("*")[0]
 
     def clearReference(self, reference):
         matches = reference.split("/")

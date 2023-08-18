@@ -1,0 +1,390 @@
+@prefix era-sh: <http://data.europa.eu/949/shapes/> .
+@prefix ex: <http://example.org/ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-sn: <http://data.europa.eu/949/concepts/sol-natures/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+
+#############################
+# Rules for operational-points
+#############################
+
+#
+# operational-points
+#
+era-sh:operationalpointsShape
+	a sh:NodeShape ;
+	sh:targetClass era:OperationalPoint.
+
+
+# label
+
+# opName: # 1.2.0.0.0.1
+era-sh:operationalpointsShape sh:property era-sh:opName .
+era-sh:opName
+	a sh:PropertyShape;
+	rdfs:comment "Name normally related to the town or village or to traffic control purpose." ;
+	era:rinfIndex "1.2.0.0.0.1" ;
+	sh:path era:opName ;
+	sh:minCount 0 ;
+    sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Warning ;
+	sh:message "opName (1.2.0.0.0.1): There has to be one opName as most, and must be represented as a String."@en .
+
+# uopid: # 1.2.0.0.0.2 
+era-sh:operationalpointsShape sh:property era-sh:uopidP .
+era-sh:uopidP
+	a sh:PropertyShape;
+	rdfs:comment "Code composed of country code and alphanumeric OP code." ;
+	era:rinfIndex "1.2.0.0.0.2" ;
+	sh:path era:uopid ;
+	sh:minCount 1 ;
+    sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Z]{2}.{0,10}$" ;
+	sh:severity sh:Violation ;
+	sh:message "uopid (1.2.0.0.0.2): There must be exactly one UOPID, and its value must follow the pattern [AA+AAAAAAAAAA]."@en .
+
+#era-sh:operationalpointsShape sh:sparql era-sh:uopid . #todo comprobar tarda demasiado en mi caso, en endpoint funciona correctamente
+#era-sh:uopid
+#    a sh:SPARQLConstraint ;   
+#    rdfs:comment "Code composed of country code and alphanumeric OP code." ;
+#	era:rinfIndex "1.2.0.0.0.2" ;
+#	sh:targetClass era:OperationalPoint ;
+#    sh:severity sh:Violation ;
+#    sh:message "uopid (1.2.0.0.0.2): UOPID must be a unique identifier. The OperationalPoints {$this}({?thisLabel}) and {?op2}({?op2Label}) have the same UOPID identifier {?thisID}."@en ;
+#    sh:prefixes era:;
+#    sh:select """
+#    PREFIX era: <http://data.europa.eu/949/>
+#    SELECT DISTINCT $this ?thisLabel ?op2 ?op2Label ?thisID
+#			WHERE {
+#               $this era:uopid ?thisID .
+#				OPTIONAL{$this rdfs:label ?thisLabel} .
+#				?op2 a era:OperationalPoint .
+#				FILTER($this != ?op2)
+#				?op2 era:uopid ?op2ID .
+#				OPTIONAL{?op2 rdfs:label ?op2Label} .
+#               FILTER(?thisID = ?op2ID)
+#   			}
+#			""" .
+
+# tafTAPCode: # 1.2.0.0.0.3
+era-sh:operationalpointsShape sh:property era-sh:tafTAPCode .
+era-sh:tafTAPCode
+	a sh:PropertyShape;
+	rdfs:comment "Primary code developed for TAF/TAP." ;
+	era:rinfIndex "1.2.0.0.0.3" ;
+	sh:path era:tafTAPCode ;
+	sh:minCount 0 ;
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Z]{2}\\d{5}$" ;
+	sh:severity sh:Violation ;
+	sh:message "tafTAPCode (1.2.0.0.0.3): Must follow the pattern [AANNNNN]."@en .
+
+
+# opType: # 1.2.0.0.0.4
+era-sh:operationalpointsShape sh:property era-sh:opTypeP .
+era-sh:opTypeP
+	a sh:PropertyShape;
+	rdfs:comment "Type of facility in relation to the dominating operational functions.\nEach existing case has to be approximated to the one of the above defined types by including size, importance and dominating functions. It is most important to recognize the most important role of specific OP in the network. That is why only one type for one OP is permitted." ;
+	era:rinfIndex "1.2.0.0.0.4" ;
+	sh:path era:opType ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI;
+	#sh:class skos:Concept ; todo
+	sh:severity sh:Violation ;
+	sh:message "opType (1.2.0.0.0.4):  Each OperationalPoint must have exactly one type. This error may be due to having an OP without or with more than one type or it value is not a Concept."@en .
+
+#funciona en endpoint
+#era-sh:operationalpointsShape sh:sparql era-sh:opType .
+#era-sh:opType
+#	a sh:SPARQLConstraint;
+#	rdfs:comment "Type of facility in relation to the dominating operational functions.\nEach existing case has to be approximated to the one of the above defined types by including size, importance and dominating functions. It is most important to recognize the most important role of specific OP in the network. That is why only one type for one OP is permitted." ;
+#	era:rinfIndex "1.2.0.0.0.4" ;
+#	sh:targetClass era:OperationalPoint;
+#	sh:severity sh:Violation ;
+#	sh:message "opType (1.2.0.0.0.4): The OperationalPoint {$this} has a type {?type} that is not part of the appropiate scheme: {?scheme}."@en .
+#	sh:prefixes era:;
+#	sh:select """
+#	SELECT $this ?type ?scheme WHERE {
+#		$this a era:OperationalPoint .
+#		$this era:opType ?type .
+#		FILTER NOT EXISTS{ ?type skos:inScheme <http://data.europa.eu/949/concepts/op-types/OperationalPointTypes> . }
+#		OPTIONAL{ ?type skos:inScheme ?scheme . }
+#	}""" .
+
+#todo borrar en fase delivery
+#era-sh:operationalpointsShape sh:sparql era-sh:opType .
+#era-sh:opType
+#	a sh:SPARQLConstraint;
+#	rdfs:comment "Type of facility in relation to the dominating operational functions.\nEach existing case has to be approximated to the one of the above defined types by including size, importance and dominating functions. It is most important to recognize the most important role of specific OP in the network. That is why only one type for one OP is permitted." ;
+#	era:rinfIndex "1.2.0.0.0.4" ;
+#	sh:targetClass era:OperationalPoint;
+#	sh:severity sh:Violation ;
+#	sh:message "opType (1.2.0.0.0.4): The OperationalPoint {$this} has a type {?type} that is not part of the scheme."@en .
+#	sh:prefixes era:;
+#	sh:select """
+#	SELECT WHERE {
+#		$this era:opType ?type .
+#		FILTER NOT EXISTS {
+#			?type skos:inScheme ?scheme .
+#			era:opType era:inSKOSConceptScheme ?scheme .
+#		}
+#	}""" .
+
+# hasGeometry: # 1.2.0.0.0.5
+era-sh:operationalpointsShape sh:property era-sh:hasGeometry .
+era-sh:hasGeometry
+	a sh:PropertyShape;
+	rdfs:comment "Geographical coordinates in decimal degrees normally given for the centre of the OP." ;
+	era:rinfIndex "1.2.0.0.0.5" ;
+	sh:path geosparql:hasGeometry ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:class geosparql:Geometry;
+	sh:severity sh:Violation ;
+	sh:message "hasGeometry (1.2.0.0.0.5):  Each OP must have exactly one location. This error may be due to having an OP without or with more than one location or the object of the property is not a geosparql:Geometry."@en .
+
+# inCountry todo no aparece en el vocabulario, los valores no son sujetos (tampoco pertenecen a un scheme)
+era-sh:operationalpointsShape sh:property era-sh:inCountryP .
+era-sh:inCountryP
+	a sh:PropertyShape;
+	rdfs:comment "" ; #todo
+	era:rinfIndex "" ; #todo
+	sh:path era:inCountry ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI;
+	#sh:class skos:Concept ; todo
+	sh:severity sh:Violation ;
+	sh:message "inCountry:  Each OperationalPoint must have exactly one country. This error may be due to having an OP without or with more than one country or it value is not a Concept."@en .
+
+#era-sh:operationalpointsShape sh:sparql era-sh:inCountry .
+#era-sh:inCountry
+#	a sh:SPARQLConstraint;
+#	rdfs:comment "" ; #todo
+#	era:rinfIndex "" ; #todo
+#	sh:targetClass era:OperationalPoint;
+#	sh:severity sh:Violation ;
+#	sh:message "inCountry: The OP {$this} has a country ({?country}) which is not part of the countries scheme."@en .
+#	sh:prefixes era:;
+#	sh:select """
+#	SELECT $this ?country WHERE {
+#		$this era:inCountry ?country .
+#		FILTER NOT EXISTS {
+#			?country skos:inScheme ?scheme .
+#			<http://publications.europa.eu/resource/authority/country> era:inSKOSConceptScheme ?scheme .
+#		}
+#	}""" .
+
+# lineReference: # 1.2.0.0.0.6 #TODO saltan errores debido a que falta declaracion de type y propiedades de lineas
+era-sh:operationalpointsShape sh:property era-sh:lineReferenceP .
+era-sh:lineReferenceP
+	a sh:PropertyShape;
+	rdfs:comment "Kilometre related to line identification defining the location of the OP. This will normally be in the centre of the OP.\nThe railway location identifies the location of an OP in the system of reference of a given line.\nThe parameter can be repeated to allow to describe the location of the OP when it belongs to several lines." ;
+	era:rinfIndex "1.2.0.0.0.6" ;
+	sh:targetClass era:OperationalPoint ;
+	sh:path era:lineReference ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	#sh:class era:LineReference;
+	sh:severity sh:Violation ;
+	sh:message "lineReference (1.2.0.0.0.6):  The OperationalPoint must have one LineReference at least. This error may be due to having an OP without LineReference or it class is not LineReference."@en .
+
+#era-sh:operationalpointsShape sh:sparql era-sh:lineReference .
+#era-sh:lineReference
+#	a sh:SPARQLConstraint;
+#	rdfs:comment "Kilometre related to line identification defining the location of the OP. This will normally be in the centre of the OP.\nThe railway location identifies the location of an OP in the system of reference of a given line.\nThe parameter can be repeated to allow to describe the location of the OP when it belongs to several lines." ;
+#	era:rinfIndex "1.2.0.0.0.6" ;
+#	sh:targetClass era:OperationalPoint ;
+#	sh:severity sh:Violation ;
+#	sh:message "lineReference (1.2.0.0.0.6):  The OperationalPoint {$this} (with label:{?oplabel}) has a LineReference({?line}) with the error: {?error}."@en ;
+#	sh:prefixes era:;
+#    sh:select """
+#    PREFIX era: <http://data.europa.eu/949/>
+#    SELECT DISTINCT $this ?oplabel ?line (CONCAT(?error1,?error2) as ?error) WHERE{
+#		OPTIONAL{ $this rdfs:label ?oplabel}
+#		{
+#			SELECT DISTINCT $this ?line ?error1 ?error2 WHERE {
+#				$this era:lineReference ?line .
+#				BIND (IF((NOT EXISTS {?line era:kilometer ?km} || NOT EXISTS {?line era:lineNationalId ?nli}),
+#					"Missing property of LineReference", "") as ?error1) .
+#                              
+#				OPTIONAL{
+#					?line era:kilometer ?km .
+#					?line era:lineNationalId ?nli .
+#					BIND(IF ((datatype(?km) != xsd:double || NOT EXISTS{?nli ?p ?o}),
+#                                             "Wrong Km datatype or lineNationalId does not exists","") as ?error2).
+#				}	
+#			}
+#		}
+#		FILTER (?error1 != "" || ?error2 != "")
+#	}""" .
+
+#TODO: borrar shape inferior en fase delivery
+#era-sh:operationalpointsShape sh:sparql era-sh:lineReference .
+#era-sh:lineReference
+#	a sh:SPARQLConstraint;
+#	rdfs:comment "" ;
+#	era:rinfIndex "1.2.0.0.0.6" ;
+#	sh:targetClass era:OperationalPoint ;
+#	sh:severity sh:Violation ;
+#	sh:message "lineReference (1.2.0.0.0.6):  The OperationalPoint {$this} {?oplabel} {?line} {?error}. "@en ;
+#	sh:prefixes era:;
+#    sh:select """
+#    PREFIX era: <http://data.europa.eu/949/>
+#    SELECT DISTINCT $this ?oplabel ?line ?error WHERE{
+#		OPTIONAL{ $this rdfs:label ?oplabel}
+#		{
+#			SELECT DISTINCT $this ?line ?error WHERE {
+#
+#				OPTIONAL{ SELECT DISTINCT $this ("The node does not have a lineReference property" as ?error) WHERE {
+#					$this a era:OperationalPoint .
+#					FILTER NOT EXISTS { $this era:lineReference ?line . }
+#					}
+#				}
+#
+#				OPTIONAL{ SELECT DISTINCT $this ?line ("Missing property of LineReference" as ?error) WHERE {
+#					$this era:lineReference ?line .
+#					FILTER (NOT EXISTS {?line era:kilometer ?km} || NOT EXISTS {?line era:lineNationalId ?nli})
+#					}
+#				}
+#
+#				OPTIONAL{ SELECT DISTINCT $this ?line ("Wrong Km datatype or lineNationalId does not exists" as ?error) WHERE {
+#					$this a era:OperationalPoint .
+#					$this era:lineReference ?line .
+#					?line era:kilometer ?km .
+#					?line era:lineNationalId ?nli .
+#					FILTER (datatype(?km) != xsd:double || NOT EXISTS{?nli ?p ?o})
+#					}
+#				}
+#			}
+#		}
+#	}""" .
+#
+
+# opTypeGaugeChangeover: # 1.2.0.0.0.4.1 todo revisar NYA
+era-sh:operationalpointsShape sh:property era-sh:opTypeGaugeChangeover .
+era-sh:opTypeGaugeChangeover
+	a sh:PropertyShape;
+	rdfs:comment "Type of track gauge changeover facility." ;
+	era:rinfIndex "1.2.0.0.0.4.1" ;
+	sh:targetClass era:OperationalPoint ;
+	sh:path era:opTypeGaugeChangeover ;
+	sh:minCount 0 ;
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "opTypeGaugeChangeover (1.2.0.0.0.4.1): The Operational Point must have one opTypeGaugeChangeover at most and the type must be string."@en .
+
+# localRulesOrRestrictions: # 1.2.3.1 todo revisar Y/N/NYA
+era-sh:operationalpointsShape sh:property era-sh:localRulesOrRestrictions .
+era-sh:localRulesOrRestrictions
+	a sh:PropertyShape;
+	rdfs:comment "Existence of rules and restrictions of a strictly local nature." ;
+	era:rinfIndex "1.2.3.1" ;
+	sh:targetClass era:OperationalPoint ;
+	sh:path era:localRulesOrRestrictions ;
+	sh:minCount 0 ;
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean;
+	sh:severity sh:Warning ;
+	sh:message "localRulesOrRestrictions (1.2.3.1): The Operational Point must have one localRulesOrRestrictions at most and the type must be boolean."@en .
+
+# localRulesOrRestrictionsDoc: # 1.2.3.2 todo revisar Y/N/NYA
+era-sh:operationalpointsShape sh:property era-sh:localRulesOrRestrictionsDoc .
+era-sh:localRulesOrRestrictionsDoc
+	a sh:PropertyShape;
+	rdfs:comment "Reference of the documents regarding the rules or restrictions of a strictly local nature available by the IM." ;
+	era:rinfIndex "1.2.3.2" ;
+	sh:targetClass era:OperationalPoint ;
+	sh:path era:localRulesOrRestrictionsDoc ;
+	sh:minCount 0 ;
+	sh:maxCount 1 ; #todo: es posible que no tenga maximo
+	sh:datatype xsd:string;
+	sh:severity sh:Warning ;
+	sh:message "localRulesOrRestrictionsDoc (1.2.3.2): The Operational Point must have one localRulesOrRestrictionsDoc reference at most and the type must be string."@en .
+
+
+
+#
+# location #todo es posible comprobar la precisión de decimales?
+#
+era-sh:locationShape
+	a sh:NodeShape ;
+	sh:targetClass geosparql:Geometry .
+
+# wgs:lat
+era-sh:locationShape sh:property era-sh:lat .
+era-sh:lat
+	a sh:PropertyShape;
+	rdfs:comment "Latitude following the spatial reference system WGS84." ;
+	sh:targetClass geosparql:Geometry ;
+	sh:path wgs:lat ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:minInclusive 34;
+	sh:maxExclusive 73;
+	sh:datatype xsd:double ;
+	sh:severity sh:Violation ;
+	sh:message "wgs:lat property. This error may be due to having a Geometry without or with more than one lat property or it value is out of the latitude range of Europe." .
+
+# wgs:long
+era-sh:locationShape sh:property era-sh:long .
+era-sh:long
+	a sh:PropertyShape;
+	rdfs:comment "Longitude following the spatial reference system WGS84." ;
+	sh:targetClass geosparql:Geometry ;
+	sh:path wgs:long ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:minInclusive -25;
+	sh:maxExclusive 46;
+	sh:datatype xsd:double ;
+	sh:severity sh:Violation ;
+	sh:message "wgs:long property. This error may be due to having a Geometry without or with more than one long property or it value is out of the longitude range of Europe." .
+
+# geosparql:asWKT
+era-sh:locationShape sh:property era-sh:wkt .
+era-sh:wkt
+	a sh:PropertyShape;
+	rdfs:comment "Geometry coordinates in WKT serialization format." ;
+	sh:targetClass geosparql:Geometry ;
+	sh:path geosparql:asWKT ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:datatype geosparql:wktLiteral ;
+	sh:severity sh:Violation ;
+	sh:message "geosparql:Geometry. This error This error may be due to having a Geometry without or with more than one asWKT property or it value is not from the wktLiteral type." .
+
+# geometry consistence
+#era-sh:locationShape sh:sparql era-sh:GeometryFormat .
+#era-sh:GeometryFormat
+#	a sh:SPARQLConstraint;
+#	rdfs:comment "Geographical coordinates in decimal degrees normally given for the centre of the OP." ;
+#	sh:targetClass geosparql:Geometry ;
+#	sh:severity sh:Violation ;
+#	sh:message "Geometry {$this} has inconsistences in its properties: {?error}" ;
+#	sh:prefixes (era: geosparql: wgs:);
+#	sh:select """
+#   PREFIX era: <http://data.europa.eu/949/>
+#	PREFIX geosparql: <http://www.opengis.net/ont/geosparql#> 
+#	PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+#	SELECT DISTINCT $this (CONCAT(?error1,?error2) as ?error) WHERE {
+#		$this geosparql:asWKT ?wkt .
+#		$this wgs:lat ?lat .
+#		$this wgs:long ?long .
+#		BIND( xsd:double (replace( str(?wkt), "^[^0-9\\.\\+\\-]*([\\+\\-0-9\\.]+) .*$", "$1" )) as ?longWKT ) .
+#  		BIND( xsd:double (replace( str(?wkt), "^.* ([0-9\\.]+)[^0-9\\.]*$", "$1" )) as ?latWKT ) .
+#		BIND(IF ((?lat != ?latWKT), "The latitude of WKTLiteral and WGS does not match.","") as ?error1) .
+#		BIND(IF ((?long != ?longWKT), "The longitude of WKTLiteral and WGS does not match.","") as ?error2) .
+#		FILTER (?error1 != "" || ?error2 != "")
+#	}""" .

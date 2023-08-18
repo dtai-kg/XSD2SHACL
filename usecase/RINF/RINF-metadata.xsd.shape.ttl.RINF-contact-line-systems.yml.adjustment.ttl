@@ -1,0 +1,109 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter> a sh:NodeShape ;
+    sh:name "SOLTrackParameter" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Set>,
+        <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/conditionalRegenerativeBrake>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/currentLimitationRequired>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/energySupplySystem>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/energySupplySystemTSICompliant>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/hasRegenerativeBrake>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxCurrentStandstillPantograph>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxTrainCurrent>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/umax2> ;
+    sh:targetClass era:ContactLineSystem .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Set> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Set" ;
+    sh:nodeKind sh:Literal ;
+    sh:path rdfs:label .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:contactLineSystemType .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/conditionalRegenerativeBrake> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:conditionalRegenerativeBrake .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/currentLimitationRequired> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:currentLimitationRequired .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/energySupplySystem> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:energySupplySystem .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/energySupplySystemTSICompliant> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:energySupplySystemTSICompliant .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/hasRegenerativeBrake> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasRegenerativeBrake .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxCurrentStandstillPantograph> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:maxCurrentStandstillPantograph .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxTrainCurrent> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:maxTrainCurrent .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/umax2> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:umax2 .
+

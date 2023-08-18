@@ -1,0 +1,248 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint> a sh:NodeShape ;
+    sh:name "OperationalPoint" ;
+    sh:node <http://example.com/NodeShape/RINFData/OperationalPoint/OPGeographicLocation>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPName>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPRailwayLocation>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPTafTapCode>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPType>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPTypeGaugeChangeover>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/UniqueOPID> ;
+    sh:targetClass era:BorderPoint,
+        era:OperationalPoint .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPRules/OPRulesParameter> a sh:NodeShape ;
+    sh:name "OPRulesParameter" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPRules/OPRulesParameter/Value>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPRules/OPRulesParameter/Value/localRulesOrRestrictions> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPGeographicLocation> a sh:NodeShape ;
+    sh:name "OPGeographicLocation" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPGeographicLocation/Latitude>,
+        <http://example.com/PropertyShape/RINFData/OperationalPoint/OPGeographicLocation/Longitude> ;
+    sh:targetClass era:OperationalPoint,
+        geosparql:Geometry,
+        wgs:Point .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPName> a sh:NodeShape ;
+    sh:name "OPName" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPName/Value>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPName/Value/opName>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPName/Value/rdf-schema#label> ;
+    sh:targetClass era:BorderPoint,
+        era:OperationalPoint .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPRailwayLocation> a sh:NodeShape ;
+    sh:name "OPRailwayLocation" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPRailwayLocation/Kilometer>,
+        <http://example.com/PropertyShape/RINFData/OperationalPoint/OPRailwayLocation/NationalIdentNum> ;
+    sh:targetClass era:LineReference .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTafTapCode> a sh:NodeShape ;
+    sh:name "OPTafTapCode" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPTafTapCode/Value>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTafTapCode/Value/tafTAPCode> ;
+    sh:targetClass era:BorderPoint,
+        era:OperationalPoint .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPType> a sh:NodeShape ;
+    sh:name "OPType" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPType/Value>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPType/Value/opType> ;
+    sh:targetClass era:BorderPoint,
+        era:OperationalPoint .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTypeGaugeChangeover> a sh:NodeShape ;
+    sh:name "OPTypeGaugeChangeover" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPTypeGaugeChangeover/Value> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/UniqueOPID> a sh:NodeShape ;
+    sh:name "UniqueOPID" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value/borderPointOf>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value/canonicalURI>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value/hasAbstraction>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value/uopid> ;
+    sh:targetClass era:BorderPoint,
+        era:OperationalPoint .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPGeographicLocation/Latitude> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Latitude" ;
+    sh:nodeKind sh:Literal ;
+    sh:path wgs:lat .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPGeographicLocation/Longitude> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Longitude" ;
+    sh:nodeKind sh:Literal ;
+    sh:path wgs:long .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPName/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path rdfs:label .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPRailwayLocation/Kilometer> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Kilometer" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:kilometer .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPRailwayLocation/NationalIdentNum> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "NationalIdentNum" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:lineNationalId .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPRules/OPRulesParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:localRulesOrRestrictionsDoc .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPTafTapCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 7 ;
+    sh:minCount 0 ;
+    sh:minLength 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tafTAPCode .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPType/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:opType .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPTypeGaugeChangeover/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:opTypeGaugeChangeover .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 12 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:uopid .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPName/Value/opName> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:opName .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPName/Value/rdf-schema#label> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path rdfs:label .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPRules/OPRulesParameter/Value/localRulesOrRestrictions> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:localRulesOrRestrictions .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTafTapCode/Value/tafTAPCode> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 7 ;
+    sh:minCount 0 ;
+    sh:minLength 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tafTAPCode .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPType/Value/opType> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:opType .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value/borderPointOf> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 12 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:borderPointOf .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value/canonicalURI> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 12 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:canonicalURI .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value/hasAbstraction> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 12 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:hasAbstraction .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/UniqueOPID/Value/uopid> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 12 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:uopid .
+
+[] rdf:first "http://example.com/NodeShape/RINFData/OperationalPoint" ;
+    rdf:rest () .
+

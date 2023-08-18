@@ -1,0 +1,56 @@
+@prefix era-sh: <http://data.europa.eu/949/shapes/> .
+@prefix ex: <http://example.org/ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix era-etclvl: <http://data.europa.eu/949/concepts/etcs-levels/> .
+@prefix era-etcb: <http://data.europa.eu/949/concepts/etcs-baselines/> .
+
+#############################
+# Rules for etcs-levels
+#############################
+
+era-sh:ETCSLevelShape  
+    a sh:NodeShape ;
+    sh:targetClass era:ETCSLevel .
+
+# etcsLevelType: # 1.1.1.3.2.1
+era-sh:ETCSLevelShape sh:property era-sh:EtcsLevelType.
+era-sh:EtcsLevelType
+	a sh:SPARQLConstraint ;
+	rdfs:comment "ERTMS/ETCS application level related to the track side equipment." ;
+	era:rinfIndex "1.1.1.3.2.1" ;
+	sh:path era:etcsLevelType ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+#	skos:inScheme era-etclvl:ETCSLevels ;
+	sh:severity sh:Violation ;
+	sh:message "etcsLevelType (1.1.1.3.2.1): The track must define the ERTMS/ETCS application level related to the track side equipment."@en ;
+	sh:prefixes era: ;
+	sh:select """
+	SELECT $this WHERE{
+ 		$this era:etcsLevelType ?type .
+		FILTER NOT EXISTS{
+  			?type skos:inScheme <http://data.europa.eu/949/concepts/etcs-levels/ETCSLevels> .
+		}
+	}""" .
+
+# etcs-baseline: # 1.1.1.3.2.2
+era-sh:ETCSLevelShape sh:property era-sh:EtcsBaseline.
+era-sh:EtcsBaseline
+	a sh:PropertyShape ;
+	rdfs:comment "ERTMS/ETCS baseline installed lineside." ;
+	era:rinfIndex "1.1.1.3.2.2" ;
+	sh:path era:etcsBaseline ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-etcb:ETCSBaselines ;
+	sh:severity sh:Violation ;
+	sh:message "etcsBaseline (1.1.1.3.2.2): The track must define the ERTMS/ETCS baseline installed lineside."@en .

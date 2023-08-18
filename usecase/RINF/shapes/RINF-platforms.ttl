@@ -1,0 +1,159 @@
+@prefix era-sh: <http://data.europa.eu/949/shapes/> .
+@prefix ex: <http://example.org/ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-sn: <http://data.europa.eu/949/concepts/sol-natures/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix era-ph: <http://data.europa.eu/949/concepts/platform-heights/> .
+#############################
+# Rules for platform
+#############################
+
+#
+# platform
+#
+era-sh:platformsShape
+	a sh:NodeShape ;
+	sh:targetClass era:Platform .
+
+# label
+
+# imCode: # 1.2.1.0.6.1
+era-sh:platformsShape sh:property era-sh:imCode .
+era-sh:imCode
+	a sh:PropertyShape;
+	rdfs:comment "Each Platform can only be submitted by one infrastructure manager, represented by a four-digit code." ;
+	era:rinfIndex "1.2.1.0.6.1" ;
+	sh:path era:imCode ;
+	sh:minCount 1 ;
+    sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:minLength 4 ;
+    sh:maxLength 4 ;
+	sh:severity sh:Warning ;
+	sh:message "imCode (1.2.1.0.6.1): Each Platform can be referred to only one infrastructure manager, which MUST be represented with a four-digit code. This error may be due to having a Platform with no infrastructure manager associated, with more than one infrastructure managers, or with a code that has a different length."@en .
+
+# platformId: # 1.2.1.0.6.2
+era-sh:platformsShape sh:property era-sh:platformId .
+era-sh:platformId
+	a sh:PropertyShape;
+    rdfs:comment "Unique platform identification or unique platform number within OP." ;
+	era:rinfIndex "1.2.1.0.6.2" ;
+	sh:path era:platformId ;
+	sh:minCount 1 ;
+    sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "platformId (1.2.1.0.6.2): Each Platform must have exactly one platformId. This error may be due to having a platform without or with more than one platformId or it value is not a string."@en .
+
+# tenClassification: # 1.2.1.0.6.3
+era-sh:platformsShape sh:property era-sh:tenClassificationP .
+era-sh:tenClassificationP
+	a sh:PropertyShape;
+    rdfs:comment "Indicates the part of the trans-European network the platform belongs to." ;
+	era:rinfIndex "1.2.1.0.6.3" ;
+	sh:path era:tenClassification ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI;
+	#sh:class skos:Concept ; todo
+	sh:severity sh:Violation ;
+	sh:message "tenClassification (1.2.1.0.6.3): Each Platform must be part of at least one TEN. This error may be due to having a Platfrom without being part of a TEN or having an illegal TEN value."@en .
+
+#funciona en endpoint
+#era-sh:platformsShape sh:sparql era-sh:tenClassification .
+#era-sh:tenClassification
+#	a sh:SPARQLConstraint;
+#	rdfs:comment "Indicates the part of the trans-European network the platform belongs to." ;
+#	era:rinfIndex "1.2.1.0.6.3" ;
+#	sh:targetClass era:Platform;
+#	sh:severity sh:Violation ;
+#	sh:message "tenClassification (1.2.1.0.6.3): The Platform {$this} has a tenClassification {?ten} that is not part of the appropiate scheme: {?scheme}."@en .
+#	sh:prefixes era:;
+#	sh:select """
+#	SELECT $this ?ten ?scheme WHERE {
+#		$this era:tenClassification ?ten .
+#		FILTER NOT EXISTS{ ?ten skos:inScheme <http://data.europa.eu/949/concepts/ten-classifications/TENClassifications> . }
+#		OPTIONAL{ ?ten skos:inScheme ?scheme . }
+#	}""" .
+
+# length: # 1.2.1.0.6.4
+era-sh:platformsShape sh:property era-sh:length .
+era-sh:length
+	a sh:PropertyShape;
+    rdfs:comment "The maximum continuous length (expressed in metres) of that part of platform in front of which a train is intended to remain stationary in normal operating conditions for passengers to board and alight from the train, making appropriate allowance for stopping tolerances." ;
+	era:rinfIndex "1.2.1.0.6.4" ;
+	sh:path era:length ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:datatype xsd:double ;
+	sh:minInclusive 0 ;
+	sh:maxExclusive 10000 ;
+	sh:severity sh:Violation ;
+	sh:message "length (1.2.1.0.6.4): Each Platform must have exactly one lenght. This error may be caused due to having a platform with no length or its value is not correct( not being double or not in range [0,10000)) "@en .
+	
+
+
+# platformHeight: # 1.2.1.0.6.5
+era-sh:platformsShape sh:property era-sh:platformHeightP .
+era-sh:platformHeightP
+	a sh:PropertyShape;
+    rdfs:comment "Distance between the upper surface of platform and running surface of the neighbouring track. It is the nominal value expressed in millimetres." ;
+	era:rinfIndex "1.2.1.0.6.5" ;
+	sh:path era:platformHeight ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:IRI;
+	#sh:class skos:Concept ; todo
+	sh:severity sh:Violation ;
+	sh:message "platformHeight (1.2.1.0.6.5): Each Platform must have exactly one height. This error may be due to having a platform with no length or having an illegal height value."@en .
+
+#funciona en endpoint
+#era-sh:platformsShape sh:sparql era-sh:platformHeight .
+#era-sh:platformHeight
+#	a sh:SPARQLConstraint;
+#	rdfs:comment "Distance between the upper surface of platform and running surface of the neighbouring track. It is the nominal value expressed in millimetres." ;
+#	era:rinfIndex "1.2.1.0.6.5" ;
+#	sh:targetClass era:Platform;
+#	sh:severity sh:Violation ;
+#	sh:message "tenClassification (1.2.1.0.6.3): The Platform {$this} has a tenClassification {?ten} that is not part of the appropiate scheme: {?scheme}."@en .
+#	sh:prefixes era:;
+#	sh:select """
+#	SELECT $this ?height ?scheme WHERE {
+#		$this era:platformHeight ?height .
+#		FILTER NOT EXISTS{ ?height skos:inScheme <http://data.europa.eu/949/concepts/platform-heights/PlatformHeights> . }
+#		OPTIONAL{ ?height skos:inScheme ?scheme . }
+#	}""" .
+
+# assistanceStartingTrain: # 1.2.1.0.6.6
+era-sh:platformsShape sh:property era-sh:assistanceStartingTrain .
+era-sh:assistanceStartingTrain
+	a sh:PropertyShape;
+    rdfs:comment "Indication of existence of equipment or staff supporting the train crew in starting the train.\nFixed equipment (for example mirrors or CCTV cameras) or station staff indicating to train crew or driver when to close doors and whether this has been done successfully." ;
+	era:rinfIndex "1.2.1.0.6.6" ;
+	sh:path era:assistanceStartingTrain ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "assistanceStartingTrain (1.2.1.0.6.6): Each Platform must have exactly one assistanceStartingTrain declaration. This error may be caused due to having a platform with no assistanceStartingTrain or its value is not boolean."@en .
+	
+# areaBoardingAid: # 1.2.1.0.6.7
+era-sh:platformsShape sh:property era-sh:areaBoardingAid .
+era-sh:areaBoardingAid
+	a sh:PropertyShape;
+    rdfs:comment "Information of the train access level for which the boarding aid can be used." ;
+	era:rinfIndex "1.2.1.0.6.7" ;
+	sh:path era:areaBoardingAid ;
+	sh:minCount 0 ;
+	sh:maxCount 1 ;
+	sh:datatype xsd:integer ;#todo no hay datos, es posible que deba ser double
+	sh:minInclusive 0 ;
+	sh:maxExclusive 10000 ;
+	sh:severity sh:Warning ;
+	sh:message "areaBoardingAid (1.2.1.0.6.7): Each Platform may have one areaBoardingAid value. This error may be caused due to having a platform with multiple areaBoardingAid or its value is not correct( not being integer or not in range [0,10000)."@en .
+	

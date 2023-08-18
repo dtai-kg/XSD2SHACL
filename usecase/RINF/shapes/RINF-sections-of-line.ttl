@@ -1,0 +1,117 @@
+@prefix ex: <http://example.org/ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-sn: <http://data.europa.eu/949/concepts/sol-natures/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+#############################
+# Rules for sections-of-line
+#############################
+
+#
+# sections-of-line
+#
+ex:sectionsoflineShape
+	a sh:NodeShape ;
+	sh:targetClass era:SectionOfLine ;    # Applies to all SectionOfLine
+	sh:property [                 # _:b1
+		sh:path rdfs:label ;           # constrains the values of rdfs:label
+#		sh:minCount 1 ;
+        sh:maxCount 1 ;
+#		sh:nodeKind sh:IRI ;
+#		sh:message "message"@en ;
+	] ;
+
+#
+# imCode: # 1.1.0.0.0.1
+#
+	sh:property [                 # _:b2
+		sh:path era:imCode ;           # constrains the values of era:imCode
+		sh:minCount 1 ;
+        sh:maxCount 1 ;
+#		sh:severity sh:Warning ;
+#		sh:message "message"@en ;
+	] ;
+
+#
+# lineNationalId: # 1.1.0.0.0.2
+#
+	sh:property [                 # _:b3
+		sh:path era:lineNationalId ;           # constrains the values of era:lineNationalId
+#		sh:minCount 1 ;
+        sh:maxCount 1 ;
+		sh:nodeKind sh:IRI ;
+#		sh:severity sh:Warning ;
+#		sh:message "message"@en ;
+	] ;
+
+#
+# opStart: # 1.1.0.0.0.3
+#
+	sh:property [                 # _:b4
+		sh:path era:opStart ;           # constrains the values of era:opStart
+#		sh:minCount 1 ;
+        sh:maxCount 1 ;
+		sh:nodeKind sh:IRI ;
+#		sh:severity sh:Warning ;
+#		sh:message "message"@en ;
+	] ;
+
+#
+# opEnd: # 1.1.0.0.0.4
+#
+	sh:property [                 # _:b5
+		sh:path era:opEnd ;           # constrains the values of era:opEnd
+#		sh:minCount 1 ;
+        sh:maxCount 1 ;
+		sh:nodeKind sh:IRI ;
+#		sh:severity sh:Warning ;
+#		sh:message "message"@en ;
+	] ;
+
+#
+# length: # 1.1.0.0.0.5 
+#
+	sh:property [                 # _:b6
+		sh:path era:length ;           # constrains the values of era:length
+#		sh:minCount 1 ;
+        sh:maxCount 1 ;
+		sh:datatype xsd:double ;
+#		sh:severity sh:Warning ;
+#		sh:message "message"@en ;
+	] ;
+
+#
+# solNature: # 1.1.0.0.0.6
+#
+	sh:property [                 # _:b7
+		sh:path era:solNature ;           # constrains the values of era:solNature
+#		sh:minCount 1 ;
+#        sh:maxCount 1 ;
+		sh:nodeKind sh:IRI ;
+		skos:inScheme era-sn:SoLNatures ;
+#		sh:severity sh:Warning ;
+#		sh:message "message"@en ;
+	] ;
+
+#
+# hasAbstraction: # 1.1.0.0.0.6
+#
+	sh:property [                 # _:b8
+		sh:path era:hasAbstraction ;           # constrains the values of era:hasAbstraction
+		sh:minCount 1 ;
+        sh:maxCount 1 ;
+		sh:nodeKind sh:IRI ;
+#		sh:severity sh:Warning ;
+#		sh:message "message"@en ;
+	] ;
+
+	sh:property [                 # _:b9
+		sh:path era:inCountry ;           # constrains the values of era:inCountry
+		sh:minCount 1 ;
+        sh:maxCount 1 ;
+		sh:nodeKind sh:IRI ;
+#		sh:message "message"@en ;
+	] .

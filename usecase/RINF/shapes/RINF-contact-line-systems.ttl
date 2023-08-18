@@ -1,0 +1,120 @@
+@prefix era-sh: <http://data.europa.eu/949/shapes/> .
+@prefix ex: <http://example.org/ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix  era-cls: <http://data.europa.eu/949/concepts/contact-line-systems/> .
+@prefix  era-ess: <http://data.europa.eu/949/concepts/energy-supply-systems/> .
+@prefix skos:<http://www.w3.org/2004/02/skos/core#> .
+#############################
+# Rules for contact-line-systems
+#############################
+
+era-sh:contactLineSystemShape  
+    a sh:NodeShape ;
+    sh:targetClass era:ContactLineSystem .
+
+#contactLineSystemType: # 1.1.1.2.2.1.1
+era-sh:contactLineSystemShape sh:property era-sh:contactLineSystems .
+era-sh:contactLineSystems
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the type of the contact line system" ;
+	era:rinfIndex "1.1.1.2.2.1.1" ;
+	sh:path era:contactLineSystemType ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-cls:ContactLineSystems ;
+	sh:severity sh:Violation ;
+	sh:message "contactLineSystemType (1.1.1.2.2.1.1): The contact line system must define the type."@en .
+
+# energySupplySystem: # 1.1.1.2.2.1.2
+era-sh:contactLineSystemShape sh:property era-sh:energySupplySystems .
+era-sh:energySupplySystems
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the traction supply system" ;
+	era:rinfIndex "1.1.1.2.2.1.2" ;
+	sh:path era:energySupplySystem ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-ess:EnergySupplySystems ;
+	sh:severity sh:Violation ;
+	sh:message "energySupplySystem (1.1.1.2.2.1.2): The contact line system must define the energy supply system."@en .
+
+# energySupplySystemTSICompliant: # 1.1.1.2.2.1.2.1
+era-sh:contactLineSystemShape sh:property era-sh:energySupplySystemTSICompliant .
+era-sh:energySupplySystemTSICompliant
+	a sh:PropertyShape ;
+	rdfs:comment "Indication if the traction supply system is fully compilant with TSI" ;
+	era:rinfIndex "1.1.1.2.2.1.2.1" ;
+	sh:path era:energySupplySystemTSICompliant ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "energySupplySystemTSICompliant (1.1.1.2.2.1.2.1): The contact line system must define if the energy supply system is fully compilant with TSI."@en .
+
+# umax2: # 1.1.1.2.2.1.3
+era-sh:contactLineSystemShape sh:property era-sh:umax2 .
+era-sh:umax2
+	a sh:PropertyShape ;
+	rdfs:comment "Umax2 for lines referred to in sections 7.4.2.2.1 and 7.4.2.11.1 of Regulation (EU) 1301/2014" ;
+	era:rinfIndex "1.1.1.2.2.1.3" ;
+	sh:path era:umax2 ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:integer ;
+	sh:pattern "[1-9]\\d{0,5}|0" ;
+	sh:severity sh:Violation ;
+	sh:message "umax2 (1.1.1.2.2.1.3): The contact line system must define the Umax2"@en .
+
+# maxTrainCurrent: # 1.1.1.2.2.2
+era-sh:contactLineSystemShape sh:property era-sh:maximumTrainCurrent .
+era-sh:maximumTrainCurrent
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the maximum allowable train current" ;
+	era:rinfIndex "1.1.1.2.2.2" ;
+	sh:path era:maxTrainCurrent ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:integer ;
+	sh:pattern "[1-9]\\d{0,3}|0" ;
+	sh:severity sh:Violation ;
+	sh:message "maxTrainCurrent (1.1.1.2.2.2): The contact line system must define the maximum allowable train current."@en .
+
+# maxCurrentStandstillPantograph: # 1.1.1.2.2.3
+era-sh:contactLineSystemShape sh:property era-sh:maxCurrentStandstillPantograph .
+era-sh:maxCurrentStandstillPantograph
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the maximum allowable current at standstill per pantograph" ;
+	era:rinfIndex "1.1.1.2.2.3" ;
+	sh:path era:maxCurrentStandstillPantograph ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:double ;
+	sh:pattern "[1-9]\\d{0,2}|0" ;
+	sh:severity sh:Violation ;
+	sh:message "maxCurrentStandstillPantograph (1.1.1.2.2.3): The contact line system must define the maximum allowable current at standstill per pantograph."@en .
+
+# conditionalRegenerativeBrake: # 1.1.1.2.2.4
+era-sh:contactLineSystemShape sh:property era-sh:conditionalRegenerativeBrake .
+era-sh:conditionalRegenerativeBrake
+	a sh:PropertyShape ;
+	rdfs:comment "Indication if the regenerative brake is permitted" ;
+	era:rinfIndex "1.1.1.2.2.4" ;
+	sh:path era:conditionalRegenerativeBrake ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "conditionalRegenerativeBrake (1.1.1.2.2.4): The contact line system must define if the regenerative brake is permitted."@en .
+	
+# currentLimitationRequired: # 1.1.1.2.5.1
+era-sh:contactLineSystemShape sh:property era-sh:currentLimitationRequired .
+era-sh:currentLimitationRequired
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the current or power limitation on board required" ;
+	era:rinfIndex "1.1.1.2.5.1" ;
+	sh:path era:currentLimitationRequired ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "currentLimitationRequired (1.1.1.2.5.1): The contact line system must define the current or power limitation on board required."@en .

@@ -1,0 +1,39 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter> a sh:NodeShape ;
+    sh:name "SOLTrackParameter" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Set>,
+        <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/etcsLevelType> ;
+    sh:targetClass era:ETCSLevel .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Set> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Set" ;
+    sh:nodeKind sh:Literal ;
+    sh:path rdfs:label .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:etcsBaseline .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/etcsLevelType> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:etcsLevelType .
+

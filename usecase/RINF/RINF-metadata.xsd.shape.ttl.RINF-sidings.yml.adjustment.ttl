@@ -1,0 +1,243 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding> a sh:NodeShape ;
+    sh:name "OPSiding" ;
+    sh:node <http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingIMCode>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingIdentification>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter> ;
+    sh:targetClass era:Siding .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/UniqueOPID> a sh:NodeShape ;
+    sh:name "UniqueOPID" .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingIMCode> a sh:NodeShape ;
+    sh:name "OPSidingIMCode" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingIMCode/Value> ;
+    sh:targetClass era:Siding .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingIdentification> a sh:NodeShape ;
+    sh:name "OPSidingIdentification" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingIdentification/Value> ;
+    sh:targetClass era:Siding .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter> a sh:NodeShape ;
+    sh:name "OPSidingParameter" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter>,
+        <http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable>,
+        <http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable/hasExternalCleaning>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable/hasRefuelling>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable/hasSandRestocking>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable/hasToiletDischarge>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable/hasWaterRestocking>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/gradient>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasElectricShoreSupply>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasExternalCleaning>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasRefuelling>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasSandRestocking>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasToiletDischarge>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasWaterRestocking>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/length>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/maxCurrentStandstillPantograph>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/minimumHorizontalRadius>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/minimumVerticalRadius> .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 4 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:imCode .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:sidingId .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter> a sh:PropertyShape ;
+    sh:minCount 0 ;
+    sh:name "OPSidingParameter" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:tenClassification .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 3 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "IsApplicable" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasElectricShoreSupply .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:demonstrationINF .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable/hasExternalCleaning> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 3 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "IsApplicable" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasExternalCleaning .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable/hasRefuelling> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 3 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "IsApplicable" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasRefuelling .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable/hasSandRestocking> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 3 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "IsApplicable" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasSandRestocking .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable/hasToiletDischarge> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 3 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "IsApplicable" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasToiletDischarge .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/IsApplicable/hasWaterRestocking> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 3 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "IsApplicable" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasWaterRestocking .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/gradient> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:gradient .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasElectricShoreSupply> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasElectricShoreSupply .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasExternalCleaning> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasExternalCleaning .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasRefuelling> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasRefuelling .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasSandRestocking> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasSandRestocking .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasToiletDischarge> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasToiletDischarge .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/hasWaterRestocking> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:hasWaterRestocking .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/length> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:length .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/maxCurrentStandstillPantograph> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:maxCurrentStandstillPantograph .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/minimumHorizontalRadius> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:minimumHorizontalRadius .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPSiding/OPSidingParameter/Value/minimumVerticalRadius> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:minimumVerticalRadius .
+
+[] rdf:first "http://example.com/NodeShape/RINFData/OperationalPoint" ;
+    rdf:rest () .
+

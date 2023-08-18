@@ -1,0 +1,36 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLLineIdentification> a sh:NodeShape ;
+    sh:name "SOLLineIdentification" ;
+    sh:targetClass era:NetRelation .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLOPEnd> a sh:NodeShape ;
+    sh:name "SOLOPEnd" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLOPEnd/Value> ;
+    sh:targetClass era:NetRelation .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLOPStart> a sh:NodeShape ;
+    sh:name "SOLOPStart" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLOPStart/Value> ;
+    sh:targetClass era:NetRelation .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLOPEnd/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 12 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:elementB .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLOPStart/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 12 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:elementA .
+

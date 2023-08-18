@@ -1,0 +1,208 @@
+@prefix era-sh: <http://data.europa.eu/949/shapes/> .
+@prefix ex: <http://example.org/ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-sn: <http://data.europa.eu/949/concepts/sol-natures/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix era-ph: <http://data.europa.eu/949/concepts/platform-heights/> .
+@prefix era-tenclass: <http://data.europa.eu/949/concepts/ten-classifications/> .
+@prefix era-gaugings: <http://data.europa.eu/949/concepts/gaugings/> .
+@prefix era-ntg: <http://data.europa.eu/949/concepts/nominal-track-gauges/> .
+@prefix era-linecat: <http://data.europa.eu/949/concepts/line-category/> .
+@prefix era-frecorr: <http://data.europa.eu/949/concepts/freight-corridor/> .
+
+#############################
+# Rules for op-track
+#############################
+
+#
+# op-track
+#
+era-sh:optracksShape
+	a sh:NodeShape ;
+	sh:targetClass era:Track .
+
+
+# imCode: #1.2.1.0.0.1
+era-sh:optracksShape sh:property era-sh:imCode .
+era-sh:imCode
+	a sh:PropertyShape ;
+	rdfs:comment "Infrastructure manager means any body or undertaking that is responsible in particular for establishing and maintaining railway infrastructure or a part thereof" ;
+	era:rinfIndex "1.2.1.0.0.1" ;
+	sh:path era:imCode ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Za-z0-9]{4}$" ;
+	sh:severity sh:Warning ;
+	sh:message "imCode (1.2.1.0.0.1): Each OPTrack can be referred to only one infrastructure manager, which MUST be represented with a four-digit code."@en .
+
+# trackId: #1.2.1.0.0.2
+era-sh:optracksShape sh:property era-sh:trackId .
+era-sh:trackId
+	a sh:PropertyShape ;
+	rdfs:comment "Unique track identification or unique number within OP" ;
+	era:rinfIndex "1.2.1.0.0.2" ;
+	sh:path era:trackId ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "trackId (1.2.1.0.0.2): Each track shall have one identification or number"@en .
+
+# trackId: #1.2.1.0.0.2
+era-sh:opcodeShape sh:property era-sh:trackIdUnique .
+era-sh:trackIdUnique
+	a sh:PropertyShape ;
+	rdfs:comment "Unique track identification or unique number within OP" ;
+	era:rinfIndex "1.2.1.0.0.2" ;
+	sh:path era:trackId ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "trackId (1.2.1.0.0.2): Each track shall have unique identification or number within the Operational Point"@en .
+
+# verificationINF: # 1.2.1.0.1.1
+era-sh:optracksShape sh:property era-sh:verificationINF .
+era-sh:verificationINF
+	a sh:PropertyShape ;
+	rdfs:comment "Unique number for EC declarations following format requirements specified in the 'Document about practical arrangements for transmitting interoperability documents'" ;
+	era:rinfIndex "1.2.1.0.1.1" ;
+	sh:path era:verificationINF ;
+	#TODO: Not yet applicable
+	sh:minCount 0 ;
+	sh:datatype xsd:string ;
+	# example for the pattern: BL/00001002036258/2009/000001
+	sh:pattern "^[A-Z]{2}/[0-9]{14}/(19[0-9][0-9]|20[0-9][0-9]|2100)/[0-9]{6}$" ;
+	sh:severity sh:Warning ;
+	sh:message "verificationINF (1.2.1.0.1.1): Each OPTrack may have one or more verificationINF following this pattern country code/national registration number/year between 1900 and 2100/progressive counter"@en .
+
+# demonstrationINF: # 1.2.1.0.1.2
+era-sh:optracksShape sh:property era-sh:demonstrationINF .
+era-sh:demonstrationINF
+	a sh:PropertyShape ;
+	rdfs:comment "Unique number for EI declarations following the same format requirements as specified in the 'Document about practical arrangements for transmitting interoperability documents'" ;
+	era:rinfIndex "1.2.1.0.1.2" ;
+	sh:path era:demonstrationINF ;
+	#TODO: Not yet applicable
+	sh:minCount 0 ;
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Z]{2}/[0-9]{14}/(19[0-9][0-9]|20[0-9][0-9]|2100)/[0-9]{6}$" ;
+	sh:severity sh:Warning ;
+	sh:message "demonstrationINF (1.2.1.0.1.2): Each OPTrack may have one or more demonstrationINF following these pattern country code/national registration number/year between 1900 and 2100/progressive counter"@en .
+
+# tenClassification: # 1.2.1.0.2.1
+era-sh:optracksShape sh:property era-sh:tenClassification .
+era-sh:tenClassification
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the part of the trans-European network (TEN-T) to which the track belongs" ;
+	era:rinfIndex "1.2.1.0.2.1" ;
+	sh:path era:tenClassification ;
+	#TODO: Not yet applicable
+	sh:minCount 0 ;	
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; 
+#	skos:inScheme era-tenclass:TENClassifications ; #TODO: Check if this is correct
+	sh:severity sh:Violation ;
+	sh:message "tenClassification (1.2.1.0.2.1): Each OPTrack may have one or more tenClassification"@en .
+
+# lineCategory: #1.2.1.0.2.2
+era-sh:optracksShape sh:property era-sh:lineCategory .
+era-sh:lineCategory
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the category of the line to which the track belongs according to the INF TSI. TSI categories of line shall be used for the classification of existing lines to defina a target system so that the relevant performance parameters will be met" ;
+	era:rinfIndex "1.2.1.0.2.2" ;
+	sh:path era:lineCategory ;
+	sh:minCount 0 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; 
+#	skos:inScheme era-linecat:LineCategories ; #TODO: Check if this is correct
+	sh:severity sh:Violation ;
+	sh:message "lineCategory (1.2.1.0.2.2): "@en . #TODO: add message
+
+# lineCategory: #1.2.1.0.2.2
+era-sh:optracksShape sh:property era-sh:lineCategoryCode .
+era-sh:lineCategoryCode
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of the category of the line to which the track belongs according to the INF TSI. TSI categories of line shall be used for the classification of existing lines to defina a target system so that the relevant performance parameters will be met" ;
+	era:rinfIndex "1.2.1.0.2.2" ;
+	sh:path era:lineCategory ;
+	sh:minCount 0 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ;
+#	skos:inScheme era-linecat:LineCategories ; #TODO: Check if this is correct
+	sh:severity sh:Violation ;
+	sh:message "lineCategory (1.2.1.0.2.2): Each OPTrack must define the track to which it belongs "@en . #TODO: add message
+
+# freightCorridor: #1.2.1.0.2.3
+era-sh:optracksShape sh:property era-sh:freightCorridor .
+era-sh:freightCorridor
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether the line is designated to a Railway Freight Corridor" ;
+	era:rinfIndex "1.2.1.0.2.3" ;
+	sh:path era:freightCorridor ;
+	sh:minCount 0 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; 
+#	skos:inScheme era-frecorr:FreightCorridors ; #TODO: Check if this is correct
+	sh:severity sh:Violation ;
+	sh:message "freightCorridor (1.2.1.0.2.3): Each OPTrack may belong to one or more corridor from the following list: Rhine-Alpine RFC (RFC 1), North Sea-Mediterranean RFC (RFC 2), Scandinavian – Mediterranean RFC (RFC 3), Atlantic RFC (RFC 4), Baltic-Adriatic RFC (RFC 5), Mediterranean RFC (RFC 6), Orient-EastMed RFC (RFC 7), North Sea-Baltic RFC (RFC 8), Rhine-Danube RFC (RFC 9), Alpine-Western Balkan RFC (RFC 10), Amber RFC (RFC 11)"@en .
+
+# gaugingProfile: # 1.2.1.0.3.4
+era-sh:optracksShape sh:property era-sh:gaugingProfile .
+era-sh:gaugingProfile
+	a sh:PropertyShape ;
+	rdfs:comment "Gauges as defined in the European standard or other local gauges, including lower or upper part" ;
+	era:rinfIndex "1.2.1.0.3.4" ;
+	sh:path era:gaugingProfile ;
+	sh:minCount 0 ;
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; 
+#	skos:inScheme era-gaugings:GaugingProfiles ; #TODO: Check if this is correct
+	sh:severity sh:Violation ;
+	sh:message "gaugingProfile (1.2.1.0.3.4): Each OPTrack may have one or more gauge with allowed values from http://data.europa.eu/949/concepts/gaugings/GaugingProfiles"@en .
+
+# gaugingCheckLocation: # 1.2.1.0.3.5
+era-sh:optracksShape sh:property era-sh:gaugingCheckLocation .
+era-sh:gaugingCheckLocation
+	a sh:PropertyShape ;
+	rdfs:comment "Location of particular points requiring specific checks due to deviations from gauging referred to in 1.2.1.0.3.4. The railway location identifies the location of the structure  in the system of reference of the line to which the track belongs" ;
+	era:rinfIndex "1.2.1.0.3.5" ;
+	sh:path era:gaugingCheckLocation ;
+	sh:minCount 0 ;
+	sh:maxCount 1 ;
+	#TODO: Not sure about the pattern
+	sh:pattern "^±([1-9]\\d{3}|[1-9]\\d{2}|[1-9]\\d|[0-9])(\\.\\d{1,3})\\s\\+\\s.*" ;
+	sh:severity sh:Violation ;
+	sh:message "gaugingCheckLocation (1.2.1.0.3.5): Each OPTrack may have only one gaugingCheckLocation following this pattern ±NNNN.NNN + CharString and whitout extra zeros at the left"@en .
+
+# gaugingTransversalDocument: # 1.2.1.0.3.6
+era-sh:optracksShape sh:property era-sh:gaugingTransversalDocument .
+era-sh:gaugingTransversalDocument
+	a sh:PropertyShape ;
+	rdfs:comment "Electronic document available from the IM stored by the Agency with the transversal section of the particular points requiring specific checks due to deviations from gauging referred to in 1.2.1.0.3.4" ;
+	era:rinfIndex "1.2.1.0.3.6" ;
+	sh:path era:gaugingTransversalDocument ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:severity sh:Violation ;
+	sh:message "gaugingTransversalDocument (1.2.1.0.3.6): Each OPTrack may have a reference for the Gauging Transversal Document "@en .
+
+# wheelSetGauge: # 1.2.1.0.4.1
+era-sh:optracksShape sh:property era-sh:wheelSetGauge .
+era-sh:wheelSetGauge
+	a sh:PropertyShape ;
+	rdfs:comment "A single value expressed in millimetres that identifies the track gauge" ;
+	era:rinfIndex "1.2.1.0.4.1" ;
+	sh:path era:wheelSetGauge ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; 
+#	skos:inScheme era-ntg:NominalTrackGauges ; #TODO: Check if this is correct
+	sh:severity sh:Violation ;
+	sh:message "wheelSetGauge (1.2.1.0.4.1): Each OPTrack may have a reference for the Track Gauge"@en .

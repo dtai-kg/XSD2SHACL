@@ -1,0 +1,244 @@
+@prefix era-sh: <http://data.europa.eu/949/shapes/> .
+@prefix ex: <http://example.org/ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-sn: <http://data.europa.eu/949/concepts/sol-natures/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix era-ph: <http://data.europa.eu/949/concepts/platform-heights/> .
+@prefix era-tenclass: <http://data.europa.eu/949/concepts/ten-classifications/> .
+@prefix era-gaugings: <http://data.europa.eu/949/concepts/gaugings/> .
+@prefix era-ntg: <http://data.europa.eu/949/concepts/nominal-track-gauges/> .
+
+
+#############################
+# Rules for sidings
+#############################
+
+#
+# sidings
+#
+era-sh:sidingsShape
+	a sh:NodeShape ;
+	sh:targetClass era:Siding .   # Applies to all Siding
+
+# imCode: #1.2.2.0.0.1
+era-sh:sidingsShape sh:property era-sh:imCode .
+era-sh:imCode
+	a sh:PropertyShape ;
+	rdfs:comment "Infrastructure manager means any body or undertaking that is responsible in particular for establishing and maintaining railway infrastructure or a part thereof" ;
+	era:rinfIndex "1.2.2.0.0.1" ;
+	sh:path era:imCode ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:pattern "^[0-9]{4}$" ;
+	sh:severity sh:Violation ;
+	sh:message "imCode (1.2.2.0.0.1): Each OPTrack can be referred to only one siding, which MUST be represented with a four-digit code."@en .
+
+# sidingId: #1.2.2.0.0.2
+era-sh:sidingsShape sh:property era-sh:sidingId .
+era-sh:sidingId
+	a sh:PropertyShape ;
+	rdfs:comment "Unique siding identification or unique siding number within OP" ;
+	era:rinfIndex "1.2.2.0.0.2" ;
+	sh:path era:sidingId ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:severity sh:Violation ;
+	sh:message "sidingId (1.2.2.0.0.2): Each track shall have a unique siding identification or unique siding number within OP."@en .
+
+# tenClassification: # 1.2.2.0.0.3
+era-sh:sidingsShape sh:property era-sh:tenClassification .
+era-sh:tenClassification
+	a sh:PropertyShape;
+    rdfs:comment "Indication of the part of the trans-European network the siding belongs to" ;
+	era:rinfIndex "1.2.2.0.0.3" ;
+	sh:path era:tenClassification ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI;
+#	sh:class skos:Concept ; 
+#	skos:inScheme era-tenclass:TENClassifications ; #TODO: Check if this is correct
+	sh:severity sh:Violation ;
+	sh:message "tenClassification (1.2.2.0.0.3): Each Platform must be part of at least one TEN. This error may be due to having a Platfrom without being part of a TEN or having an illegal TEN value."@en .
+	#TODO: Check the value comes from the list of TENs
+
+# verificationINF: # 1.2.2.0.1.1
+era-sh:sidingsShape sh:property era-sh:verificationINF .
+era-sh:verificationINF
+	a sh:PropertyShape;
+	rdfs:comment "Indication of the verification of the infrastructure manager" ;
+	era:rinfIndex "1.2.2.0.1.1" ;
+	sh:path era:verificationINF ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Z]{2}/[0-9]{14}/(19[0-9][0-9]|20[0-9][0-9]|2100)/[0-9]{6}$" ;
+	sh:severity sh:Violation ;
+	sh:message "verificationINF (1.2.2.0.1.1): Each Siding may have one or more verificationINF following this pattern, country code/national registration number/year between 1900 and 2100/progressive counter"@en .
+
+# demonstrationINF: # # 1.2.2.0.1.2
+era-sh:sidingsShape sh:property era-sh:demonstrationINF .
+era-sh:demonstrationINF
+	a sh:PropertyShape;
+	rdfs:comment "Unique number for EI declarations following the same format requirements as specified in the 'Documents about practical arrangements for transmitting interoperability documents'" ;
+	era:rinfIndex "1.2.2.0.1.2" ;
+	sh:path era:demonstrationINF ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:string ;
+	sh:pattern "^[A-Z]{2}/[0-9]{14}/(19[0-9][0-9]|20[0-9][0-9]|2100)/[0-9]{6}$" ;
+	sh:severity sh:Violation ;
+	sh:message "demonstrationINF (1.2.2.0.1.2): Each Siding may have one or more demonstrationINF following this pattern, country code/national registration number/year between 1900 and 2100/progressive counter "@en .
+
+# length: # 1.2.2.0.2.1
+era-sh:sidingsShape sh:property era-sh:length .
+era-sh:length
+	a sh:PropertyShape;
+	rdfs:comment "Total length of the siding/stabling track expressed in meters where trains can be parked safely" ;
+	era:rinfIndex "1.2.2.0.2.1" ;
+	sh:path era:length ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:double ;
+	sh:pattern "([1-9]\\d{3}|[1-9]\\d{2}|[1-9]\\d{1}|[0-9])" ;
+	sh:severity sh:Violation ;
+	sh:message "length (1.2.2.0.2.1): Each Siding must have a length in meters."@en .
+
+# gradient: # 1.2.2.0.3.1
+era-sh:sidingsShape sh:property era-sh:gradient .
+era-sh:gradient
+	a sh:PropertyShape;
+	rdfs:comment "Maximum value of the gradient expressed in millimeters per meter" ;
+	era:rinfIndex "1.2.2.0.3.1" ;
+	sh:path era:gradient ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:double ;
+	sh:pattern "([1-9]\\d{1}|[0-9])\\.[0-9]" ;
+	sh:severity sh:Violation ;
+	sh:message "gradient (1.2.2.0.3.1): Each Siding must have a gradient in millimeters per meter."@en .
+
+# minimumHorizontalRadius: # 1.2.2.0.3.2
+era-sh:sidingsShape sh:property era-sh:minimumHorizontalRadius .
+era-sh:minimumHorizontalRadius
+	a sh:PropertyShape;
+	rdfs:comment "Radius of the smallest horizontal curve expressed in meters" ;
+	era:rinfIndex "1.2.2.0.3.2" ;
+	sh:path era:minimumHorizontalRadius ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:integer ;
+	sh:pattern "([1-9]\\d{2}|[1-9]\\d{1}|[0-9])" ;
+	sh:severity sh:Violation ;
+	sh:message "minimumHorizontalRadius (1.2.2.0.3.2): Each Siding must have a minimumHorizontalRadius in meters."@en .
+
+# minimumVerticalRadius: # 1.2.2.0.3.3
+era-sh:sidingsShape sh:property era-sh:minimumVerticalRadius .
+era-sh:minimumVerticalRadius
+	a sh:PropertyShape;
+	rdfs:comment "Radius of the smallest vertical curve expressed in meters" ;
+	era:rinfIndex "1.2.2.0.3.3" ;
+	sh:path era:minimumVerticalRadius ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:string ;
+	sh:pattern "([1-9]\\d{2}|[1-9]\\d{1}|[1-9]|000)\\+([1-9]\\d{2}|[1-9]\\d{1}|[1-9]|000)" ;
+	sh:severity sh:Violation ;
+	sh:message "minimumVerticalRadius (1.2.2.0.3.3): Each Siding must have a minimumVerticalRadius in meters following the pattern [number+number]."@en .
+
+# hasToiletDischarge: # 1.2.2.0.4.1
+era-sh:sidingsShape sh:property era-sh:hasToiletDischarge .
+era-sh:hasToiletDischarge
+	a sh:PropertyShape;
+	rdfs:comment "Indication whether exists and installation for toilet discharge (fixed installation for servicing trains) as defined in INF TSIs" ; 
+	era:rinfIndex "1.2.2.0.4.1" ;
+	sh:path era:hasToiletDischarge ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasToiletDischarge (1.2.2.0.4.1): Each Siding must define the existence of a toilet discharge."@en .
+
+# hasExternalCleaning: # 1.2.2.0.4.2
+era-sh:sidingsShape sh:property era-sh:hasExternalCleaning .
+era-sh:hasExternalCleaning
+	a sh:PropertyShape;
+	rdfs:comment "Indication whether exists and installation for external cleaning facility (fixed installation for servicing trains) as defined in INF TSIs" ; 
+	era:rinfIndex "1.2.2.0.4.2" ;
+	sh:path era:hasExternalCleaning ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasExternalCleaning (1.2.2.0.4.2): Each Siding must define the existence of an external cleaning facility."@en .
+
+# hasWaterRestocking: # 1.2.2.0.4.3
+era-sh:sidingsShape sh:property era-sh:hasWaterRestocking .
+era-sh:hasWaterRestocking
+	a sh:PropertyShape;
+	rdfs:comment "Indication whether exists and installation for water restocking (fixed installation for servicing trains) as defined in INF TSIs" ; 
+	era:rinfIndex "1.2.2.0.4.3" ;
+	sh:path era:hasWaterRestocking ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasWaterRestocking (1.2.2.0.4.3): Each Siding must define the existence of a water restocking facility."@en .
+
+# hasRefuelling: # 1.2.2.0.4.4
+era-sh:sidingsShape sh:property era-sh:hasRefuelling .
+era-sh:hasRefuelling
+	a sh:PropertyShape;
+	rdfs:comment "Indication whether exists and installation for refuelling (fixed installation for servicing trains) as defined in INF TSIs" ; 
+	era:rinfIndex "1.2.2.0.4.4" ;
+	sh:path era:hasRefuelling ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasRefuelling (1.2.2.0.4.4): Each Siding must define the existence of a refuelling facility."@en .
+
+# hasSandRestocking: # 1.2.2.0.4.5
+era-sh:sidingsShape sh:property era-sh:hasSandRestocking .
+era-sh:hasSandRestocking
+	a sh:PropertyShape;
+	rdfs:comment "Indication whether an installation for sand restocking exists(fixed installation for servicing trains)" ; 
+	era:rinfIndex "1.2.2.0.4.5" ;
+	sh:path era:hasSandRestocking ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasSandRestocking (1.2.2.0.4.5): Each Siding must define the existence of a sand restocking facility."@en .
+
+# hasElectricShoreSupply: # 1.2.2.0.4.6
+era-sh:sidingsShape sh:property era-sh:hasElectricShoreSupply .
+era-sh:hasElectricShoreSupply
+	a sh:PropertyShape;
+	rdfs:comment "Indication whether an installation for electric shore supply exists (fixed installation for servicing trains)" ; 
+	era:rinfIndex "1.2.2.0.4.6" ;
+	sh:path era:hasElectricShoreSupply ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:maxCount 1 ;
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "hasElectricShoreSupply (1.2.2.0.4.6): Each Siding must define the existence of an electric shore supply facility."@en .
+
+#TODO: Not sure is tunnels have to be validated
+
+# maxCurrentStandstillPantograph: # 1.2.2.0.6.1
+era-sh:sidingsShape sh:property era-sh:maxCurrentStandstillPantograph .
+era-sh:maxCurrentStandstillPantograph
+	a sh:PropertyShape;
+	rdfs:comment "Indication of the maximum allowable train current at standstill for DC systems expressed in amperes" ;
+	era:rinfIndex "1.2.2.0.6.1" ;
+	sh:path era:maxCurrentStandstillPantograph ;
+	sh:minCount 0 ; #TODO: Not yet applicable
+	sh:datatype xsd:double ;
+	sh:pattern "([1-9]\\d{2}|[1-9]\\d{1}|[0-9])" ;
+	sh:severity sh:Violation ;
+	sh:message "maxCurrentStandstillPantograph (1.2.2.0.6.1): Each Siding must define the maximum allowable train current at standstill for DC systems expressed in amperes."@en .

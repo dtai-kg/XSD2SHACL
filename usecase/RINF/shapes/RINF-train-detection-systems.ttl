@@ -1,0 +1,377 @@
+@prefix era-sh: <http://data.europa.eu/949/shapes/> .
+@prefix ex: <http://example.org/ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-sn: <http://data.europa.eu/949/concepts/sol-natures/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix era-ph: <http://data.europa.eu/949/concepts/platform-heights/> .
+@prefix era-tenclass: <http://data.europa.eu/949/concepts/ten-classifications/> .
+@prefix era-gaugings: <http://data.europa.eu/949/concepts/gaugings/> .
+@prefix era-ntg: <http://data.europa.eu/949/concepts/nominal-track-gauges/> .
+@prefix era-tds: <http://data.europa.eu/949/concepts/train-detection/> .
+@prefix era-tdssc: <http://data.europa.eu/949/concepts/train-detection-specific-checks/> .
+@prefix era-tsi: <http://data.europa.eu/949/concepts/tsi-compliances/> .
+@prefix era-malvc: <http://data.europa.eu/949/concepts/min-axle-loads-per-vehicle-category/> .
+@prefix era-mas: <http://data.europa.eu/949/concepts/max-amount-sandings/> .
+
+#############################
+# Rules for train detection system
+#############################
+
+era-sh:TrainDetectionSystemShape
+	a sh:NodeShape ;
+	sh:targetClass era:TrainDetectionSystem .    # Applies to all TrainDetectionSystem instances
+
+# train-detection-system : # 1.1.1.3.7.1.1
+era-sh:TrainDetectionSystemShape sh:property era-sh:trainDetectionSystem .
+era-sh:trainDetectionSystem
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of types of train detection system installed." ;
+	era:rinfIndex "1.1.1.3.7.1.1" ;
+	sh:path era:trainDetectionSystem ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	sh:inScheme era-tds:TrainDetectionSystems ;
+	sh:severity sh:Violation ;
+	sh:message "trainDetectionSystem (1.1.1.3.7.1.1): Indication of types of train detection system installed."@en .
+
+# trainDetectionSystemSpecificCheck: # 1.1.1.3.7.1.2
+era-sh:TrainDetectionSystemShape sh:property era-sh:trainDetectionSystemSpecificCheck .
+era-sh:trainDetectionSystemSpecificCheck
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of types of train detection system to which specific checks are needed." ;
+	era:rinfIndex "1.1.1.3.7.1.2" ;
+	sh:path era:trainDetectionSystemSpecificCheck ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	sh:inScheme era-tdssc:TrainDetectionSystemsSpecificChecks ;
+	sh:severity sh:Violation ;
+	sh:message "trainDetectionSystemSpecificCheck (1.1.1.3.7.1.2): Indication of types of train detection system to which specific checks are needed."@en .
+
+# tsiCompliantMaxDistConsecutiveAxles: # 1.1.1.3.7.2.1
+era-sh:TrainDetectionSystemShape sh:property era-sh:tsiCompliantMaxDistConsecutiveAxles .
+era-sh:tsiCompliantMaxDistConsecutiveAxles
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether the maximum distance between consecutive axles is TSI compliant." ;
+	era:rinfIndex "1.1.1.3.7.2.1" ;
+	sh:path era:tsiCompliantMaxDistConsecutiveAxles ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	sh:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "tsiCompliantMaxDistConsecutiveAxles (1.1.1.3.7.2.1): Indication whether the maximum distance between consecutive axles is TSI compliant."@en .
+
+# maxDistConsecutiveAxles: # 1.1.1.3.7.2.2
+era-sh:TrainDetectionSystemShape sh:property era-sh:maxDistConsecutiveAxles .
+era-sh:maxDistConsecutiveAxles
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of maximum permitted distance between two consecutive axles in case of TSI non-compliance, given millimetres." ;
+	era:rinfIndex "1.1.1.3.7.2.2" ;
+	sh:path era:maxDistConsecutiveAxles ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:integer ;
+	sh:pattern "^([1-9]\\d{1,4}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "maxDistConsecutiveAxles (1.1.1.3.7.2.2): Indication of maximum permitted distance between two consecutive axles in case of TSI non-compliance, given millimetres."@en .
+
+# minDistConsecutiveAxles: # 1.1.1.3.7.3
+era-sh:TrainDetectionSystemShape sh:property era-sh:minDistConsecutiveAxles .
+era-sh:minDistConsecutiveAxles
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of minimum permitted distance between two consecutive axles, given millimetres." ;
+	era:rinfIndex "1.1.1.3.7.3" ;
+	sh:path era:minDistConsecutiveAxles ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:integer ;
+	sh:pattern "^([1-9]\\d{1,3}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "minDistConsecutiveAxles (1.1.1.3.7.3): Indication of minimum permitted distance between two consecutive axles, given millimetres."@en .
+
+# minDistFirstLastAxle: # 1.1.1.3.7.4
+era-sh:TrainDetectionSystemShape sh:property era-sh:minDistFirstLastAxle .
+era-sh:minDistFirstLastAxle
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of minimum permitted distance between the first and last axles, given millimetres." ;
+	era:rinfIndex "1.1.1.3.7.4" ;
+	sh:path era:minDistFirstLastAxle ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:integer ;
+	sh:pattern "^([1-9]\\d{1,4}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "minDistFirstLastAxle (1.1.1.3.7.4): Indication of minimum permitted distance between the first and last axles, given millimetres."@en .
+
+# maxDistEndTrainFirstAxle: # 1.1.1.3.7.5
+era-sh:TrainDetectionSystemShape sh:property era-sh:maxDistEndTrainFirstAxle .
+era-sh:maxDistEndTrainFirstAxle
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of maximum permitted distance between the end of the train and the first axle, given millimetres." ;
+	era:rinfIndex "1.1.1.3.7.5" ;
+	sh:path era:maxDistEndTrainFirstAxle ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:integer ;
+	sh:pattern "^([1-9]\\d{1,3}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "maxDistEndTrainFirstAxle (1.1.1.3.7.5): Indication of maximum permitted distance between the end of the train and the first axle, given millimetres."@en .
+
+# minRimWidth: # 1.1.1.3.7.6
+era-sh:TrainDetectionSystemShape sh:property era-sh:minRimWidth .
+era-sh:minRimWidth
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of minimum permitted rim width, given millimetres." ;
+	era:rinfIndex "1.1.1.3.7.6" ;
+	sh:path era:minRimWidth ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:double ;
+	sh:pattern "^([1-9]\\d{1,2}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "minRimWidth (1.1.1.3.7.6): Indication of minimum permitted rim width, given millimetres."@en .
+	
+# minWheelDiameter: # 1.1.1.3.7.7
+era-sh:TrainDetectionSystemShape sh:property era-sh:minWheelDiameter .
+era-sh:minWheelDiameter
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of minimum permitted wheel diameter, given millimetres." ;
+	era:rinfIndex "1.1.1.3.7.7" ;
+	sh:path era:minWheelDiameter ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:integer ;
+	sh:pattern "^([1-9]\\d{1,2}|[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "minWheelDiameter (1.1.1.3.7.7): Indication of minimum permitted wheel diameter, given millimetres."@en .
+
+# minFlangeThickness: # 1.1.1.3.7.8
+era-sh:TrainDetectionSystemShape sh:property era-sh:minFlangeThickness .
+era-sh:minFlangeThickness
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of minimum permitted flange thickness, given millimetres." ;
+	era:rinfIndex "1.1.1.3.7.8" ;
+	sh:path era:minFlangeThickness ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:double ;
+	sh:pattern "^([1-9]{0,1}[0-9]\\.[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "minFlangeThickness (1.1.1.3.7.8): Indication of minimum permitted flange thickness, given millimetres."@en .
+
+# minFlangeHeight: # 1.1.1.3.7.9
+era-sh:TrainDetectionSystemShape sh:property era-sh:minFlangeHeight .
+era-sh:minFlangeHeight
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of minimum permitted flange height, given millimetres." ;
+	era:rinfIndex "1.1.1.7.9" ;
+	sh:path era:minFlangeHeight ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:double ;
+	sh:pattern "^([1-9]{0,1}[0-9]\\.[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "minFlangeHeight (1.1.1.7.9): Indication of minimum permitted flange height, given millimetres."@en .
+
+# maxFlangeHeight: # 1.1.1.3.7.10
+era-sh:TrainDetectionSystemShape sh:property era-sh:maxFlangeHeight .
+era-sh:maxFlangeHeight
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of maximum permitted flange height, given millimetres." ;
+	era:rinfIndex "1.1.1.3.7.10" ;
+	sh:path era:maxFlangeHeight ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:double ;
+	sh:pattern "^([1-9]{0,1}[0-9]\\.[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "maxFlangeHeight (1.1.1.3.7.10): Indication of maximum permitted flange height, given millimetres."@en .
+
+# minAxleLoad: # 1.1.1.3.7.11
+era-sh:TrainDetectionSystemShape sh:property era-sh:minAxleLoad .
+era-sh:minAxleLoad
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of minimum permitted axle load, given tonnes." ;
+	era:rinfIndex "1.1.1.3.7.11" ;
+	sh:path era:minAxleLoad ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:double ;
+	sh:pattern "^([1-9]{0,1}[0-9]\\.[0-9])$" ;
+	sh:severity sh:Violation ;
+	sh:message "minAxleLoad (1.1.1.3.7.11): Indication of minimum permitted axle load, given tonnes."@en .
+
+# minAxleLoadVehicleCategory: # 1.1.1.3.7.11.1
+era-sh:TrainDetectionSystemShape sh:property era-sh:minAxleLoadVehicleCategory .
+era-sh:minAxleLoadVehicleCategory
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of minimum permitted axle load, given vehicle category." ;
+	era:rinfIndex "1.1.1.3.7.11.1" ;
+	sh:path era:minAxleLoadVehicleCategory ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-malvc:MinAxleLoadsPerVehicleCategory ;
+	sh:severity sh:Violation ;
+	sh:message "minAxleLoadVehicleCategory (1.1.1.3.7.11.1): Indication of minimum permitted axle load, given vehicle category."@en .
+
+# tsiCompliantMetalFreeSpace: # 1.1.1.3.7.12
+era-sh:TrainDetectionSystemShape sh:property era-sh:tsiCompliantMetalFreeSpace .
+era-sh:tsiCompliantMetalFreeSpace
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of whether the rules are TSI compliant for metal free space around wheels." ;
+	era:rinfIndex "1.1.1.3.7.12" ;
+	sh:path era:tsiCompliantMetalFreeSpace ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "tsiCompliantMetalFreeSpace (1.1.1.3.7.12): Indication of whether the rules are TSI compliant for metal free space around wheels."@en .
+
+# tsiCompliantMetalConstruction: # 1.1.1.3.7.13
+era-sh:TrainDetectionSystemShape sh:property era-sh:tsiCompliantMetalConstruction .
+era-sh:tsiCompliantMetalConstruction
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of whether the rules are TSI compliant for vehicle metal construction." ;
+	era:rinfIndex "1.1.1.3.7.13" ;
+	sh:path era:tsiCompliantMetalConstruction ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "tsiCompliantMetalConstruction (1.1.1.3.7.13): Indication of whether the rules are TSI compliant for vehicle metal construction."@en .
+
+# tsiCompliantFerromagneticWheel: # 1.1.1.3.7.14
+era-sh:TrainDetectionSystemShape sh:property era-sh:tsiCompliantFerromagneticWheel .
+era-sh:tsiCompliantFerromagneticWheel
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of whether the rules are TSI compliant for ferromagnetic characteristics of wheel material required." ;
+	era:rinfIndex "1.1.1.3.7.14" ;
+	sh:path era:tsiCompliantFerromagneticWheel ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "tsiCompliantFerromagneticWheel (1.1.1.3.7.14): Indication of whether the rules are TSI compliant for ferromagnetic characteristics of wheel material required."@en .
+
+# tsiCompliantMaxImpedanceWheelset: # 1.1.1.3.7.15.1
+era-sh:TrainDetectionSystemShape sh:property era-sh:tsiCompliantMaxImpedanceWheelset .
+era-sh:tsiCompliantMaxImpedanceWheelset
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of whether the rules are TSI compliant for maximum impedance between opposite wheels of a wheelset." ;
+	era:rinfIndex "1.1.1.3.7.15.1" ;
+	sh:path era:tsiCompliantMaxImpedanceWheelset ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "tsiCompliantMaxImpedanceWheelset (1.1.1.3.7.15.1): Indication of whether the rules are TSI compliant for maximum impedance between opposite wheels of a wheelset."@en .
+
+# maxImpedanceWheelset: # 1.1.1.3.7.15.2
+era-sh:TrainDetectionSystemShape sh:property era-sh:maxImpedanceWheelset .
+era-sh:maxImpedanceWheelset
+	a sh:PropertyShape ;
+	rdfs:comment "Maximum impedance between opposite wheels of a wheelset when not TSI compilant." ;
+	era:rinfIndex "1.1.1.3.7.15.2" ;
+	sh:path era:maxImpedanceWheelset ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:double ;
+	sh:pattern "^[0-9](\\.[0-9]{1,3})?$" ;
+	sh:severity sh:Violation ;
+	sh:message "maxImpedanceWheelset (1.1.1.3.7.15.2): Maximum impedance between opposite wheels of a wheelset when not TSI compilant."@en .
+
+# maxSandingOutput: # 1.1.1.3.7.17
+era-sh:TrainDetectionSystemShape sh:property era-sh:maxSandingOutput .
+era-sh:maxSandingOutput
+	a sh:PropertyShape ;
+	rdfs:comment "Maximum amount of sand whithin 30s given in grams accepted on the track." ;
+	era:rinfIndex "1.1.1.3.7.17" ;
+	sh:path era:maxSandingOutput ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error	
+	skos:inScheme era-mas:MaxAmountSandings ;
+	sh:severity sh:Violation ;
+	sh:message "maxSandingOutput (1.1.1.3.7.17): Maximum amount of sand whithin 30s given in grams accepted on the track."@en .
+
+# requiredSandingOverride: # 1.1.1.3.7.18
+era-sh:TrainDetectionSystemShape sh:property era-sh:requiredSandingOverride .
+era-sh:requiredSandingOverride
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of whether sanding override by driver required." ;
+	era:rinfIndex "1.1.1.3.7.18" ;
+	sh:path era:requiredSandingOverride ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "requiredSandingOverride (1.1.1.3.7.18): Indication of whether sanding override by driver required."@en .
+
+# tsiCompliantSandCharacteristics: # 1.1.1.3.7.19
+era-sh:TrainDetectionSystemShape sh:property era-sh:tsiCompliantSandCharacteristics .
+era-sh:tsiCompliantSandCharacteristics
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of whether the rules are TSI compliant on sand characteristics." ;
+	era:rinfIndex "1.1.1.3.7.19" ;
+	sh:path era:tsiCompliantSandCharacteristics ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "tsiCompliantSandCharacteristics (1.1.1.3.7.19): Indication of whether the rules are TSI compliant on sand characteristics."@en .
+
+# flangeLubeRules: # 1.1.1.3.7.20
+era-sh:TrainDetectionSystemShape sh:property era-sh:flangeLubeRules .
+era-sh:flangeLubeRules
+	a sh:PropertyShape ;
+	rdfs:comment "Indication whether rules for activation or deactivation of flange lubrication exist." ;
+	era:rinfIndex "1.1.1.3.7.20" ;
+	sh:path era:flangeLubeRules ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:datatype xsd:boolean ;
+	sh:severity sh:Violation ;
+	sh:message "flangeLubeRules (1.1.1.3.7.20): Indication of whether the rules are TSI compliant for flange lubrication."@en .
+
+# tsiCompliantCompositeBrakeBlocks: # 1.1.1.3.7.21
+era-sh:TrainDetectionSystemShape sh:property era-sh:tsiCompliantCompositeBrakeBlocks .
+era-sh:tsiCompliantCompositeBrakeBlocks
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of whether the rules are TSI compliant on composite brake blocks." ;
+	era:rinfIndex "1.1.1.3.7.21" ;
+	sh:path era:tsiCompliantCompositeBrakeBlocks ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "tsiCompliantCompositeBrakeBlocks (1.1.1.3.7.21): Indication of whether the rules are TSI compliant for composite brake blocks."@en .
+
+# tsiCompliantShuntDevices: # 1.1.1.3.7.22
+era-sh:TrainDetectionSystemShape sh:property era-sh:tsiCompliantShuntDevices .
+era-sh:tsiCompliantShuntDevices
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of whether the rules are TSI compliant on shunt assisting devices." ;
+	era:rinfIndex "1.1.1.3.7.22" ;
+	sh:path era:tsiCompliantShuntDevices ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "tsiCompliantShuntDevices (1.1.1.3.7.22): Indication of whether the rules are TSI compliant for shunt assisting devices."@en .
+
+# tsiCompliantRSTShuntImpedance: # 1.1.1.3.7.23
+era-sh:TrainDetectionSystemShape sh:property era-sh:tsiCompliantRSTShuntImpedance .
+era-sh:tsiCompliantRSTShuntImpedance
+	a sh:PropertyShape ;
+	rdfs:comment "Indication of whether the rules are TSI compliant on combination of RST characteristics influencing shunting impedance." ;
+	era:rinfIndex "1.1.1.3.7.23" ;
+	sh:path era:tsiCompliantRSTShuntImpedance ;
+	sh:minCount 0 ; # TODO: Not yet applicable
+	sh:nodeKind sh:IRI ;
+#	sh:class skos:Concept ; #TODO: Check error
+	skos:inScheme era-tsi:TSICompliances ;
+	sh:severity sh:Violation ;
+	sh:message "tsiCompliantRSTShuntImpedance (1.1.1.3.7.23): Indication of whether the rules are TSI compliant for combination of RST characteristics influencing shunting impedance."@en .

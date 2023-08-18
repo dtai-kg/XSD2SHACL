@@ -1,0 +1,25 @@
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix era-ess: <http://data.europa.eu/949/concepts/energy-supply-systems/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-ex: <http://data.europa.eu/949/example/> .
+
+
+#############################
+# Rules for SKOS
+#############################
+
+era-ex:EnergySupplySystems_NODE_SHAPE
+  a sh:NodeShape;
+  sh:property [                 # _:b1
+        a sh:PropertyShape;
+        sh:path skos:inScheme;  # constrains the values of era:EnergySupplySystems
+        sh:hasValue era-ess:EnergySupplySystems;
+	] ;
+  sh:targetObjectsOf era:energySupplySystem.
