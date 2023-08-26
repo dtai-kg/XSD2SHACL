@@ -22,11 +22,10 @@ class Adjustment:
 
         self.mapping_dicts = []
         self.FnO_dict = {}
-        self.parentTMs = {}
 
 
         self.query_yarrrml = prepareQuery("""
-                                        SELECT ?tm ?iterator ?targetClass ?subjectTemplate ?subjectReference ?predicate ?objectReference ?objectTemplate ?objectFN ?parentTM ?om ?datatype 
+                                        SELECT ?tm ?iterator ?targetClass ?subjectTemplate ?subjectReference ?predicate ?objectReference ?objectTemplate ?objectFN ?om ?datatype
                                         WHERE {
                                             ?tm a rr:TriplesMap ;
                                                 rml:logicalSource [ rml:iterator ?iterator ] ;
@@ -39,7 +38,7 @@ class Adjustment:
                                                 ?tm rr:predicateObjectMap [rr:predicateMap ?pm ;
                                                                             rr:objectMap ?om ].
                                                 ?pm rr:constant ?predicate.
-                                            {  { ?om rml:reference ?objectReference } UNION { ?om rr:template ?objectTemplate } UNION { ?om <http://semweb.mmlab.be/ns/fnml#functionValue> ?objectFN } UNION { ?om rr:parentTriplesMap ?parentTM }} }
+                                            {  { ?om rml:reference ?objectReference } UNION { ?om rr:template ?objectTemplate } UNION { ?om <http://semweb.mmlab.be/ns/fnml#functionValue> ?objectFN } } }
                                             OPTIONAL { ?om rr:datatype ?datatype. }
                                         }
                                     """, initNs={"rr": self.RR, "rml": self.RML})
@@ -89,7 +88,7 @@ class Adjustment:
                             r = findFnObject(g,obj,datatype)
                         else:
                             r = findFnObject(g,obj,new_datatype)
-                        return r
+            return None
         
         for om,_,fm in g.triples((None,URIRef("http://semweb.mmlab.be/ns/fnml#functionValue"),None)):
             d = None
@@ -103,13 +102,6 @@ class Adjustment:
                 elif obj[1] == "IRI":
                     objectTemplate = self.extract_curly_braces_content("", obj[0])
                     self.FnO_dict[om] = (objectTemplate, "IRI",obj[-1])
-
-    def parseParentTM(self, g):
-        for parentTM in g.objects(None, self.RR.parentTriplesMap):
-            for logicalSource in g.objects(parentTM, self.RML.logicalSource):
-                for iterator in g.objects(logicalSource, self.RML.iterator):
-                    iterator = self.clearIterator(str(iterator))
-                    self.parentTMs[parentTM] = iterator
     
     def adjust(self):
 
@@ -118,7 +110,10 @@ class Adjustment:
                 for s, p, o in g.triples((sub, self.SHACL.targetClass, None)):
                     if sub not in shape_adjusted:
                         g.remove((s,p,o))
-
+                # if targetClass != [None]:
+                #     for c in targetClass:
+                #         g.add((URIRef(sub),self.SHACL.targetClass,URIRef(c)))
+                # shape_adjusted.append(sub)
             return g, shape_adjusted
 
         def clearPropertyShape(g, sub, shape_list, predicate, shape_adjusted = []):
@@ -129,11 +124,19 @@ class Adjustment:
                     g.add((sub,self.SHACL.path,URIRef(predicate)))
                 else:
                     current_path_subject = (str(sub)+"/"+(predicate.split("/")[-1])).replace("//","/")
+                    # for s, p, o in g.triples((URIRef(sub), None, None)):
+                    #     g.add((URIRef(current_path_subject),p,o))
+                    # for s, p, o in g.triples((None, None, URIRef(sub))):
+                    #     g.remove((s,p,URIRef(current_path_subject)))
 
                     sub_new = URIRef(current_path_subject)
                     g = update_graph(g,[sub],URIRef(current_path_subject))
                     g.remove((URIRef(current_path_subject), self.SHACL.path, None))
                     g.add((URIRef(current_path_subject),self.SHACL.path,URIRef(predicate)))
+
+                # print(predicate, self.correctKind)
+                # for i in g.triples((sub_new, self.SHACL.nodeKind, None)):
+                #     print(i)
                 
                 if self.correctKind != False:
                     
@@ -148,19 +151,6 @@ class Adjustment:
                     g.add((sub_new,self.SHACL.datatype,self.datatype))
                      
                 shape_adjusted.append(sub_new)
-            return g, shape_adjusted
-
-        def addExtraPS(g, predicate):
-            sub = URIRef("http://example.com/PropertyShape/Extra/"+str(predicate).split("/")[-1])
-            g.add((sub,self.RDF.type,self.SHACL.PropertyShape))
-            g.add((sub,self.SHACL.path,URIRef(predicate)))
-            if self.correctKind != False:
-                g.add((sub,self.SHACL.nodeKind,self.correctKind))
-            if self.datatype != False:
-                g.add((sub,self.SHACL.datatype,self.datatype))
-            g.add((sub,self.SHACL.minCount,Literal(1)))
-            shape_adjusted.append(sub)
-            self.addExtraPS = sub
             return g, shape_adjusted
 
         shape_list = []
@@ -181,12 +171,10 @@ class Adjustment:
                     
                 sub = NStemplate+iterator.replace("//","/")
                 sub = URIRef(sub)
-                #self.SHACL_g, shape_adjusted = clearNodeShape(self.SHACL_g, sub, shape_list, shape_adjusted = shape_adjusted, targetClass = targetClass)
+                self.SHACL_g, shape_adjusted = clearNodeShape(self.SHACL_g, sub, shape_list, shape_adjusted = shape_adjusted, targetClass = targetClass)
                 self.targetClassAdd = False
-                self.addExtraPS = False
                 self.datatype = False
                 for pom in poms:
-                    iterator = mapping_dict[m]["iterator"]
                     predicate = pom[0]
                     if predicate == "http://www.w3.org/2000/01/rdf-schema#label" or predicate ==None:
                         continue
@@ -196,22 +184,12 @@ class Adjustment:
                         self.correctKind = self.SHACL.Literal
                     else:
                         self.correctKind = False
-                    p = pom[1]
-                    if p.startswith("ParentTM"):
-                        p = p.split("ParentTM")[-1]
-                        iterator = ""
-                    NS_list = p.split("/")
+                    NS_list = pom[1].split("/")
 
                     if pom[3] != None:
                         self.datatype = pom[3]
                     else:
                         self.datatype = False
-
-                    NS_sub = URIRef(PStemplate+iterator+"/"+"/".join(NS_list))
-                    if NS_sub in shape_list:
-                        self.SHACL_g, shape_adjusted = clearPropertyShape(self.SHACL_g, NS_sub, shape_list, predicate, shape_adjusted = shape_adjusted)
-                    else:
-                        self.SHACL_g, shape_adjusted = addExtraPS(self.SHACL_g, predicate)
 
 
                     # For finding the minimum node shape to add targetClass 
@@ -225,20 +203,16 @@ class Adjustment:
                         if targetClass != [None]:
                             for c in targetClass:
                                 self.SHACL_g.add((URIRef(self.targetClassAdd),self.SHACL.targetClass,URIRef(c)))
-                        if self.addExtraPS != False:
-                            self.SHACL_g.add((URIRef(self.targetClassAdd),self.SHACL.property,self.addExtraPS))
-                            self.addExtraPS = False
                         self.targetClassAdd = False
                     else:
-                        self.SHACL_g, shape_adjusted = clearNodeShape(self.SHACL_g, sub, shape_list, shape_adjusted = shape_adjusted)
                         shape_adjusted.append(sub)
                         if targetClass != [None]:
                             for c in targetClass:
                                 self.SHACL_g.add((URIRef(sub),self.SHACL.targetClass,URIRef(c)))
-                        if self.addExtraPS != False:
-                            self.SHACL_g.add((URIRef(sub),self.SHACL.property,self.addExtraPS))
-                            self.addExtraPS = False
-        
+                    
+                    NS_sub = URIRef(PStemplate+iterator+"/"+"/".join(NS_list))
+                    if NS_sub in shape_list:
+                        self.SHACL_g, shape_adjusted = clearPropertyShape(self.SHACL_g, NS_sub, shape_list, predicate, shape_adjusted = shape_adjusted)
         for s, p, o in self.SHACL_g.triples((None, self.RDF.nodeKind, self.SHACL.IRI)):
             g.remove((s, self.SHACL.datatype, None))
             g.remove((s, self.SHACL.minLength, None))
@@ -248,6 +222,8 @@ class Adjustment:
         remove_subjects =[i for i in shape_list if i not in shape_adjusted]  
         self.SHACL_g = clear_graph(self.SHACL_g, remove_subjects)
         return self.SHACL_g
+
+
         
     
     def loadMapping(self, SHACL_g_path, mapping_path):
@@ -258,7 +234,6 @@ class Adjustment:
             g = Graph().parse(mapping_path, format="ttl")
             for ns_prefix, namespace in g.namespaces():
                 self.SHACL_g.bind(ns_prefix, namespace, False)
-            self.parseParentTM(g)
             self.parseFunction(g)
             self.parseMapping(g, "yml" in mapping_path)
         else:
@@ -269,7 +244,6 @@ class Adjustment:
                     g = Graph().parse(mapping_path + "/" + file, format="ttl")
                     for ns_prefix, namespace in g.namespaces():
                         self.SHACL_g.bind(ns_prefix, namespace, False)
-                    self.parseParentTM(g)
                     self.parseFunction(g)
                     self.parseMapping(g, "yml" in file)
         # print(self.mapping_dicts)
@@ -281,7 +255,7 @@ class Adjustment:
         if yarrrml == True:
             result = g.query(self.query_yarrrml)
             for r in result:
-                tm, iterator, targetClass, subjectTemplate, subjectReference, predicate, objectReference, objectTemplate, objectFN, parentTM, om, datatype = r
+                tm, iterator, targetClass, subjectTemplate, subjectReference, predicate, objectReference, objectTemplate, objectFN, om, datatype = r
                 current = mapping_dict.get(tm, {})
                 
                 iterator = str(iterator).split("[")[0]
@@ -294,39 +268,38 @@ class Adjustment:
           
 
                 if subjectTemplate is not None and current.get("subject") is None:
+                    # subjectTemplate = self.extract_curly_braces_content(iterator, str(subjectTemplate))
                     subjectTemplate = self.extract_curly_braces_content("", str(subjectTemplate))
                     current["subject"] =  subjectTemplate
                     
                 elif subjectReference is not None and current.get("subject") is None:
+                    # subjectReference = (iterator + "/" + str(subjectReference)).replace("//","/").replace("@","")
+                    # subjectReference = str(subjectReference).replace("//","/").replace("@","")
                     subjectReference = self.clearReference(str(subjectReference))
                     current["subject"] =  subjectReference
   
 
                 current_pom  = current.get("pom", [])
                 if objectReference is not None:
-
+                    # objectReference = (iterator + "/" + str(objectReference)).replace("//","/").replace("@","")
+                    # objectReference = str(objectReference).replace("//","/").replace("@","")
                     objectReference = self.clearReference(str(objectReference))
                     if (predicate, objectReference, "Literal", datatype) not in current_pom:
                         current_pom.append((predicate, objectReference, "Literal",datatype))
- 
+                        # self.path_dict["PS"+objectReference] = predicate
                 elif objectTemplate is not None:
-
+                    # objectTemplate = self.extract_curly_braces_content(iterator, str(objectTemplate))
                     objectTemplate = self.extract_curly_braces_content("", str(objectTemplate))
                     if (predicate, objectTemplate, "IRI",datatype) not in current_pom:
                         current_pom.append((predicate, objectTemplate, "IRI",datatype))
-   
+                        # self.path_dict["PS"+objectTemplate] = predicate
                 elif objectFN is not None:
                     if om:
                         objectFN = self.FnO_dict.get(om, None)
                         if objectFN:
                             if (predicate, objectFN[0], objectFN[1],objectFN[-1]) not in current_pom:
                                 current_pom.append((predicate, objectFN[0], objectFN[1],objectFN[-1]))
-
-                if parentTM is not None:
-                    parentTM = "ParentTM"+str(self.parentTMs.get(parentTM, None))
-                    if (predicate, parentTM, "IRI", None) not in current_pom:
-                        current_pom.append((predicate, parentTM, "IRI", None))
-
+                                # self.path_dict["PS"+objectFN] = predicate
                 current["pom"] = current_pom
                 mapping_dict[tm] = current
         self.mapping_dicts.append(mapping_dict)
@@ -337,16 +310,12 @@ class Adjustment:
         else:
             return path.split("/")[-1].split("*")[0]
 
-
     def clearIterator(self, iterator):
-        result = iterator.split("/")
-        return "/".join([r.split('[')[0].split('(')[0].split("*")[0] for r in result])
+        return iterator.split('[')[0].split("*")[0]
 
     def clearReference(self, reference):
         matches = reference.split("/")
-        matches = [r.split('[')[0].split('(')[0].split("*")[0] for r in matches]
-        matches = [r for r in matches if "parent::" not in r]
-        matches = [r for r in matches if "ancestor:" not in r]
+        matches = [self.clearIterator(match) for match in matches]
         result = "/".join(matches)
         return result.replace("//","/").replace("@","")
 
@@ -354,8 +323,6 @@ class Adjustment:
         pattern = r'\{([^{}]+)\}'  
         matches = re.findall(pattern, input_string)
         matches = [self.clearIterator(match) for match in matches]
-        matches = [i for i in matches if "parent::" not in i]
-        matches = [i for i in matches if "ancestor:" not in i]
         # result = iterator+"/"+"/".join(matches)
         result = "/".join(matches)
         return result.replace("//","/").replace("@","")

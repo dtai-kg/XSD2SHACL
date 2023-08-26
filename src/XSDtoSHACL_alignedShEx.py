@@ -7,7 +7,7 @@ import argparse
 from .utils import recursiceCheck
 
 
-class XSDtoSHACL:
+class XSDtoSHACL_alignedShEx:
     def __init__(self):
         """
 
@@ -232,15 +232,19 @@ class XSDtoSHACL:
             subject = self.NS[f'NodeShape/{pre_subject_path}/{element_name}']
             ps_subject = self.NS[f'PropertyShape/{pre_subject_path}/{element_name}']
             if subject not in self.choiceShapes:
-                self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
+                # self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
+                temp = BNode()
+                self.SHACL.add((self.shapes[-1],self.shaclNS.property,temp))
+                self.SHACL.add((temp,self.rdfSyntax['type'],self.shaclNS.PropertyShape))
+                self.SHACL.add((temp,self.shaclNS.path,self.xsdTargetNS[element_name]))
+                self.SHACL.add((temp,self.shaclNS.node,subject))
 
         self.transAnnotation(xsd_element,subject)
         self.shapes.append(subject)
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
         
-        self.SHACL.add((subject,self.shaclNS.nodeKind,self.shaclNS.IRI))
-        self.SHACL.add((subject,self.shaclNS.targetClass,self.xsdTargetNS[element_name]))
+        #self.SHACL.add((subject,self.shaclNS.targetClass,self.xsdTargetNS[element_name]))
         # self.SHACL.add((subject,self.shaclNS.targetSubjectsOf,self.xsdTargetNS[element_name]))
         # self.SHACL.add((subject,self.shaclNS.targetObjectsOf,self.xsdTargetNS[element_name]))
         # complex type does not have target, element can
@@ -270,7 +274,12 @@ class XSDtoSHACL:
                     self.SHACL.add((ps_subject,self.shaclNS.datatype,self.xsdNS[type_name.split(":")[1]]))
             return xsd_element
         else:
-            self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_type}'])) #Will be translated later
+            # self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_type}'])) #Will be translated later
+            temp = BNode()
+            self.SHACL.add((subject,self.shaclNS.property,temp))
+            self.SHACL.add((temp,self.rdfSyntax['type'],self.shaclNS.PropertyShape))
+            self.SHACL.add((temp,self.shaclNS.path,self.xsdTargetNS[element_name]))
+            self.SHACL.add((temp,self.shaclNS.node,self.NS[f'NodeShape/{element_type}']))
   
             for i in self.root.findall(f".//*[@name='{name}']/{{http://www.w3.org/2001/XMLSchema}}simpleContent/{{http://www.w3.org/2001/XMLSchema}}extension"):
                 type_name = i.get("base")
@@ -296,7 +305,12 @@ class XSDtoSHACL:
             subject = subject = self.NS[f'NodeShape/{pre_subject_path}/{element_name}']
             # To solve that it is the child node of any element
             if subject not in self.choiceShapes:
-                self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
+                # self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
+                temp = BNode()
+                self.SHACL.add((self.shapes[-1],self.shaclNS.property,temp))
+                self.SHACL.add((temp,self.rdfSyntax['type'],self.shaclNS.PropertyShape))
+                self.SHACL.add((temp,self.shaclNS.path,self.xsdTargetNS[element_name]))
+                self.SHACL.add((temp,self.shaclNS.node,subject))
 
         self.transAnnotation(xsd_element,subject)
         self.shapes.append(subject)
@@ -347,7 +361,12 @@ class XSDtoSHACL:
 
             if element_type == 1:
                 # complexType will be translated seperatly so we just need to add the node shape
-                self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_name}'])) 
+                # self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_name}'])) 
+                temp = BNode()
+                self.SHACL.add((subject,self.shaclNS.property,temp))
+                self.SHACL.add((temp,self.rdfSyntax['type'],self.shaclNS.PropertyShape))
+                self.SHACL.add((temp,self.shaclNS.path,self.xsdTargetNS[element_name]))
+                self.SHACL.add((temp,self.shaclNS.node,self.NS[f'NodeShape/{element_name}']))
                 # self.extensionShape = False
                 return xsd_element
 
@@ -657,7 +676,7 @@ class XSDtoSHACL:
 
         print("Start writing to file")
 
-        self.writeShapeToFile(xsd_file + ".shape.ttl")
+        self.writeShapeToFile(xsd_file + ".shape.alignedShEx.ttl")
         # print(self.SHACL.serialize(format="turtle"))
         
 if __name__ == "__main__":
