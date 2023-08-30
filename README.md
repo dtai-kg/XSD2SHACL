@@ -41,24 +41,3 @@ $ python python main.py usecase/RINF/RINF-metadata.xsd -r usecase\RINF\mappings
 
 The generated shape file will then be located here: usecase/RINF/RINF-metadata.xsd.shape.ttl AND RINF-metadata.xsd.shape.ttl.adjustment.ttl
 
-
-## Translation correspondences:
-
-<div align="center">
-  <img src="image/image.png">
-</div>
-
-
-## To Do
-
-- [ ]sh:node/sh:class in PS in TED case, XPath v2
-
-- [ ] fix element without type => type is required ?
-- [ ] attribute language => Add languageIn? Or to which shape? To be disccused 
-- [ ] Evaluation 
-
-- [ ] detailed check schema type hierarchy translation
-- [ ] fix restriction on complexType/complexContent (transRestriction&transEleComplex): add NS check before add constraints
-
-
-
