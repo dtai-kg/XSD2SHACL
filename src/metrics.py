@@ -111,10 +111,19 @@ class SHACLMetric:
 
         recall = self.get_recall(ground_truth_targets, predicated_targets)
         precision = self.get_precision(ground_truth_targets, predicated_targets)
+
+        # the common target between ground truth and predicted
+        R_T = ground_truth_targets.intersection(new_classDefined)
+        # the common target between ground truth and predicted
+        P_T = ground_truth_targets.intersection(predicated_targets)
+        # the differnce between RT and PT
+        D_T = R_T.difference(P_T)
+        print("TARGETDDDDDDDDDDDDDDDDDDDDDDDD",len(D_T),D_T)
+
         # f1_score = self.get_F1_score(ground_truth_targets, predicated_targets)
-        print("Target declaration coverage score: ")
-        print("Recall: " + str(recall))
-        print("Precision: " + str(precision))
+        # print("Target declaration coverage score: ")
+        # print("Recall: " + str(recall))
+        # print("Precision: " + str(precision))
         # print("F1 score: " + str(f1_score))
         # print("Difference: ", ground_truth_targets.difference(predicated_targets))
         if classDefined:
@@ -134,10 +143,17 @@ class SHACLMetric:
         recall = self.get_recall(ground_truth_property_paths, predicated_property_paths)
         precision = self.get_precision(ground_truth_property_paths, predicated_property_paths)
         # f1_score = self.get_F1_score(ground_truth_property_paths, predicated_property_paths)
+        # the common target between ground truth and predicted
+        R_T = ground_truth_property_paths.intersection(self.class_predicate)
+        # the common target between ground truth and predicted
+        P_T = ground_truth_property_paths.intersection(predicated_property_paths)
+        # the differnce between RT and PT
+        D_T = R_T.difference(P_T)
+        print("PROPERTYDDDDDDDDDDDDDDDDDDDDDDDD",len(D_T),D_T)
 
-        print("Property path coverage score: ")
-        print("Recall: " + str(recall))
-        print("Precision: " + str(precision))
+        # print("Property path coverage score: ")
+        # print("Recall: " + str(recall))
+        # print("Precision: " + str(precision))
         # print("F1 score: " + str(f1_score))
         # print("Difference PPPPPP: ", ground_truth_property_paths.difference(predicated_property_paths))
         return recall, precision, len(ground_truth_property_paths), len(predicated_property_paths), len(ground_truth_property_paths.intersection(self.class_predicate))
@@ -196,9 +212,9 @@ class SHACLMetric:
         recall = self.get_recall(ground_truth_referencing_relationships, predicted_referencing_relationships)
         precision = self.get_precision(ground_truth_referencing_relationships, predicted_referencing_relationships)
         # f1_score = self.get_F1_score(ground_truth_referencing_relationships, predicted_referencing_relationships)
-        print("Referencing relationship coverage score: ")
-        print("Recall: " + str(recall))
-        print("Precision: " + str(precision))
+        # print("Referencing relationship coverage score: ")
+        # print("Recall: " + str(recall))
+        # print("Precision: " + str(precision))
         # print("F1 score: " + str(f1_score))
         return recall, precision, len(ground_truth_referencing_relationships), len(predicted_referencing_relationships)
 
@@ -256,9 +272,9 @@ class SHACLMetric:
         precision = sum(precision_scores) / len(precision_scores)
         # f1_score = sum(f1_scores) / len(f1_scores)
 
-        print("Constraints coverage score: ")
-        print("Recall: " + str(recall))
-        print("Precision: " + str(precision))
+        # print("Constraints coverage score: ")
+        # print("Recall: " + str(recall))
+        # print("Precision: " + str(precision))
         # print("F1 score: " + str(f1_score))
         return recall, precision
 
@@ -282,11 +298,13 @@ class SHACLMetric:
         predicted = set(predicted)
         if len(predicted) == 0:
             return 0
+        print("#############################PRECISION", len(ground_truth.intersection(predicted)))
         return len(ground_truth.intersection(predicted)) / len(predicted)
 
     def get_recall(self, ground_truth, predicted):
         if len(ground_truth) == 0:
             return 0
+        print("#############################recall", len(ground_truth.intersection(predicted)))
         return len(ground_truth.intersection(predicted)) / len(ground_truth)
 
 
@@ -336,16 +354,16 @@ if __name__ == "__main__":
         PPC_gt_inRML.append(inRML)
         print("The number of property path: ", num_gt, num_pd, inRML)
 
-        recall, precision, num_gt, num_pd = metric.referencing_relationship_coverage_score()
-        RRC_Rec.append(round(recall, 2))
-        RRC_Pre.append(round(precision, 2))
-        RRC_gt_num.append(num_gt)
-        RRC_pd_num.append(num_pd)
-        print("The number of referencing relationship: ", num_gt, num_pd)
+        # recall, precision, num_gt, num_pd = metric.referencing_relationship_coverage_score()
+        # RRC_Rec.append(round(recall, 2))
+        # RRC_Pre.append(round(precision, 2))
+        # RRC_gt_num.append(num_gt)
+        # RRC_pd_num.append(num_pd)
+        # print("The number of referencing relationship: ", num_gt, num_pd)
 
-        recall, precision = metric.constraints_coverage()
-        CC_Rec.append(round(recall, 2))
-        CC_Pre.append(round(precision, 2))
+        # recall, precision = metric.constraints_coverage()
+        # CC_Rec.append(round(recall, 2))
+        # CC_Pre.append(round(precision, 2))
         # df = pd.DataFrame({"Name":["ePO_shacl_shapes"], "TDC_Rec":TDC_Rec, "TDC_Pre":TDC_Pre, "TDC_gt_num":TDC_gt_num, "TDC_pd_num":TDC_pd_num, "TDC_inRML":TDC_gt_inRML, "PPC_Rec":PPC_Rec, "PPC_Pre":PPC_Pre, "PPC_gt_num":PPC_gt_num, "PPC_pd_num":PPC_pd_num, "PPC_inRML":PPC_gt_inRML, "RRC_Rec":RRC_Rec, "RRC_Pre":RRC_Pre, "RRC_gt_num":RRC_gt_num, "RRC_pd_num":RRC_pd_num, "CC_Rec":CC_Rec, "CC_Pre":CC_Pre})
         # df.to_csv("usecase/TED/metric.csv", index=False)
         # #Store in excel
@@ -392,16 +410,16 @@ if __name__ == "__main__":
             PPC_pd_num.append(num_pd)
             PPC_gt_inRML.append(inRML)
 
-            recall, precision, num_gt, num_pd = metric.referencing_relationship_coverage_score()
-            RRC_Rec.append(round(recall, 2))
-            RRC_Pre.append(round(precision, 2))
-            RRC_gt_num.append(num_gt)
-            RRC_pd_num.append(num_pd)
+            # recall, precision, num_gt, num_pd = metric.referencing_relationship_coverage_score()
+            # RRC_Rec.append(round(recall, 2))
+            # RRC_Pre.append(round(precision, 2))
+            # RRC_gt_num.append(num_gt)
+            # RRC_pd_num.append(num_pd)
 
-            recall, precision = metric.constraints_coverage()
-            CC_Rec.append(round(recall, 2))
-            CC_Pre.append(round(precision, 2))
-        df = pd.DataFrame({"Name":name, "TDC_Rec":TDC_Rec, "TDC_Pre":TDC_Pre, "TDC_gt_num":TDC_gt_num, "TDC_pd_num":TDC_pd_num, "TDC_inRML":TDC_gt_inRML, "PPC_Rec":PPC_Rec, "PPC_Pre":PPC_Pre, "PPC_gt_num":PPC_gt_num, "PPC_pd_num":PPC_pd_num, "PPC_inRML":PPC_gt_inRML, "RRC_Rec":RRC_Rec, "RRC_Pre":RRC_Pre, "RRC_gt_num":RRC_gt_num, "RRC_pd_num":RRC_pd_num, "CC_Rec":CC_Rec, "CC_Pre":CC_Pre})
-        df.to_csv("usecase/RINF/metric.csv", index=False)
-        #Store in excel
-        df.to_excel('usecase/RINF/metric.xlsx', index=False)
+            # recall, precision = metric.constraints_coverage()
+            # CC_Rec.append(round(recall, 2))
+            # CC_Pre.append(round(precision, 2))
+        # df = pd.DataFrame({"Name":name, "TDC_Rec":TDC_Rec, "TDC_Pre":TDC_Pre, "TDC_gt_num":TDC_gt_num, "TDC_pd_num":TDC_pd_num, "TDC_inRML":TDC_gt_inRML, "PPC_Rec":PPC_Rec, "PPC_Pre":PPC_Pre, "PPC_gt_num":PPC_gt_num, "PPC_pd_num":PPC_pd_num, "PPC_inRML":PPC_gt_inRML, "RRC_Rec":RRC_Rec, "RRC_Pre":RRC_Pre, "RRC_gt_num":RRC_gt_num, "RRC_pd_num":RRC_pd_num, "CC_Rec":CC_Rec, "CC_Pre":CC_Pre})
+        # df.to_csv("usecase/RINF/metric.csv", index=False)
+        # #Store in excel
+        # df.to_excel('usecase/RINF/metric.xlsx', index=False)

@@ -44,7 +44,7 @@ class Adjustment_TED:
                                         }
                                     """, initNs={"rr": self.RR, "rml": self.RML})
         self.query_rml = prepareQuery("""
-                                        SELECT ?tm ?iterator ?targetClass_Position1 ?targetClass_Position2 ?subjectTemplate ?subjectReference ?predicate ?objectReference ?objectTemplate ?objectFN ?parentTM ?om ?datatype
+                                        SELECT ?tm ?iterator ?targetClass_Position1 ?targetClass_Position2 ?targetClass_Position3 ?subjectTemplate ?subjectReference ?predicate ?objectReference ?objectTemplate ?objectFN ?parentTM ?om ?datatype
                                         WHERE {
                                             ?tm a rr:TriplesMap ;
                                                 rml:logicalSource [ rml:iterator ?iterator ] ;
@@ -54,6 +54,9 @@ class Adjustment_TED:
                                             OPTIONAL {
                                                 ?tm rr:predicateObjectMap [rr:predicate <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
                                                                             rr:objectMap [rr:constant ?targetClass_Position2] ]. }
+                                            OPTIONAL {
+                                                ?tm rr:predicateObjectMap [rr:predicate <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
+                                                                            rr:objectMap [rml:reference ?targetClass_Position3] ]. }
                                             OPTIONAL {      
                                                 ?tm rr:predicateObjectMap [rr:predicate ?predicate ;
                                                                             rr:objectMap ?om ].
@@ -374,7 +377,7 @@ class Adjustment_TED:
         else:
             result = g.query(self.query_rml)
             for r in result:
-                tm, iterator, targetClass, targetClass2, subjectTemplate, subjectReference, predicate, objectReference, objectTemplate, objectFN, parentTM, om, datatype = r
+                tm, iterator, targetClass, targetClass2, targetClass3, subjectTemplate, subjectReference, predicate, objectReference, objectTemplate, objectFN, parentTM, om, datatype = r
                 current = mapping_dict.get(tm, {})
                 
                 iterator = str(iterator).split("[")[0]
@@ -383,6 +386,12 @@ class Adjustment_TED:
                 current_targetClass = current.get("targetClass", [])
                 if targetClass not in current_targetClass and targetClass != None:
                     current_targetClass.append(targetClass)
+                if targetClass3 is not None and "if" in targetClass3:
+                    url_pattern = r"http://[^']*"
+                    url = re.findall(url_pattern, targetClass3)
+                    for c in url:
+                        if URIRef(c) not in current_targetClass:
+                            current_targetClass.append(URIRef(c))
                 if targetClass2 not in current_targetClass and targetClass2 != None:
                     current_targetClass.append(targetClass2)
                 current["targetClass"] = current_targetClass
