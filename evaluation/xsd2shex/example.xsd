@@ -1,0 +1,18 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://tempuri.org/po.xsd" xmlns="http://tempuri.org/po.xsd" elementFormDefault="qualified"> 
+  
+  <xs:element name="items" type="Items"/> 
+
+  <xs:complexType name="Items"> 
+    <xs:all> 
+      <xs:element name="item" minOccurs="0" maxOccurs="unbounded"> 
+        <xs:complexType> 
+          <xs:all> 
+            <xs:element name="productName" type="xs:string"/> 
+            <xs:element name="USPrice" type="xs:decimal"/> 
+          </xs:all> 
+        </xs:complexType> 
+      </xs:element> 
+    </xs:all>
+  </xs:complexType>
+
+</xs:schema>

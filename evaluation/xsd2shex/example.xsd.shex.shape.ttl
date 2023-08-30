@@ -1,0 +1,24 @@
+@prefix :     <http://example.org/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xs:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+<Items>  rdf:type    sh:NodeShape ;
+        sh:property  [ rdf:type  sh:PropertyShape ;
+                       sh:node   <item> ;
+                       sh:path   :item
+                     ] .
+<item>  rdf:type     sh:NodeShape ;
+        sh:property  [ rdf:type     sh:PropertyShape ;
+                       sh:datatype  xs:string ;
+                       sh:maxCount  1 ;
+                       sh:minCount  1 ;
+                       sh:path      :productName
+                     ] ;
+        sh:property  [ rdf:type     sh:PropertyShape ;
+                       sh:datatype  xs:decimal ;
+                       sh:maxCount  1 ;
+                       sh:minCount  1 ;
+                       sh:path      :USPrice
+                     ] .

@@ -1,0 +1,299 @@
+#--- s6_complementary_information.rml.ttl ---
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix tedm: <http://data.europa.eu/a4g/mapping/sf-rml/> .
+@prefix epo: <http://data.europa.eu/a4g/ontology#> .
+@prefix epo-not: <http://data.europa.eu/a4g/ontology#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+
+tedm:notice
+  a owl:Ontology ;
+  owl:imports dct:, <http://www.w3.org/2004/02/skos/core> ;
+  dct:description """
+        This module provides the mapping definitions for the ..."""@en ;
+  rdfs:label "TED-SWS mapping of "@en ;
+  dct:date "2022-06-28"^^xsd:date .
+
+tedm:Notice a rr:TriplesMap ;
+    rr:predicateObjectMap     # second (more specific) notice type depending on NOTICE TYPE
+        [
+            rr:predicate rdf:type ;
+            rr:objectMap
+            [
+                rml:reference "if(../NOTICE/@TYPE='AWARD_CONTRACT' or ../NOTICE/@TYPE='CONCESSION_AWARD_CONTRACT') then 'http://data.europa.eu/a4g/ontology#ResultNotice' else if (../NOTICE/@TYPE='CONTRACT' or ../NOTICE/@TYPE='PRI' or ../NOTICE/@TYPE='PRI_CALL_COMPETITION' or ../NOTICE/@TYPE='QSU_ONLY' or ../NOTICE/@TYPE='QSU_CALL_COMPETITION' or ../NOTICE/@TYPE='PER_CALL_COMPETITION') then 'http://data.europa.eu/a4g/ontology#CompetitionNotice' else if(../NOTICE/@TYPE='PRI_ONLY' or ../NOTICE/@TYPE='PRI_REDUCING_TIME_LIMITS' or ../NOTICE/@TYPE='PER_ONLY' or ../NOTICE/@TYPE='PER_REDUCING_TIME_LIMITS') then 'http://data.europa.eu/a4g/ontology#PlanningNotice' else null ";
+                rr:termType rr:IRI;
+           ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasID;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:NoticeIdentifier;
+                rr:joinCondition [
+                    rr:child "path()";
+                    rr:parent "path()";
+                ];
+            ]
+        ];
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasLegalBasis ;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:legalBasis;
+                rr:joinCondition [
+                    rr:child "../LEGAL_BASIS/@VALUE";
+                    rr:parent "code.value";
+                ];
+            ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo-not:announcesPlannedProcurementPart ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:PlannedProcurementPart
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasPublicationDate ;
+            rr:objectMap
+                [
+                    rml:reference "/TED_EXPORT/CODED_DATA_SECTION/REF_OJS/DATE_PUB";
+#                    # according to EPO this value should be of type xsd:date, but the format of values that appear in the XML files is "YYYYMMDD", which is invalid for the xsd:date datatype (expecting "YYYY-MM-DD"). The wrong values will be fixed in a separate "transformation" step.
+                    rr:datatype xsd:string;
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDispatchDate ;
+            rr:objectMap
+                [
+                    rml:reference "../COMPLEMENTARY_INFO/DATE_DISPATCH_NOTICE";
+                    rr:datatype xsd:date;
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesNoticeAwardInformation ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:NoticeAwardInformation
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesRole ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Reviewer;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesRole ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Mediator;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesRole ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ReviewProcedureInformationProvider;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:announcesRole ;
+#            rr:objectMap
+#                [
+#                    rr:parentTriplesMap tedm:ContractSignatoryonContractorSide;
+#                    rr:joinCondition [
+#                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+#                        rr:parent "'true'";
+#                    ];
+#                ] ;
+#        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesRole ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Buyer;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesRole ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:BuyerCP;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesRole ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:AdditionalBuyer;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesRole ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:AdditionalBuyerCP;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesRole ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Winner;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:refersToProcedure ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Procedure
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:refersToLot ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Lot;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:refersToPrevious;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:PreviousNotice;
+            ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesContract ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Contract;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo-not:refersToContractToBeModified ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Contract;
+                    rr:joinCondition [
+                        rr:child "if(exists(/TED_EXPORT/FORM_SECTION/F20_2014)) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:announcesContract ;
+#            rr:objectMap
+#                [
+#                    rr:parentTriplesMap tedm:PurchaseContract
+#                ] ;
+#        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:announcesTender ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Tender;
+                    rr:joinCondition [
+                        rr:child "if(not(exists(/TED_EXPORT/FORM_SECTION/F20_2014))) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] .
+tedm:NoticeIdentifier a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasIdentifierValue;
+            rr:objectMap
+                [
+                    rml:reference "/TED_EXPORT/CODED_DATA_SECTION/NOTICE_DATA/NO_DOC_OJS"
+                ]
+        ] .
+tedm:PlannedProcurementPart a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:isSubjectToTerm ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ProcessPlanningTermLot
+                ] ;
+        ] .
+tedm:ProcessPlanningTermLot a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasEstimatedContractNoticePublicationDate ;
+            rr:objectMap
+                [
+                    rml:reference "DATE_PUBLICATION_NOTICE";
+                    rr:datatype xsd:date
+                ] ;
+        ] .

@@ -1,0 +1,10 @@
+prefix : <http://example.org/>
+PREFIX xs: <http://www.w3.org/2001/XMLSchema#>
+
+<PurchaseOrderType> {
+:shipTo  @<shipTo> {1}  ;
+:orderDate  xs:date {1}  ;
+}
+<shipTo> {
+:street  xs:string {1}  ;
+}

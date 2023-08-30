@@ -1,0 +1,133 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine> a sh:NodeShape ;
+    sh:name "SectionOfLine" ;
+    sh:node <http://example.com/NodeShape/RINFData/SectionOfLine/SOLIMCode>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLLength>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLLineIdentification>,
+        <http://example.com/NodeShape/RINFData/SectionOfLine/SOLNature> ;
+    sh:property <http://example.com/PropertyShape/Extra/geosparql#asWKT>,
+        <http://example.com/PropertyShape/Extra/inCountry>,
+        <http://example.com/PropertyShape/Extra/opEnd>,
+        <http://example.com/PropertyShape/Extra/opStart>,
+        <http://example.com/PropertyShape/Extra/rdf-schema#label>,
+        <http://example.com/PropertyShape/Extra/validityEndDate>,
+        <http://example.com/PropertyShape/Extra/validityStartDate> ;
+    sh:targetClass era:SectionOfLine .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLIMCode> a sh:NodeShape ;
+    sh:name "SOLIMCode" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLIMCode/Value> ;
+    sh:targetClass era:SectionOfLine .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLLength> a sh:NodeShape ;
+    sh:name "SOLLength" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLLength/Value> ;
+    sh:targetClass era:SectionOfLine .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLLineIdentification> a sh:NodeShape ;
+    sh:name "SOLLineIdentification" ;
+    sh:property <http://example.com/PropertyShape/Extra/canonicalURI>,
+        <http://example.com/PropertyShape/Extra/geosparql#hasGeometry>,
+        <http://example.com/PropertyShape/Extra/hasAbstraction>,
+        <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLLineIdentification/Value> ;
+    sh:targetClass era:SectionOfLine .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLNature> a sh:NodeShape ;
+    sh:name "SOLNature" ;
+    sh:property <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLNature/Value> ;
+    sh:targetClass era:SectionOfLine .
+
+<http://example.com/PropertyShape/Extra/canonicalURI> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:canonicalURI .
+
+<http://example.com/PropertyShape/Extra/geosparql#asWKT> a sh:PropertyShape ;
+    sh:datatype geosparql:wktLiteral ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:path geosparql:asWKT .
+
+<http://example.com/PropertyShape/Extra/geosparql#hasGeometry> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:path geosparql:hasGeometry .
+
+<http://example.com/PropertyShape/Extra/hasAbstraction> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:hasAbstraction .
+
+<http://example.com/PropertyShape/Extra/inCountry> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:inCountry .
+
+<http://example.com/PropertyShape/Extra/opEnd> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:opEnd .
+
+<http://example.com/PropertyShape/Extra/opStart> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:opStart .
+
+<http://example.com/PropertyShape/Extra/rdf-schema#label> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:path rdfs:label .
+
+<http://example.com/PropertyShape/Extra/validityEndDate> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:validityEndDate .
+
+<http://example.com/PropertyShape/Extra/validityStartDate> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:validityStartDate .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLIMCode/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 4 ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:imCode .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLLength/Value> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:length .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLLineIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:lineNationalId .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLNature/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:solNature .
+

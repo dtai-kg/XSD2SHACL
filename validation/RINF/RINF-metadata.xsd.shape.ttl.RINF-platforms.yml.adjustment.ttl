@@ -1,0 +1,108 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform> a sh:NodeShape ;
+    sh:name "OPTrackPlatform" ;
+    sh:node <http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification>,
+        <http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter> ;
+    sh:property <http://example.com/PropertyShape/Extra/imCode> ;
+    sh:targetClass era:Platform .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification> a sh:NodeShape ;
+    sh:name "OPTrackPlatformIdentification" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification/Value>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification/Value/platformId>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification/Value/rdf-schema#label> ;
+    sh:targetClass era:Platform .
+
+<http://example.com/NodeShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter> a sh:NodeShape ;
+    sh:name "OPTrackPlatformParameter" ;
+    sh:property <http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value/assistanceStartingTrain>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value/length>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value/platformHeight>,
+        <http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value/tenClassification> .
+
+<http://example.com/PropertyShape/Extra/imCode> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:imCode .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:platform .
+
+<http://example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:areaBoardingAid .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification/Value/platformId> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:platformId .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformIdentification/Value/rdf-schema#label> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 1 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path rdfs:label .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value/assistanceStartingTrain> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:assistanceStartingTrain .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value/length> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:length .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value/platformHeight> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:platformHeight .
+
+<http:/example.com/PropertyShape/RINFData/OperationalPoint/OPTrack/OPTrackPlatform/OPTrackPlatformParameter/Value/tenClassification> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxLength 450 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:tenClassification .
+
+[] rdf:first "http://example.com/NodeShape/RINFData/OperationalPoint" ;
+    rdf:rest () .
+

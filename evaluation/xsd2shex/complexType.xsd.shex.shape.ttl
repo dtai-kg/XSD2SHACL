@@ -1,0 +1,43 @@
+@prefix :     <http://example.org/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xs:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+<USAddress>  rdf:type  sh:NodeShape ;
+        sh:property  [ rdf:type     sh:PropertyShape ;
+                       sh:datatype  xs:string ;
+                       sh:maxCount  1 ;
+                       sh:minCount  1 ;
+                       sh:path      :name
+                     ] ;
+        sh:property  [ rdf:type     sh:PropertyShape ;
+                       sh:datatype  xs:integer ;
+                       sh:maxCount  1 ;
+                       sh:minCount  1 ;
+                       sh:path      :zip
+                     ] ;
+        sh:property  [ rdf:type     sh:PropertyShape ;
+                       sh:datatype  xs:string ;
+                       sh:maxCount  1 ;
+                       sh:minCount  1 ;
+                       sh:path      :city
+                     ] ;
+        sh:property  [ rdf:type     sh:PropertyShape ;
+                       sh:in        ( "US" ) ;
+                       sh:maxCount  1 ;
+                       sh:minCount  1 ;
+                       sh:path      :country
+                     ] ;
+        sh:property  [ rdf:type     sh:PropertyShape ;
+                       sh:datatype  xs:string ;
+                       sh:maxCount  1 ;
+                       sh:minCount  1 ;
+                       sh:path      :state
+                     ] ;
+        sh:property  [ rdf:type     sh:PropertyShape ;
+                       sh:datatype  xs:string ;
+                       sh:maxCount  1 ;
+                       sh:minCount  1 ;
+                       sh:path      :street
+                     ] .

@@ -1,0 +1,50 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/student> a sh:NodeShape ;
+    sh:name "student" ;
+    sh:node <http://example.com/NodeShape/studentType> ;
+    sh:property <http://example.com/PropertyShape/student> ;
+    sh:targetClass <http://example.com/student> .
+
+<http://example.com/NodeShape/studentType> a sh:NodeShape ;
+    sh:name "studentType" ;
+    sh:property <http://example.com/PropertyShape/studentType/fullName>,
+        <http://example.com/PropertyShape/studentType/grade>,
+        <http://example.com/PropertyShape/studentType/id>,
+        <http://example.com/PropertyShape/studentType/nationality> .
+
+<http://example.com/PropertyShape/student> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "student" ;
+    sh:path <http://example.com/student> .
+
+<http://example.com/PropertyShape/studentType/fullName> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "fullName" ;
+    sh:path <http://example.com/fullName> .
+
+<http://example.com/PropertyShape/studentType/grade> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 20 ;
+    sh:minCount 1 ;
+    sh:minInclusive 0 ;
+    sh:name "grade" ;
+    sh:path <http://example.com/grade> .
+
+<http://example.com/PropertyShape/studentType/id> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "id" ;
+    sh:path <http://example.com/id> .
+
+<http://example.com/PropertyShape/studentType/nationality> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:name "nationality" ;
+    sh:path <http://example.com/nationality> .
+

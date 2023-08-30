@@ -1,0 +1,633 @@
+#--- s6_complementary_information.rml.ttl ---
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix locn: <http://www.w3.org/ns/locn#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix tedm: <http://data.europa.eu/a4g/mapping/sf-rml/> .
+@prefix epo: <http://data.europa.eu/a4g/ontology#> .
+@prefix epd: <http://data.europa.eu/a4g/resource/> .
+@prefix cpov: <http://data.europa.eu/m8g/> .
+@prefix cv: <http://data.europa.eu/m8g/> .
+
+tedm:complementary_information
+  a owl:Ontology ;
+  owl:imports dct:, <http://www.w3.org/2004/02/skos/core> ;
+  dct:description """
+        This module provides the mapping definitions for the ..."""@en ;
+  rdfs:label "TED-SWS mapping of "@en ;
+  dct:date "2022-05-11"^^xsd:date .
+
+tedm:Procedure a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:isSubjectToProcedureSpecificTerm ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ReviewTerm
+                ] ;
+        ] .
+tedm:ReviewTerm a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasReviewDeadlineInformation ;
+            rr:objectMap
+                [
+                   rml:reference "REVIEW_PROCEDURE"
+                ] ;
+        ] .
+
+tedm:Reviewer a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:contextualisedBy ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Procedure;
+                    rr:joinCondition [
+                        rr:child "if(exists(/TED_EXPORT/FORM_SECTION/F20_2014)) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:playedBy ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ReviewerOrganisation
+                ] ;
+        ] .
+
+tedm:ReviewerOrganisation a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasLegalName ;
+            rr:objectMap
+                [
+                    rml:reference "OFFICIALNAME";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasPrimaryContactPoint ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ReviewerContactPoint
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cv:registeredAddress ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ReviewerOrganisationAddress
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasID;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ReviewerOrganisationIdentifier
+                ]
+        ] .
+tedm:ReviewerOrganisationIdentifier a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasIdentifierValue;
+            rr:objectMap
+                [
+                    rml:reference "NATIONALID"
+                ]
+        ] .
+tedm:ReviewerContactPoint a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasInternetAddress ;
+            rr:objectMap
+                [
+                    rml:reference "URL";
+                    rr:datatype xsd:anyURI
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cpov:email ;
+            rr:objectMap
+                [
+                    rml:reference "E_MAIL"
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasFax ;
+            rr:objectMap
+                [
+                    rml:reference "FAX"
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cpov:telephone ;
+            rr:objectMap
+                [
+                    rml:reference "PHONE"
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasContactName ;
+            rr:objectMap
+                [
+                    rml:reference "CONTACT_POINT";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ]
+        ] .
+tedm:ReviewerOrganisationAddress a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:postName ;
+            rr:objectMap
+                [
+                    rml:reference "TOWN"
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:thoroughfare ;
+            rr:objectMap
+                [
+                    rml:reference "ADDRESS"
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:postCode ;
+            rr:objectMap
+                [
+                    rml:reference "POSTAL_CODE"
+                ] ;
+        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasNutsCode ;
+#            rr:objectMap
+#                [
+#                    rml:reference "if (not(exists(*:NUTS/@CODE))) then 'http://data.europa.eu/nuts/OP_DATPRO' else null";
+#                    rr:termType rr:IRI ;
+#                ]
+#
+#        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasNutsCode ;
+#            rr:objectMap
+#                [
+#                    rr:parentTriplesMap tedm:nuts;
+#                    rr:joinCondition [
+#                        rr:child "*:NUTS/@CODE";
+#                        rr:parent "code.value";
+#                    ];
+#                ] ;
+#        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasCountryCode ;
+#            rr:objectMap
+#                [
+#                    rml:reference "if (not(exists(COUNTRY/@VALUE))) then 'http://publications.europa.eu/resource/authority/country/OP_DATPRO' else null";
+#                    rr:termType rr:IRI ;
+#                ]
+#
+#        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasCountryCode ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:country;
+                    rr:joinCondition [
+                        rr:child "COUNTRY/@VALUE";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+
+tedm:Mediator a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:contextualisedBy ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Procedure;
+                    rr:joinCondition [
+                        rr:child "if(exists(/TED_EXPORT/FORM_SECTION/F20_2014)) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:playedBy ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:MediatorOrganisation
+                ] ;
+        ] .
+tedm:MediatorOrganisation a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasLegalName ;
+            rr:objectMap
+                [
+                    rml:reference "OFFICIALNAME";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasPrimaryContactPoint ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:MediatorContactPoint
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cv:registeredAddress ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:MediatorOrganisationAddress
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasID;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:MediatorOrganisationIdentifier
+                ]
+        ] .
+tedm:MediatorOrganisationIdentifier a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasIdentifierValue;
+            rr:objectMap
+                [
+                    rml:reference "NATIONALID"
+                ]
+        ] .
+tedm:MediatorContactPoint a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasInternetAddress ;
+            rr:objectMap
+                [
+                    rml:reference "URL";
+                    rr:datatype xsd:anyURI
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cpov:email ;
+            rr:objectMap
+                [
+                    rml:reference "E_MAIL"
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasFax ;
+            rr:objectMap
+                [
+                    rml:reference "FAX"
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cpov:telephone ;
+            rr:objectMap
+                [
+                    rml:reference "PHONE"
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasContactName ;
+            rr:objectMap
+                [
+                    rml:reference "CONTACT_POINT";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ]
+        ] .
+tedm:MediatorOrganisationAddress a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:postName ;
+            rr:objectMap
+                [
+                    rml:reference "TOWN"
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:thoroughfare ;
+            rr:objectMap
+                [
+                    rml:reference "ADDRESS"
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:postCode ;
+            rr:objectMap
+                [
+                    rml:reference "POSTAL_CODE"
+                ] ;
+        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasNutsCode ;
+#            rr:objectMap
+#                [
+#                    rml:reference "if (not(exists(*:NUTS/@CODE))) then 'http://data.europa.eu/nuts/OP_DATPRO' else null";
+#                    rr:termType rr:IRI;
+#                ]
+#
+#        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasNutsCode ;
+#            rr:objectMap
+#                [
+#                    rr:parentTriplesMap tedm:nuts;
+#                    rr:joinCondition [
+#                        rr:child "*:NUTS/@CODE";
+#                        rr:parent "code.value";
+#                    ];
+#                ] ;
+#        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasCountryCode ;
+#            rr:objectMap
+#                [
+#                    rml:reference "if (not(exists(COUNTRY/@VALUE))) then 'http://publications.europa.eu/resource/authority/country/OP_DATPRO' else null";
+#                    rr:termType rr:IRI;
+#                ]
+#
+#        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasCountryCode ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:country;
+                    rr:joinCondition [
+                        rr:child "COUNTRY/@VALUE";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+
+tedm:ReviewProcedureInformationProvider a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:contextualisedBy ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Procedure;
+                    rr:joinCondition [
+                        rr:child "if(exists(/TED_EXPORT/FORM_SECTION/F20_2014)) then 'true' else 'false'";
+                        rr:parent "'true'";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:playedBy ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ReviewProcedureInformationProviderOrganisation
+                ] ;
+        ] .
+tedm:ReviewProcedureInformationProviderOrganisation a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasLegalName ;
+            rr:objectMap
+                [
+                    rml:reference "OFFICIALNAME";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasPrimaryContactPoint ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ReviewProcedureInformationProviderContactPoint
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cv:registeredAddress ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ReviewProcedureInformationProviderOrganisationAddress
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasID;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ReviewProcedureInformationProviderOrganisationIdentifier
+                ]
+        ] .
+tedm:ReviewProcedureInformationProviderOrganisationIdentifier a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasIdentifierValue;
+            rr:objectMap
+                [
+                    rml:reference "NATIONALID"
+                ]
+        ] .
+tedm:ReviewProcedureInformationProviderContactPoint a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasInternetAddress ;
+            rr:objectMap
+                [
+                    rml:reference "URL";
+                    rr:datatype xsd:anyURI
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cpov:email ;
+            rr:objectMap
+                [
+                    rml:reference "E_MAIL"
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasFax ;
+            rr:objectMap
+                [
+                    rml:reference "FAX"
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cpov:telephone ;
+            rr:objectMap
+                [
+                    rml:reference "PHONE"
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasContactName ;
+            rr:objectMap
+                [
+                    rml:reference "CONTACT_POINT";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ]
+        ] .
+tedm:ReviewProcedureInformationProviderOrganisationAddress a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:postName ;
+            rr:objectMap
+                [
+                    rml:reference "TOWN"
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:thoroughfare ;
+            rr:objectMap
+                [
+                    rml:reference "ADDRESS"
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:postCode ;
+            rr:objectMap
+                [
+                    rml:reference "POSTAL_CODE"
+                ] ;
+        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasNutsCode ;
+#            rr:objectMap
+#                [
+#                    rml:reference "if (not(exists(*:NUTS/@CODE))) then 'http://data.europa.eu/nuts/OP_DATPRO' else null";
+#                    rr:termType rr:IRI;
+#                ]
+#
+#        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasNutsCode ;
+#            rr:objectMap
+#                [
+#                    rr:parentTriplesMap tedm:nuts;
+#                    rr:joinCondition [
+#                        rr:child "*:NUTS/@CODE";
+#                        rr:parent "code.value";
+#                    ];
+#                ] ;
+#        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasCountryCode ;
+#            rr:objectMap
+#                [
+#                    rml:reference "if (not(exists(COUNTRY/@VALUE))) then 'http://publications.europa.eu/resource/authority/country/OP_DATPRO' else null";
+#                    rr:termType rr:IRI;
+#                ]
+#
+#        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasCountryCode ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:country;
+                    rr:joinCondition [
+                        rr:child "COUNTRY/@VALUE";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+tedm:Procedure a rr:TriplesMap;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAdditionalInformation ;
+            rr:objectMap
+                [
+                    rml:reference "../COMPLEMENTARY_INFO/INFO_ADD";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:foreseesContractSpecificTerm ;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:ContractTermProcedure;
+            ]
+        ] .
+tedm:ContractTermProcedure a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasEOrdering;
+            rr:objectMap
+                [
+                    rml:reference "if(exists(../COMPLEMENTARY_INFO/EORDERING)) then 'true' else null";
+                    rr:datatype xsd:boolean
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasEInvoicing;
+            rr:objectMap
+                [
+                    rml:reference "if(exists(../COMPLEMENTARY_INFO/EINVOICING)) then 'true' else null";
+                    rr:datatype xsd:boolean
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasEPayment;
+            rr:objectMap
+                [
+                    rml:reference "if(exists(../COMPLEMENTARY_INFO/EPAYMENT)) then 'true' else null";
+                    rr:datatype xsd:boolean
+                ]
+        ] .

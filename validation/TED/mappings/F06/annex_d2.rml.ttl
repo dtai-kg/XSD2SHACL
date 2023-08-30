@@ -1,0 +1,196 @@
+#--- s6_complementary_information.rml.ttl ---
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix locn: <http://www.w3.org/ns/locn#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix tedm: <http://data.europa.eu/a4g/mapping/sf-rml/> .
+@prefix epo: <http://data.europa.eu/a4g/ontology#> .
+@prefix epd: <http://data.europa.eu/a4g/resource/> .
+@prefix cpov: <http://data.europa.eu/m8g/> .
+tedm:annexe_d1
+  a owl:Ontology ;
+  owl:imports dct:, <http://www.w3.org/2004/02/skos/core> ;
+  dct:description """
+        This module provides the mapping definitions for the ..."""@en ;
+  rdfs:label "TED-SWS mapping of "@en ;
+  dct:date "2022-06-10"^^xsd:date .
+
+tedm:Procedure a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:isSubjectToProcedureSpecificTerm;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:DirectAwardTerm
+                ]
+        ] .
+tedm:DirectAwardTerm a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_MANUF_FOR_RESEARCH)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/resd' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_NO_TENDERS_REQUESTS)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/unsuitable' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_TECHNICAL)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/technical' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_PURE_RESEARCH)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/resd' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_BARGAIN_PURCHASE)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/bargain' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_ARTISTIC)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/artistic' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_PROTECT_RIGHTS)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/exclusive' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_EXTREME_URGENCY)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/urgency' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_ADD_DELIVERIES_ORDERED)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/additional' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_REPETITION_EXISTING)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/repetition' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_CONTRACT_AWARDED_DESIGN_CONTEST)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/contest' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_COMMODITY_MARKET)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/commodity' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_FROM_WINDING_PROVIDER)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/closure' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDirectAwardJustification ;
+            rr:objectMap
+                [
+                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_ACCORDANCE_ARTICLE/D_FROM_LIQUIDATOR_CREDITOR)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/liquidator' else null";
+                    rr:termType rr:IRI;
+                ]
+
+        ] ;
+# This mapping is commented out as per the definition of at-voc:direct-award-justification/dir24-list (which is very confusing)
+# this is code is not (always) appropriate to use to represent the exact meaning of the field
+# See issue https://github.com/OP-TED/ted-rdf-mapping/issues/308
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasDirectAwardJustification ;
+#            rr:objectMap
+#                [
+#                    rml:reference "if (exists(PT_AWARD_CONTRACT_WITHOUT_CALL/D_OUTSIDE_SCOPE)) then 'http://publications.europa.eu/resource/authority/direct-award-justification/dir24-list' else null";
+#                    rr:termType rr:IRI;
+#                ]
+#
+#        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasJustification ;
+            rr:objectMap
+                [
+                    rml:reference "PT_AWARD_CONTRACT_WITHOUT_CALL/D_JUSTIFICATION";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ]
+
+        ] .

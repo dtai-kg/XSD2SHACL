@@ -1,0 +1,56 @@
+@prefix : <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/billTo> a sh:NodeShape ;
+    sh:name "billTo" ;
+    sh:property <http://example.com/PropertyShape/billTo/city>,
+        <http://example.com/PropertyShape/billTo/country>,
+        <http://example.com/PropertyShape/billTo/name>,
+        <http://example.com/PropertyShape/billTo/state>,
+        <http://example.com/PropertyShape/billTo/street>,
+        <http://example.com/PropertyShape/billTo/zip> ;
+    sh:targetClass :billTo .
+
+<http://example.com/PropertyShape/billTo/city> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "city" ;
+    sh:path :city .
+
+<http://example.com/PropertyShape/billTo/country> a sh:PropertyShape ;
+    sh:datatype xsd:NMTOKEN ;
+    sh:in ( "US" ) ;
+    sh:name "country" ;
+    sh:path :country .
+
+<http://example.com/PropertyShape/billTo/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:path :name .
+
+<http://example.com/PropertyShape/billTo/state> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "state" ;
+    sh:path :state .
+
+<http://example.com/PropertyShape/billTo/street> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "street" ;
+    sh:path :street .
+
+<http://example.com/PropertyShape/billTo/zip> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "zip" ;
+    sh:path :zip .
+

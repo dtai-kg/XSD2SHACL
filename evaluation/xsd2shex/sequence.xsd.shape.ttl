@@ -1,0 +1,55 @@
+@prefix : <http://tempuri.org/po.xsd> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/USAddress> a sh:NodeShape ;
+    sh:name "USAddress" ;
+    sh:property <http://example.com/PropertyShape/USAddress/city>,
+        <http://example.com/PropertyShape/USAddress/country>,
+        <http://example.com/PropertyShape/USAddress/name>,
+        <http://example.com/PropertyShape/USAddress/state>,
+        <http://example.com/PropertyShape/USAddress/street>,
+        <http://example.com/PropertyShape/USAddress/zip> .
+
+<http://example.com/PropertyShape/USAddress/city> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "city" ;
+    sh:path :city .
+
+<http://example.com/PropertyShape/USAddress/country> a sh:PropertyShape ;
+    sh:datatype xsd:NMTOKEN ;
+    sh:in ( "US" ) ;
+    sh:name "country" ;
+    sh:path :country .
+
+<http://example.com/PropertyShape/USAddress/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:path :name .
+
+<http://example.com/PropertyShape/USAddress/state> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "state" ;
+    sh:path :state .
+
+<http://example.com/PropertyShape/USAddress/street> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "street" ;
+    sh:path :street .
+
+<http://example.com/PropertyShape/USAddress/zip> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "zip" ;
+    sh:path :zip .
+

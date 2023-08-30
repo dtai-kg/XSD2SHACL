@@ -1,0 +1,11 @@
+prefix : <http://example.org/>
+PREFIX xs: <http://www.w3.org/2001/XMLSchema#>
+
+<USAddress> {
+:name  xs:string {1}  ;
+:street  xs:string {1}  ;
+:city  xs:string {1}  ;
+:state  xs:string {1}  ;
+:zip  xs:integer {1}  ;
+:country  ["US"]  {1}  ;
+}

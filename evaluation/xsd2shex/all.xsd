@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="billTo">
+  <xs:complexType>
+    <xs:all>
+        <xs:element name="name" type="xs:string"/> 
+        <xs:element name="street" type="xs:string"/> 
+        <xs:element name="city" type="xs:string"/> 
+        <xs:element name="state" type="xs:string"/> 
+        <xs:element name="zip" type="xs:integer"/> 
+    </xs:all>
+    <xs:attribute name="country" type="xs:NMTOKEN" fixed="US"/> 
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>
+

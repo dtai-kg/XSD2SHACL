@@ -1,0 +1,18 @@
+prefix : <http://example.org/>
+PREFIX xs: <http://www.w3.org/2001/XMLSchema#>
+
+List(MaxExclusive(Attributes(Map(value -> "100"))))
+List(Enumeration(Attributes(Map(value -> "AK"))), Enumeration(Attributes(Map(value -> "AL"))), Enumeration(Attributes(Map(value -> "AR"))))
+<item> {
+:productName  xs:string {1}  ;
+:state xsd:string {1}  ;
+:quantity xs:positiveInteger {1, 99}  ;
+:USPrice  xs:decimal {1}  ;
+:comment  xs:string ?  ;
+:shipDate  xs:date ?  ;
+
+}
+<Items> {
+:item  @<item> *  ;
+
+}

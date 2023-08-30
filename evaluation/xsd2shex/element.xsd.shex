@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+PREFIX xs: <http://www.w3.org/2001/XMLSchema#>
+
+<item> {
+:productName  xs:string {1}  ;
+:USPrice  xs:decimal {1}  ;
+
+}
+<Items> {
+:item  @<item> *  ;
+
+}

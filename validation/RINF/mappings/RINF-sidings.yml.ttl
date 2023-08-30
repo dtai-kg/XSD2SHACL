@@ -1,0 +1,1770 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix map: <http://mapping.example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix ical: <http://www.w3.org/2002/12/cal/icaltzd#> .
+@prefix idlab-fn: <http://example.com/idlab/function/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix era: <http://data.europa.eu/949/> .
+@prefix era-tenclass: <http://data.europa.eu/949/concepts/ten-classifications/rinf/> .
+
+map:fn_000 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_013, map:pom_016, map:pomexec_000 .
+
+map:fn_001 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_014, map:pom_015, map:pomexec_001 .
+
+map:fn_002 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_018, map:pom_021, map:pomexec_002 .
+
+map:fn_003 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_019, map:pom_020, map:pomexec_003 .
+
+map:fn_004 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_023, map:pom_026, map:pomexec_004 .
+
+map:fn_005 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_024, map:pom_025, map:pomexec_005 .
+
+map:fn_006 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_028, map:pom_031, map:pomexec_006 .
+
+map:fn_007 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_029, map:pom_030, map:pomexec_007 .
+
+map:fn_008 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_033, map:pom_036, map:pomexec_008 .
+
+map:fn_009 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_034, map:pom_035, map:pomexec_009 .
+
+map:fn_010 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_038, map:pom_041, map:pomexec_010 .
+
+map:fn_011 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_039, map:pom_040, map:pomexec_011 .
+
+map:fn_012 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_043, map:pom_046, map:pomexec_012 .
+
+map:fn_013 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_044, map:pom_045, map:pomexec_013 .
+
+map:fn_014 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_048, map:pom_051, map:pomexec_014 .
+
+map:fn_015 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_049, map:pom_050, map:pomexec_015 .
+
+map:fn_016 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_053, map:pom_056, map:pomexec_016 .
+
+map:fn_017 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_054, map:pom_055, map:pomexec_017 .
+
+map:fn_018 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_058, map:pom_061, map:pomexec_018 .
+
+map:fn_019 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_059, map:pom_060, map:pomexec_019 .
+
+map:fn_020 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_063, map:pom_066, map:pomexec_020 .
+
+map:fn_021 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_064, map:pom_065, map:pomexec_021 .
+
+map:fn_022 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_068, map:pom_071, map:pomexec_022 .
+
+map:fn_023 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_069, map:pom_070, map:pomexec_023 .
+
+map:fn_024 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_073, map:pom_076, map:pomexec_024 .
+
+map:fn_025 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_074, map:pom_075, map:pomexec_025 .
+
+map:fn_026 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_078, map:pom_081, map:pomexec_026 .
+
+map:fn_027 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_079, map:pom_080, map:pomexec_027 .
+
+map:fn_028 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_083, map:pom_086, map:pomexec_028 .
+
+map:fn_029 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_084, map:pom_085, map:pomexec_029 .
+
+map:fn_030 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_088, map:pom_091, map:pomexec_030 .
+
+map:fn_031 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_089, map:pom_090, map:pomexec_031 .
+
+map:fn_032 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_093, map:pom_096, map:pomexec_032 .
+
+map:fn_033 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_094, map:pom_095, map:pomexec_033 .
+
+map:fn_034 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_098, map:pom_101, map:pomexec_034 .
+
+map:fn_035 rml:logicalSource map:source_001 ;
+	rr:predicateObjectMap map:pom_099, map:pom_100, map:pomexec_035 .
+
+map:gm_000 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_001 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_002 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_003 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_004 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_005 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_006 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_007 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_008 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_009 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_010 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_011 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_012 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_013 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_014 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:gm_015 rdf:type rr:GraphMap ;
+	rr:constant "${NAMED_GRAPH}" .
+
+map:map_ec-verification_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "ec-verification" ;
+	rr:predicateObjectMap map:pom_006 ;
+	rr:subjectMap map:s_003 .
+
+map:map_ei-demonstration_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "ei-demonstration" ;
+	rr:predicateObjectMap map:pom_007 ;
+	rr:subjectMap map:s_004 .
+
+map:map_electric-shore-supply_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "electric-shore-supply" ;
+	rr:predicateObjectMap map:pom_087, map:pom_092, map:pom_097 ;
+	rr:subjectMap map:s_014 .
+
+map:map_external-cleaning_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "external-cleaning" ;
+	rr:predicateObjectMap map:pom_027, map:pom_032, map:pom_037 ;
+	rr:subjectMap map:s_010 .
+
+map:map_link-siding-to-operational-point_000 rml:logicalSource map:source_000 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "link-siding-to-operational-point" ;
+	rr:predicateObjectMap map:pom_004 ;
+	rr:subjectMap map:s_001 .
+
+map:map_max-standstill-current_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "max-standstill-current" ;
+	rr:predicateObjectMap map:pom_102 ;
+	rr:subjectMap map:s_015 .
+
+map:map_min-radius-horizontal_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "min-radius-horizontal" ;
+	rr:predicateObjectMap map:pom_010 ;
+	rr:subjectMap map:s_007 .
+
+map:map_min-radius-vertical_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "min-radius-vertical" ;
+	rr:predicateObjectMap map:pom_011 ;
+	rr:subjectMap map:s_008 .
+
+map:map_refuelling_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "refuelling" ;
+	rr:predicateObjectMap map:pom_057, map:pom_062, map:pom_067 ;
+	rr:subjectMap map:s_012 .
+
+map:map_sand-restocking_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "sand-restocking" ;
+	rr:predicateObjectMap map:pom_072, map:pom_077, map:pom_082 ;
+	rr:subjectMap map:s_013 .
+
+map:map_siding-gradient_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "siding-gradient" ;
+	rr:predicateObjectMap map:pom_009 ;
+	rr:subjectMap map:s_006 .
+
+map:map_siding-length_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "siding-length" ;
+	rr:predicateObjectMap map:pom_008 ;
+	rr:subjectMap map:s_005 .
+
+map:map_siding_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "siding" ;
+	rr:predicateObjectMap map:pom_000, map:pom_001, map:pom_002, map:pom_003 ;
+	rr:subjectMap map:s_000 .
+
+map:map_ten-class_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "ten-class" ;
+	rr:predicateObjectMap map:pom_005 ;
+	rr:subjectMap map:s_002 .
+
+map:map_toilet-discharge_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "toilet-discharge" ;
+	rr:predicateObjectMap map:pom_012, map:pom_017, map:pom_022 ;
+	rr:subjectMap map:s_009 .
+
+map:map_water-restocking_000 rml:logicalSource map:source_001 ;
+	rdf:type rr:TriplesMap ;
+	rdfs:label "water-restocking" ;
+	rr:predicateObjectMap map:pom_042, map:pom_047, map:pom_052 ;
+	rr:subjectMap map:s_011 .
+
+map:om_000 rdf:type rr:ObjectMap ;
+	rr:constant "http://data.europa.eu/949/Siding" ;
+	rr:termType rr:IRI .
+
+map:om_001 rdf:type rr:ObjectMap ;
+	rr:template "{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" ;
+	rr:termType rr:Literal .
+
+map:om_002 rml:reference "OPSidingIMCode/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_003 rml:reference "OPSidingIdentification/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_004 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{UniqueOPID/@Value}_{OPSiding/OPSidingIdentification/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_005 rdf:type rr:ObjectMap ;
+	rr:template "http://data.europa.eu/949/concepts/ten-classifications/rinf/{OPSidingParameter[@ID='IPP_TENClass' and @IsApplicable='Y']/@Value}" ;
+	rr:termType rr:IRI .
+
+map:om_006 rml:reference "OPSidingParameter[@ID='IDE_ECVerification' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_007 rml:reference "OPSidingParameter[@ID='IDE_EIDemonstration' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_008 rml:reference "OPSidingParameter[@ID='IPP_Length' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:datatype xsd:double ;
+	rr:termType rr:Literal .
+
+map:om_009 rml:reference "OPSidingParameter[@ID='ILL_Gradient' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:datatype xsd:double ;
+	rr:termType rr:Literal .
+
+map:om_010 rml:reference "OPSidingParameter[@ID='ILL_MinRadHorzCurve' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:datatype xsd:double ;
+	rr:termType rr:Literal .
+
+map:om_011 rml:reference "OPSidingParameter[@ID='ILL_MinRadVertCurve' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_012 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_000 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_013 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_001 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_014 rml:reference "OPSidingParameter[@ID='ITS_ToiletDischarge' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_015 rdf:type rr:ObjectMap ;
+	rr:constant "Y" ;
+	rr:termType rr:Literal .
+
+map:om_016 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_017 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_002 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_018 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_003 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_019 rml:reference "OPSidingParameter[@ID='ITS_ToiletDischarge' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_020 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_021 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_022 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_004 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_023 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_005 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_024 rml:reference "OPSidingParameter[@ID='ITS_ToiletDischarge']/@IsApplicable" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_025 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_026 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_027 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_006 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_028 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_007 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_029 rml:reference "OPSidingParameter[@ID='ITS_ExternalCleaning' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_030 rdf:type rr:ObjectMap ;
+	rr:constant "Y" ;
+	rr:termType rr:Literal .
+
+map:om_031 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_032 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_008 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_033 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_009 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_034 rml:reference "OPSidingParameter[@ID='ITS_ExternalCleaning' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_035 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_036 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_037 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_010 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_038 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_011 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_039 rml:reference "OPSidingParameter[@ID='ITS_ExternalCleaning']/@IsApplicable" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_040 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_041 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_042 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_012 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_043 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_013 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_044 rml:reference "OPSidingParameter[@ID='ITS_WaterRestocking' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_045 rdf:type rr:ObjectMap ;
+	rr:constant "Y" ;
+	rr:termType rr:Literal .
+
+map:om_046 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_047 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_014 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_048 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_015 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_049 rml:reference "OPSidingParameter[@ID='ITS_WaterRestocking' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_050 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_051 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_052 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_016 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_053 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_017 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_054 rml:reference "OPSidingParameter[@ID='ITS_WaterRestocking']/@IsApplicable" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_055 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_056 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_057 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_018 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_058 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_019 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_059 rml:reference "OPSidingParameter[@ID='ITS_Refuelling' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_060 rdf:type rr:ObjectMap ;
+	rr:constant "Y" ;
+	rr:termType rr:Literal .
+
+map:om_061 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_062 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_020 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_063 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_021 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_064 rml:reference "OPSidingParameter[@ID='ITS_Refuelling' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_065 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_066 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_067 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_022 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_068 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_023 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_069 rml:reference "OPSidingParameter[@ID='ITS_Refuelling']/@IsApplicable" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_070 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_071 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_072 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_024 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_073 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_025 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_074 rml:reference "OPSidingParameter[@ID='ITS_SandRestocking' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_075 rdf:type rr:ObjectMap ;
+	rr:constant "Y" ;
+	rr:termType rr:Literal .
+
+map:om_076 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_077 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_026 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_078 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_027 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_079 rml:reference "OPSidingParameter[@ID='ITS_SandRestocking' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_080 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_081 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_082 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_028 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_083 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_029 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_084 rml:reference "OPSidingParameter[@ID='ITS_SandRestocking']/@IsApplicable" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_085 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_086 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_087 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_030 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_088 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_031 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_089 rml:reference "OPSidingParameter[@ID='ITS_ElectricShoreSupply' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_090 rdf:type rr:ObjectMap ;
+	rr:constant "Y" ;
+	rr:termType rr:Literal .
+
+map:om_091 rdf:type rr:ObjectMap ;
+	rr:constant "true" ;
+	rr:termType rr:Literal .
+
+map:om_092 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_032 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_093 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_033 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_094 rml:reference "OPSidingParameter[@ID='ITS_ElectricShoreSupply' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_095 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_096 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_097 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_034 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap> ;
+	rr:datatype xsd:boolean ;
+	rr:termType rr:Literal .
+
+map:om_098 <http://semweb.mmlab.be/ns/fnml#functionValue> map:fn_035 ;
+	rdf:type <http://semweb.mmlab.be/ns/fnml#FunctionTermMap>, rr:ObjectMap .
+
+map:om_099 rml:reference "OPSidingParameter[@ID='ITS_ElectricShoreSupply']/@IsApplicable" ;
+	rdf:type rr:ObjectMap ;
+	rr:termType rr:Literal .
+
+map:om_100 rdf:type rr:ObjectMap ;
+	rr:constant "N" ;
+	rr:termType rr:Literal .
+
+map:om_101 rdf:type rr:ObjectMap ;
+	rr:constant "false" ;
+	rr:termType rr:Literal .
+
+map:om_102 rml:reference "OPSidingParameter[@ID='ECS_MaxStandstillCurrent' and @IsApplicable='Y']/@Value" ;
+	rdf:type rr:ObjectMap ;
+	rr:datatype xsd:double ;
+	rr:termType rr:Literal .
+
+map:omexec_000 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_001 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_002 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_003 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_004 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_005 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_006 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_007 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_008 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_009 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_010 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_011 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_012 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_013 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_014 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_015 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_016 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_017 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_018 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_019 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_020 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_021 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_022 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_023 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_024 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_025 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_026 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_027 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_028 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_029 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_030 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_031 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_032 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_033 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:omexec_034 rr:constant "http://example.com/idlab/function/trueCondition" ;
+	rr:termType rr:IRI .
+
+map:omexec_035 rr:constant "http://example.com/idlab/function/equal" ;
+	rr:termType rr:IRI .
+
+map:pm_000 rdf:type rr:PredicateMap ;
+	rr:constant rdf:type .
+
+map:pm_001 rdf:type rr:PredicateMap ;
+	rr:constant rdfs:label .
+
+map:pm_002 rdf:type rr:PredicateMap ;
+	rr:constant era:imCode .
+
+map:pm_003 rdf:type rr:PredicateMap ;
+	rr:constant era:sidingId .
+
+map:pm_004 rdf:type rr:PredicateMap ;
+	rr:constant era:siding .
+
+map:pm_005 rdf:type rr:PredicateMap ;
+	rr:constant era:tenClassification .
+
+map:pm_006 rdf:type rr:PredicateMap ;
+	rr:constant era:verificationINF .
+
+map:pm_007 rdf:type rr:PredicateMap ;
+	rr:constant era:demonstrationINF .
+
+map:pm_008 rdf:type rr:PredicateMap ;
+	rr:constant era:length .
+
+map:pm_009 rdf:type rr:PredicateMap ;
+	rr:constant era:gradient .
+
+map:pm_010 rdf:type rr:PredicateMap ;
+	rr:constant era:minimumHorizontalRadius .
+
+map:pm_011 rdf:type rr:PredicateMap ;
+	rr:constant era:minimumVerticalRadius .
+
+map:pm_012 rdf:type rr:PredicateMap ;
+	rr:constant era:hasToiletDischarge .
+
+map:pm_013 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_014 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_015 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_016 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_017 rdf:type rr:PredicateMap ;
+	rr:constant era:hasToiletDischarge .
+
+map:pm_018 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_019 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_020 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_021 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_022 rdf:type rr:PredicateMap ;
+	rr:constant era:hasToiletDischarge .
+
+map:pm_023 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_024 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_025 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_026 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_027 rdf:type rr:PredicateMap ;
+	rr:constant era:hasExternalCleaning .
+
+map:pm_028 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_029 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_030 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_031 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_032 rdf:type rr:PredicateMap ;
+	rr:constant era:hasExternalCleaning .
+
+map:pm_033 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_034 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_035 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_036 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_037 rdf:type rr:PredicateMap ;
+	rr:constant era:hasExternalCleaning .
+
+map:pm_038 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_039 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_040 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_041 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_042 rdf:type rr:PredicateMap ;
+	rr:constant era:hasWaterRestocking .
+
+map:pm_043 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_044 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_045 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_046 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_047 rdf:type rr:PredicateMap ;
+	rr:constant era:hasWaterRestocking .
+
+map:pm_048 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_049 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_050 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_051 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_052 rdf:type rr:PredicateMap ;
+	rr:constant era:hasWaterRestocking .
+
+map:pm_053 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_054 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_055 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_056 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_057 rdf:type rr:PredicateMap ;
+	rr:constant era:hasRefuelling .
+
+map:pm_058 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_059 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_060 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_061 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_062 rdf:type rr:PredicateMap ;
+	rr:constant era:hasRefuelling .
+
+map:pm_063 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_064 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_065 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_066 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_067 rdf:type rr:PredicateMap ;
+	rr:constant era:hasRefuelling .
+
+map:pm_068 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_069 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_070 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_071 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_072 rdf:type rr:PredicateMap ;
+	rr:constant era:hasSandRestocking .
+
+map:pm_073 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_074 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_075 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_076 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_077 rdf:type rr:PredicateMap ;
+	rr:constant era:hasSandRestocking .
+
+map:pm_078 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_079 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_080 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_081 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_082 rdf:type rr:PredicateMap ;
+	rr:constant era:hasSandRestocking .
+
+map:pm_083 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_084 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_085 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_086 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_087 rdf:type rr:PredicateMap ;
+	rr:constant era:hasElectricShoreSupply .
+
+map:pm_088 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_089 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_090 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_091 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_092 rdf:type rr:PredicateMap ;
+	rr:constant era:hasElectricShoreSupply .
+
+map:pm_093 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_094 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_095 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_096 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_097 rdf:type rr:PredicateMap ;
+	rr:constant era:hasElectricShoreSupply .
+
+map:pm_098 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:strBoolean .
+
+map:pm_099 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter .
+
+map:pm_100 rdf:type rr:PredicateMap ;
+	rr:constant grel:valueParameter2 .
+
+map:pm_101 rdf:type rr:PredicateMap ;
+	rr:constant idlab-fn:str .
+
+map:pm_102 rdf:type rr:PredicateMap ;
+	rr:constant era:maxCurrentStandstillPantograph .
+
+map:pmexec_000 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_001 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_002 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_003 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_004 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_005 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_006 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_007 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_008 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_009 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_010 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_011 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_012 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_013 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_014 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_015 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_016 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_017 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_018 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_019 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_020 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_021 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_022 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_023 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_024 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_025 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_026 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_027 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_028 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_029 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_030 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_031 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_032 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_033 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_034 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pmexec_035 rr:constant <https://w3id.org/function/ontology#executes> .
+
+map:pom_000 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_000 ;
+	rr:predicateMap map:pm_000 .
+
+map:pom_001 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_001 ;
+	rr:predicateMap map:pm_001 .
+
+map:pom_002 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_002 ;
+	rr:predicateMap map:pm_002 .
+
+map:pom_003 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_003 ;
+	rr:predicateMap map:pm_003 .
+
+map:pom_004 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_004 ;
+	rr:predicateMap map:pm_004 .
+
+map:pom_005 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_005 ;
+	rr:predicateMap map:pm_005 .
+
+map:pom_006 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_006 ;
+	rr:predicateMap map:pm_006 .
+
+map:pom_007 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_007 ;
+	rr:predicateMap map:pm_007 .
+
+map:pom_008 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_008 ;
+	rr:predicateMap map:pm_008 .
+
+map:pom_009 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_009 ;
+	rr:predicateMap map:pm_009 .
+
+map:pom_010 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_010 ;
+	rr:predicateMap map:pm_010 .
+
+map:pom_011 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_011 ;
+	rr:predicateMap map:pm_011 .
+
+map:pom_012 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_012 ;
+	rr:predicateMap map:pm_012 .
+
+map:pom_013 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_013 ;
+	rr:predicateMap map:pm_013 .
+
+map:pom_014 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_014 ;
+	rr:predicateMap map:pm_014 .
+
+map:pom_015 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_015 ;
+	rr:predicateMap map:pm_015 .
+
+map:pom_016 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_016 ;
+	rr:predicateMap map:pm_016 .
+
+map:pom_017 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_017 ;
+	rr:predicateMap map:pm_017 .
+
+map:pom_018 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_018 ;
+	rr:predicateMap map:pm_018 .
+
+map:pom_019 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_019 ;
+	rr:predicateMap map:pm_019 .
+
+map:pom_020 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_020 ;
+	rr:predicateMap map:pm_020 .
+
+map:pom_021 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_021 ;
+	rr:predicateMap map:pm_021 .
+
+map:pom_022 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_022 ;
+	rr:predicateMap map:pm_022 .
+
+map:pom_023 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_023 ;
+	rr:predicateMap map:pm_023 .
+
+map:pom_024 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_024 ;
+	rr:predicateMap map:pm_024 .
+
+map:pom_025 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_025 ;
+	rr:predicateMap map:pm_025 .
+
+map:pom_026 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_026 ;
+	rr:predicateMap map:pm_026 .
+
+map:pom_027 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_027 ;
+	rr:predicateMap map:pm_027 .
+
+map:pom_028 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_028 ;
+	rr:predicateMap map:pm_028 .
+
+map:pom_029 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_029 ;
+	rr:predicateMap map:pm_029 .
+
+map:pom_030 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_030 ;
+	rr:predicateMap map:pm_030 .
+
+map:pom_031 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_031 ;
+	rr:predicateMap map:pm_031 .
+
+map:pom_032 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_032 ;
+	rr:predicateMap map:pm_032 .
+
+map:pom_033 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_033 ;
+	rr:predicateMap map:pm_033 .
+
+map:pom_034 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_034 ;
+	rr:predicateMap map:pm_034 .
+
+map:pom_035 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_035 ;
+	rr:predicateMap map:pm_035 .
+
+map:pom_036 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_036 ;
+	rr:predicateMap map:pm_036 .
+
+map:pom_037 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_037 ;
+	rr:predicateMap map:pm_037 .
+
+map:pom_038 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_038 ;
+	rr:predicateMap map:pm_038 .
+
+map:pom_039 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_039 ;
+	rr:predicateMap map:pm_039 .
+
+map:pom_040 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_040 ;
+	rr:predicateMap map:pm_040 .
+
+map:pom_041 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_041 ;
+	rr:predicateMap map:pm_041 .
+
+map:pom_042 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_042 ;
+	rr:predicateMap map:pm_042 .
+
+map:pom_043 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_043 ;
+	rr:predicateMap map:pm_043 .
+
+map:pom_044 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_044 ;
+	rr:predicateMap map:pm_044 .
+
+map:pom_045 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_045 ;
+	rr:predicateMap map:pm_045 .
+
+map:pom_046 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_046 ;
+	rr:predicateMap map:pm_046 .
+
+map:pom_047 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_047 ;
+	rr:predicateMap map:pm_047 .
+
+map:pom_048 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_048 ;
+	rr:predicateMap map:pm_048 .
+
+map:pom_049 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_049 ;
+	rr:predicateMap map:pm_049 .
+
+map:pom_050 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_050 ;
+	rr:predicateMap map:pm_050 .
+
+map:pom_051 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_051 ;
+	rr:predicateMap map:pm_051 .
+
+map:pom_052 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_052 ;
+	rr:predicateMap map:pm_052 .
+
+map:pom_053 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_053 ;
+	rr:predicateMap map:pm_053 .
+
+map:pom_054 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_054 ;
+	rr:predicateMap map:pm_054 .
+
+map:pom_055 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_055 ;
+	rr:predicateMap map:pm_055 .
+
+map:pom_056 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_056 ;
+	rr:predicateMap map:pm_056 .
+
+map:pom_057 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_057 ;
+	rr:predicateMap map:pm_057 .
+
+map:pom_058 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_058 ;
+	rr:predicateMap map:pm_058 .
+
+map:pom_059 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_059 ;
+	rr:predicateMap map:pm_059 .
+
+map:pom_060 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_060 ;
+	rr:predicateMap map:pm_060 .
+
+map:pom_061 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_061 ;
+	rr:predicateMap map:pm_061 .
+
+map:pom_062 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_062 ;
+	rr:predicateMap map:pm_062 .
+
+map:pom_063 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_063 ;
+	rr:predicateMap map:pm_063 .
+
+map:pom_064 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_064 ;
+	rr:predicateMap map:pm_064 .
+
+map:pom_065 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_065 ;
+	rr:predicateMap map:pm_065 .
+
+map:pom_066 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_066 ;
+	rr:predicateMap map:pm_066 .
+
+map:pom_067 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_067 ;
+	rr:predicateMap map:pm_067 .
+
+map:pom_068 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_068 ;
+	rr:predicateMap map:pm_068 .
+
+map:pom_069 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_069 ;
+	rr:predicateMap map:pm_069 .
+
+map:pom_070 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_070 ;
+	rr:predicateMap map:pm_070 .
+
+map:pom_071 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_071 ;
+	rr:predicateMap map:pm_071 .
+
+map:pom_072 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_072 ;
+	rr:predicateMap map:pm_072 .
+
+map:pom_073 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_073 ;
+	rr:predicateMap map:pm_073 .
+
+map:pom_074 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_074 ;
+	rr:predicateMap map:pm_074 .
+
+map:pom_075 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_075 ;
+	rr:predicateMap map:pm_075 .
+
+map:pom_076 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_076 ;
+	rr:predicateMap map:pm_076 .
+
+map:pom_077 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_077 ;
+	rr:predicateMap map:pm_077 .
+
+map:pom_078 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_078 ;
+	rr:predicateMap map:pm_078 .
+
+map:pom_079 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_079 ;
+	rr:predicateMap map:pm_079 .
+
+map:pom_080 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_080 ;
+	rr:predicateMap map:pm_080 .
+
+map:pom_081 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_081 ;
+	rr:predicateMap map:pm_081 .
+
+map:pom_082 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_082 ;
+	rr:predicateMap map:pm_082 .
+
+map:pom_083 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_083 ;
+	rr:predicateMap map:pm_083 .
+
+map:pom_084 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_084 ;
+	rr:predicateMap map:pm_084 .
+
+map:pom_085 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_085 ;
+	rr:predicateMap map:pm_085 .
+
+map:pom_086 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_086 ;
+	rr:predicateMap map:pm_086 .
+
+map:pom_087 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_087 ;
+	rr:predicateMap map:pm_087 .
+
+map:pom_088 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_088 ;
+	rr:predicateMap map:pm_088 .
+
+map:pom_089 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_089 ;
+	rr:predicateMap map:pm_089 .
+
+map:pom_090 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_090 ;
+	rr:predicateMap map:pm_090 .
+
+map:pom_091 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_091 ;
+	rr:predicateMap map:pm_091 .
+
+map:pom_092 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_092 ;
+	rr:predicateMap map:pm_092 .
+
+map:pom_093 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_093 ;
+	rr:predicateMap map:pm_093 .
+
+map:pom_094 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_094 ;
+	rr:predicateMap map:pm_094 .
+
+map:pom_095 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_095 ;
+	rr:predicateMap map:pm_095 .
+
+map:pom_096 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_096 ;
+	rr:predicateMap map:pm_096 .
+
+map:pom_097 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_097 ;
+	rr:predicateMap map:pm_097 .
+
+map:pom_098 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_098 ;
+	rr:predicateMap map:pm_098 .
+
+map:pom_099 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_099 ;
+	rr:predicateMap map:pm_099 .
+
+map:pom_100 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_100 ;
+	rr:predicateMap map:pm_100 .
+
+map:pom_101 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_101 ;
+	rr:predicateMap map:pm_101 .
+
+map:pom_102 rdf:type rr:PredicateObjectMap ;
+	rr:objectMap map:om_102 ;
+	rr:predicateMap map:pm_102 .
+
+map:pomexec_000 rr:objectMap map:omexec_000 ;
+	rr:predicateMap map:pmexec_000 .
+
+map:pomexec_001 rr:objectMap map:omexec_001 ;
+	rr:predicateMap map:pmexec_001 .
+
+map:pomexec_002 rr:objectMap map:omexec_002 ;
+	rr:predicateMap map:pmexec_002 .
+
+map:pomexec_003 rr:objectMap map:omexec_003 ;
+	rr:predicateMap map:pmexec_003 .
+
+map:pomexec_004 rr:objectMap map:omexec_004 ;
+	rr:predicateMap map:pmexec_004 .
+
+map:pomexec_005 rr:objectMap map:omexec_005 ;
+	rr:predicateMap map:pmexec_005 .
+
+map:pomexec_006 rr:objectMap map:omexec_006 ;
+	rr:predicateMap map:pmexec_006 .
+
+map:pomexec_007 rr:objectMap map:omexec_007 ;
+	rr:predicateMap map:pmexec_007 .
+
+map:pomexec_008 rr:objectMap map:omexec_008 ;
+	rr:predicateMap map:pmexec_008 .
+
+map:pomexec_009 rr:objectMap map:omexec_009 ;
+	rr:predicateMap map:pmexec_009 .
+
+map:pomexec_010 rr:objectMap map:omexec_010 ;
+	rr:predicateMap map:pmexec_010 .
+
+map:pomexec_011 rr:objectMap map:omexec_011 ;
+	rr:predicateMap map:pmexec_011 .
+
+map:pomexec_012 rr:objectMap map:omexec_012 ;
+	rr:predicateMap map:pmexec_012 .
+
+map:pomexec_013 rr:objectMap map:omexec_013 ;
+	rr:predicateMap map:pmexec_013 .
+
+map:pomexec_014 rr:objectMap map:omexec_014 ;
+	rr:predicateMap map:pmexec_014 .
+
+map:pomexec_015 rr:objectMap map:omexec_015 ;
+	rr:predicateMap map:pmexec_015 .
+
+map:pomexec_016 rr:objectMap map:omexec_016 ;
+	rr:predicateMap map:pmexec_016 .
+
+map:pomexec_017 rr:objectMap map:omexec_017 ;
+	rr:predicateMap map:pmexec_017 .
+
+map:pomexec_018 rr:objectMap map:omexec_018 ;
+	rr:predicateMap map:pmexec_018 .
+
+map:pomexec_019 rr:objectMap map:omexec_019 ;
+	rr:predicateMap map:pmexec_019 .
+
+map:pomexec_020 rr:objectMap map:omexec_020 ;
+	rr:predicateMap map:pmexec_020 .
+
+map:pomexec_021 rr:objectMap map:omexec_021 ;
+	rr:predicateMap map:pmexec_021 .
+
+map:pomexec_022 rr:objectMap map:omexec_022 ;
+	rr:predicateMap map:pmexec_022 .
+
+map:pomexec_023 rr:objectMap map:omexec_023 ;
+	rr:predicateMap map:pmexec_023 .
+
+map:pomexec_024 rr:objectMap map:omexec_024 ;
+	rr:predicateMap map:pmexec_024 .
+
+map:pomexec_025 rr:objectMap map:omexec_025 ;
+	rr:predicateMap map:pmexec_025 .
+
+map:pomexec_026 rr:objectMap map:omexec_026 ;
+	rr:predicateMap map:pmexec_026 .
+
+map:pomexec_027 rr:objectMap map:omexec_027 ;
+	rr:predicateMap map:pmexec_027 .
+
+map:pomexec_028 rr:objectMap map:omexec_028 ;
+	rr:predicateMap map:pmexec_028 .
+
+map:pomexec_029 rr:objectMap map:omexec_029 ;
+	rr:predicateMap map:pmexec_029 .
+
+map:pomexec_030 rr:objectMap map:omexec_030 ;
+	rr:predicateMap map:pmexec_030 .
+
+map:pomexec_031 rr:objectMap map:omexec_031 ;
+	rr:predicateMap map:pmexec_031 .
+
+map:pomexec_032 rr:objectMap map:omexec_032 ;
+	rr:predicateMap map:pmexec_032 .
+
+map:pomexec_033 rr:objectMap map:omexec_033 ;
+	rr:predicateMap map:pmexec_033 .
+
+map:pomexec_034 rr:objectMap map:omexec_034 ;
+	rr:predicateMap map:pmexec_034 .
+
+map:pomexec_035 rr:objectMap map:omexec_035 ;
+	rr:predicateMap map:pmexec_035 .
+
+map:rules_000 <http://rdfs.org/ns/void#exampleResource> map:map_ec-verification_000, map:map_ei-demonstration_000, map:map_electric-shore-supply_000, map:map_external-cleaning_000, map:map_link-siding-to-operational-point_000, map:map_max-standstill-current_000, map:map_min-radius-horizontal_000, map:map_min-radius-vertical_000, map:map_refuelling_000, map:map_sand-restocking_000, map:map_siding-gradient_000, map:map_siding-length_000, map:map_siding_000, map:map_ten-class_000, map:map_toilet-discharge_000, map:map_water-restocking_000 ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> .
+
+map:s_000 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_000 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_001 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_001 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{UniqueOPID/@Value}/{(@ValidityDateStart,'0000-00-00')[1]}_{(@ValidityDateEnd,'0000-00-00')[1]}" .
+
+map:s_002 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_002 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_003 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_003 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_004 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_004 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_005 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_005 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_006 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_006 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_007 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_007 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_008 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_008 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_009 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_009 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_010 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_010 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_011 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_011 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_012 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_012 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_013 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_013 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_014 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_014 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:s_015 rdf:type rr:SubjectMap ;
+	rr:graphMap map:gm_015 ;
+	rr:template "http://data.europa.eu/949/functionalInfrastructure/sidings/{parent::OperationalPoint/UniqueOPID/@Value}_{OPSidingIdentification/@Value}" .
+
+map:source_000 rml:iterator "/RINFData/OperationalPoint" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "op_source" .
+
+map:source_001 rml:iterator "/RINFData/OperationalPoint/OPSiding" ;
+	rml:referenceFormulation ql:XPath ;
+	rml:source "dataset/data.xml" ;
+	rdf:type rml:LogicalSource ;
+	rdfs:label "siding_source" .
+

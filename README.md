@@ -51,8 +51,7 @@ The generated shape file will then be located here: usecase/RINF/RINF-metadata.x
 
 ## To Do
 
-- [ ] pre-adjustment based on RINF Tunnels use case, XPath v2
-- [ ] translate import and include
+- [ ]sh:node/sh:class in PS in TED case, XPath v2
 
 - [ ] fix element without type => type is required ?
 - [ ] attribute language => Add languageIn? Or to which shape? To be disccused 

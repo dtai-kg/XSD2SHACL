@@ -1,0 +1,305 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter> a sh:NodeShape ;
+    sh:name "SOLTrackParameter" ;
+    sh:property <http://example.com/PropertyShape/Extra/frenchTrainDetectionSystemLimitation>,
+        <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Set>,
+        <http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Set/rdf-schema#label>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/flangeLubeRules>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxDistConsecutiveAxles>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxDistEndTrainFirstAxle>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxFlangeHeight>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxImpedanceWheelset>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxSandingOutput>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minAxleLoad>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minDistConsecutiveAxles>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minDistFirstLastAxle>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minFlangeHeight>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minFlangeThickness>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minRimWidth>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minWheelDiameter>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/requiredSandingOverride>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/trainDetectionSystemSpecificCheck>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/trainDetectionSystemSpecificCheckDocument>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/trainDetectionSystemType>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantFerromagneticWheel>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantMaxDistConsecutiveAxles>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantMaxImpedanceWheelset>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantMetalConstruction>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantMetalFreeSpace>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantRSTShuntImpedance>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantSandCharacteristics>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantSanding>,
+        <http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantShuntDevices> ;
+    sh:targetClass era:TrainDetectionSystem .
+
+<http://example.com/PropertyShape/Extra/frenchTrainDetectionSystemLimitation> a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:frenchTrainDetectionSystemLimitation .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Set> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Set" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:tdsMinAxleLoadVehicleCategory .
+
+<http://example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tsiCompliantCompositeBrakeBlocks .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Set/rdf-schema#label> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Set" ;
+    sh:nodeKind sh:Literal ;
+    sh:path rdfs:label .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/flangeLubeRules> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:flangeLubeRules .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxDistConsecutiveAxles> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:maxDistConsecutiveAxles .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxDistEndTrainFirstAxle> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:maxDistEndTrainFirstAxle .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxFlangeHeight> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:maxFlangeHeight .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxImpedanceWheelset> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:maxImpedanceWheelset .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/maxSandingOutput> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:maxSandingOutput .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minAxleLoad> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:minAxleLoad .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minDistConsecutiveAxles> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:minDistConsecutiveAxles .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minDistFirstLastAxle> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:minDistFirstLastAxle .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minFlangeHeight> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:minFlangeHeight .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minFlangeThickness> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:minFlangeThickness .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minRimWidth> a sh:PropertyShape ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:minRimWidth .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/minWheelDiameter> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:minWheelDiameter .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/requiredSandingOverride> a sh:PropertyShape ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:requiredSandingOverride .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/trainDetectionSystemSpecificCheck> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:trainDetectionSystemSpecificCheck .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/trainDetectionSystemSpecificCheckDocument> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:trainDetectionSystemSpecificCheckDocument .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/trainDetectionSystemType> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:trainDetectionSystemType .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantFerromagneticWheel> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tsiCompliantFerromagneticWheel .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantMaxDistConsecutiveAxles> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tsiCompliantMaxDistConsecutiveAxles .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantMaxImpedanceWheelset> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tsiCompliantMaxImpedanceWheelset .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantMetalConstruction> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tsiCompliantMetalConstruction .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantMetalFreeSpace> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tsiCompliantMetalFreeSpace .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantRSTShuntImpedance> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tsiCompliantRSTShuntImpedance .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantSandCharacteristics> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tsiCompliantSandCharacteristics .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantSanding> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:IRI ;
+    sh:path era:tsiCompliantSanding .
+
+<http:/example.com/PropertyShape/RINFData/SectionOfLine/SOLTrack/SOLTrackParameter/Value/tsiCompliantShuntDevices> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:maxLength 1000 ;
+    sh:minCount 0 ;
+    sh:name "Value" ;
+    sh:nodeKind sh:Literal ;
+    sh:path era:tsiCompliantShuntDevices .
+

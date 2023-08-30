@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="comment" type="xs:string"/> 
+  
+  <xs:complexType name="Items"> 
+    <xs:all> 
+      <xs:element name="item" minOccurs="0" maxOccurs="unbounded"> 
+        <xs:complexType> 
+          <xs:all> 
+            <xs:element name="productName" type="xs:string"/> 
+            <xs:element name="quantity"> 
+              <xs:simpleType> 
+                <xs:restriction base="xs:positiveInteger"> 
+                  <xs:maxExclusive value="100"/> 
+                </xs:restriction> 
+              </xs:simpleType> 
+            </xs:element> 
+            <xs:element name="USPrice" type="xs:decimal"/> 
+            <xs:element ref="comment" minOccurs="0"/> 
+            <xs:element name="shipDate" type="xs:date" minOccurs="0"/> 
+          </xs:all> 
+        </xs:complexType> 
+      </xs:element> 
+    </xs:all> 
+  </xs:complexType>
+
+</xs:schema>

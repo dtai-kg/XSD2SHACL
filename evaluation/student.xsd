@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="student" type="studentType"/> 
+
+<xs:complexType name="studentType"> 
+  <xs:all> 
+    <xs:element name="id" type="xs:string"/> 
+    <xs:element name="fullName" type="xs:string"/> 
+    <xs:element name="grade" type="gradeType"/> 
+  </xs:all> 
+  <xs:attribute name="nationality" type="xs:string"/> 
+</xs:complexType>
+
+<xs:simpleType name="gradeType"> 
+  <xs:restriction base="xs:integer"> 
+    <xs:minInclusive value="0"/>
+    <xs:maxInclusive value="20"/>
+  </xs:restriction> 
+</xs:simpleType> 
+
+</xs:schema>

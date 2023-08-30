@@ -1,0 +1,34 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://tempuri.org/po.xsd" xmlns="http://tempuri.org/po.xsd" elementFormDefault="qualified"> 
+  
+  <xs:element name="purchaseOrder" type="PurchaseOrderType"/> 
+
+  <xs:element name="comment" type="xs:string"/> 
+
+  <xs:complexType name="PurchaseOrderType"> 
+    <xs:all> 
+      <xs:element ref="comment" minOccurs="0"/> 
+      <xs:element name="items" type="Items"/> 
+    </xs:all> 
+    <xs:attribute name="orderDate" type="xs:date"/> 
+  </xs:complexType>
+
+  <xs:complexType name="Items"> 
+    <xs:all> 
+      <xs:element name="item" minOccurs="0" maxOccurs="unbounded"> 
+        <xs:complexType> 
+          <xs:all> 
+            <xs:element name="productName" type="xs:string"/> 
+            <xs:element name="quantity"> 
+              <xs:simpleType> 
+                <xs:restriction base="xs:positiveInteger"> 
+                  <xs:maxExclusive value="100"/> 
+                </xs:restriction> 
+              </xs:simpleType> 
+            </xs:element> 
+          </xs:all> 
+        </xs:complexType> 
+      </xs:element> 
+    </xs:all>
+  </xs:complexType>
+
+</xs:schema>

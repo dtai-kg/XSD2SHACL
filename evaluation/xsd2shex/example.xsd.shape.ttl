@@ -1,0 +1,35 @@
+@prefix : <http://tempuri.org/po.xsd> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/items> a sh:NodeShape ;
+    sh:name "items" ;
+    sh:node <http://example.com/NodeShape/Items> ;
+    sh:nodeKind sh:IRI ;
+    sh:targetClass :items .
+
+<http://example.com/NodeShape/Items> a sh:NodeShape ;
+    sh:name "Items" ;
+    sh:node <http://example.com/NodeShape/Items/item> .
+
+<http://example.com/NodeShape/Items/item> a sh:NodeShape ;
+    sh:name "item" ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/Items/item/USPrice>,
+        <http://example.com/PropertyShape/Items/item/productName> ;
+    sh:targetClass :item .
+
+<http://example.com/PropertyShape/Items/item/USPrice> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "USPrice" ;
+    sh:path :USPrice .
+
+<http://example.com/PropertyShape/Items/item/productName> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "productName" ;
+    sh:path :productName .
+

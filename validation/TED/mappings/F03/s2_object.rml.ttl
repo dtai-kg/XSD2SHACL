@@ -1,0 +1,940 @@
+#--- s2_object.rml.ttl ---
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix locn: <http://www.w3.org/ns/locn#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix tedm: <http://data.europa.eu/a4g/mapping/sf-rml/> .
+@prefix epo: <http://data.europa.eu/a4g/ontology#> .
+@prefix cccev: <http://data.europa.eu/m8g/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+
+tedm:object
+  a owl:Ontology ;
+  owl:imports dct:, <http://www.w3.org/2004/02/skos/core> ;
+  dct:description """
+        This module provides the mapping definitions for the ..."""@en ;
+  rdfs:label "TED-SWS mapping of "@en ;  
+  dct:date "2022-05-11"^^xsd:date .
+
+tedm:NoticeAwardInformation a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasTotalAwardedValue ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ProcurementMonetaryValue
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasProcurementLowestReceivedTenderValue ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ProcurementLowestReceivedTenderValue;
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasProcurementHighestReceivedTenderValue ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ProcurementHighestReceivedTenderValue;
+
+                ] ;
+        ] .
+
+tedm:ProcurementMonetaryValue a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAmountValue ;
+            rr:objectMap
+                [
+                    rml:reference "VAL_TOTAL";
+                    rr:datatype xsd:decimal
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasCurrency ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:currency;
+                    rr:joinCondition [
+                        rr:child "VAL_TOTAL/@CURRENCY";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+tedm:ProcurementLowestReceivedTenderValue a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAmountValue ;
+            rr:objectMap
+                [
+                    rml:reference "VAL_RANGE_TOTAL/LOW";
+                    rr:datatype xsd:decimal
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasCurrency ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:currency;
+                    rr:joinCondition [
+                        rr:child "VAL_RANGE_TOTAL/@CURRENCY";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+
+tedm:ProcurementHighestReceivedTenderValue  a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAmountValue ;
+            rr:objectMap
+                [
+                    rml:reference "VAL_RANGE_TOTAL/HIGH";
+                    rr:datatype xsd:decimal
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasCurrency ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:currency;
+                    rr:joinCondition [
+                        rr:child "VAL_RANGE_TOTAL/@CURRENCY";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+tedm:MonetaryValueProcedure a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAmountValue ;
+            rr:objectMap
+                [
+                    rml:reference "VAL_ESTIMATED_TOTAL";
+                    rr:datatype xsd:decimal
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasCurrency ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:currency;
+                    rr:joinCondition [
+                        rr:child "VAL_ESTIMATED_TOTAL/@CURRENCY";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+tedm:Procedure a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasTitle ;
+            rr:objectMap
+                [
+                    rml:reference "TITLE";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDescription ;
+            rr:objectMap
+                [
+                    rml:reference "SHORT_DESCR";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasMainFeature;
+            rr:objectMap
+                [
+                    rml:reference "../PROCEDURE/MAIN_FEATURES_AWARD"
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:isSubjectToProcedureSpecificTerm ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ProcedureTerm
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasEstimatedValue ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:MonetaryValueProcedure
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasProcurementScopeDividedIntoLot ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:Lot
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:isJointProcurement ;
+            rr:objectMap
+                [
+                   rml:reference "if(exists(../CONTRACTING_BODY/JOINT_PROCUREMENT_INVOLVED)) then 'true' else null";
+                   rr:datatype xsd:boolean
+                ] ;
+        ] ;
+
+
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasPurpose ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ProcedurePurpose
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasID;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ProcedureIdentifier
+                ]
+        ] .
+
+tedm:ProcedurePurpose a rr:TriplesMap ;
+# Not mapping supplementary CPV codes, as EPO does not provide a way to group them with "regular" CPV codes. See issues #119 and #205.
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasMainClassification ;
+#            rr:objectMap
+#                [
+#                    rr:parentTriplesMap tedm:cpvsuppl;
+#                    rr:joinCondition [
+#                        rr:child "CPV_MAIN/CPV_SUPPLEMENTARY_CODE/@CODE";
+#                        rr:parent "code.value";
+#                    ];
+#                ] ;
+#        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasMainClassification ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:cpv;
+                    rr:joinCondition [
+                        rr:child "CPV_MAIN/CPV_CODE/@CODE";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+
+tedm:PreviousNotice a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate rdf:type ;
+            rr:objectMap
+                [
+                    rml:reference "if(exists(PT_AWARD_CONTRACT_WITH_PRIOR_PUBLICATION)) then 'http://data.europa.eu/a4g/ontology#CompetitionNotice' else null";
+                    rr:termType rr:IRI
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasID;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:PreviousNoticeIdentifier;
+                rr:joinCondition [
+                    rr:child "path()";
+                    rr:parent "path()";
+                ];
+            ]
+        ] .
+tedm:PreviousNoticeIdentifier a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasIdentifierValue;
+            rr:objectMap
+                [
+                    rml:reference "NOTICE_NUMBER_OJ"
+                ]
+        ] .
+
+tedm:Lot a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasTitle ;
+            rr:objectMap
+                [
+                    rml:reference "TITLE";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDescription ;
+            rr:objectMap
+                [
+                    rml:reference "SHORT_DESCR";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAdditionalInformation ;
+            rr:objectMap
+                [
+                    rml:reference "INFO_ADD";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:isUsingEUFunds;
+            rr:objectMap
+                [
+                    rml:reference "if(exists(EU_PROGR_RELATED)) then 'true' else if(exists(NO_EU_PROGR_RELATED)) then 'false' else null";
+                    rr:datatype xsd:boolean
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasID;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:LotIdentifier;
+                rr:joinCondition [
+                    rr:child "path()";
+                    rr:parent "path()";
+                ];
+            ]
+        ] ;
+   rr:predicateObjectMap
+        [
+            rr:predicate epo:isSubjectToLotSpecificTerm;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:FrameworkAgreementTermLot
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:isSubjectToLotSpecificTerm;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:MultipleStageProcedureTerm;
+                rr:joinCondition [
+                    rr:child "path()";
+                    rr:parent "path()";
+                ];
+            ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:isFundedBy;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:Fund;
+                rr:joinCondition [
+                    rr:child "path()";
+                    rr:parent "path()";
+                ];
+            ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasPurpose ;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:LotPurpose;
+                    rr:joinCondition [
+#                        rr:child "./@ITEM";
+#                        rr:parent "ancestor::OBJECT_DESCR/@ITEM";
+#                        rr:child "./CPV_ADDITIONAL";
+#                        rr:parent "ancestor::OBJECT_DESCR/CPV_ADDITIONAL";
+                        rr:child "if(exists(./@ITEM)) then ./@ITEM else 1";
+                        rr:parent "if(exists(ancestor::OBJECT_DESCR/@ITEM)) then ancestor::OBJECT_DESCR/@ITEM else 1";
+                    ];
+            ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:foreseesContractSpecificTerm ;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:ContractTermLot;
+                rr:joinCondition [
+                    rr:child "path()";
+                    rr:parent "path()";
+                ];
+            ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:specifiesAwardCriterion ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:AwardCriterionQuality;
+                    rr:joinCondition [
+                        rr:child "./@ITEM";
+                        rr:parent "ancestor::OBJECT_DESCR/@ITEM";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:specifiesAwardCriterion ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:AwardCriterion;
+                    rr:joinCondition [
+                        rr:child "./@ITEM";
+                        rr:parent "ancestor::OBJECT_DESCR/@ITEM";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:specifiesAwardCriterion ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:AwardCriterionPrice;
+                    rr:joinCondition [
+                        rr:child "./@ITEM";
+                        rr:parent "ancestor::OBJECT_DESCR/@ITEM";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:specifiesAwardCriterion ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:AwardCriterionCost;
+                    rr:joinCondition [
+                        rr:child "./@ITEM";
+                        rr:parent "ancestor::OBJECT_DESCR/@ITEM";
+                    ];
+                ] ;
+        ] ;
+
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasEstimatedValue;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:MainMonetaryValueLot;
+                    rr:joinCondition [
+                        rr:child "path()";
+                        rr:parent "path()";
+                    ];
+
+                ] ;
+        ] .
+tedm:MainMonetaryValueLot a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAmountValue ;
+            rr:objectMap
+                [
+                    rml:reference "VAL_OBJECT";
+                    rr:datatype xsd:decimal
+                ] ;
+        ] ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasCurrency ;
+#            rr:objectMap
+#                [
+#                    rml:reference "if (not(exists(VAL_ESTIMATED_TOTAL/@CURRENCY))) then 'http://publications.europa.eu/resource/authority/currency/OP_DATPRO' else null";
+#                    rr:termType rr:IRI;
+#                ]
+#
+#        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasCurrency ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:currency;
+                    rr:joinCondition [
+                        rr:child "VAL_OBJECT/@CURRENCY";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+tedm:AwardCriterionQuality a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAwardCriterionType ;
+            rr:objectMap
+                [
+                    rr:template "http://publications.europa.eu/resource/authority/award-criterion-type/quality";
+                    rr:termType rr:IRI
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cccev:name ;
+            rr:objectMap
+                [
+                    rml:reference "AC_CRITERION";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cccev:weight ;
+            rr:objectMap
+                [
+                    rml:reference "AC_WEIGHTING";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] .
+tedm:AwardCriterionPrice a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAwardCriterionType ;
+            rr:objectMap
+                [
+                    rr:template "http://publications.europa.eu/resource/authority/award-criterion-type/price";
+                    rr:termType rr:IRI
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cccev:weight ;
+            rr:objectMap
+                [
+                    rml:reference "AC_WEIGHTING";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] .
+tedm:AwardCriterionCost a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAwardCriterionType ;
+            rr:objectMap
+                [
+                    rr:template "http://publications.europa.eu/resource/authority/award-criterion-type/cost";
+                    rr:termType rr:IRI
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cccev:name ;
+            rr:objectMap
+                [
+                    rml:reference "AC_CRITERION";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cccev:weight ;
+            rr:objectMap
+                [
+                    rml:reference "AC_WEIGHTING";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] .
+tedm:AwardCriterion a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cccev:description ;
+            rr:objectMap
+                [
+                    rml:reference ".";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate cccev:weight ;
+            rr:objectMap
+                [
+                    rml:reference "AC_WEIGHTING";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] .
+tedm:ContractTermLot a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasOptionsDescription ;
+            rr:objectMap
+                [
+                    rml:reference "OPTIONS_DESCR";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:definesSpecificPlaceOfPerformance ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ContractTermLotLocation;
+                    rr:joinCondition [
+#                        rr:child "./@ITEM";
+#                        rr:parent "./@ITEM";
+#                        rr:child "path()";
+#                        rr:parent "path()";
+                        rr:child "if(exists(./@ITEM)) then ./@ITEM else 1";
+                        rr:parent "if(exists(./@ITEM)) then ./@ITEM else 1";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:definesContractPeriod;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:Period;
+                rr:joinCondition [
+                    rr:child "if(exists(./@ITEM)) then ./@ITEM else 1";
+                    rr:parent "if(exists(./@ITEM)) then ./@ITEM else 1";
+                ];
+            ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:definesContractDuration;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:Duration;
+                rr:joinCondition [
+                    rr:child "if(exists(./@ITEM)) then ./@ITEM else 1";
+                    rr:parent "if(exists(../@ITEM)) then ../@ITEM else 1";
+                ];
+            ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasOptions;
+            rr:objectMap
+                [
+                    rml:reference "if(exists(OPTIONS)) then 'true' else if(exists(NO_OPTIONS)) then 'false' else null";
+                    rr:datatype xsd:boolean
+                ]
+        ] .
+
+tedm:ContractTermLotLocation a rr:TriplesMap ;
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasNutsCode ;
+#            rr:objectMap
+#                [
+#                    rml:reference "if (not(exists(./*:NUTS/@CODE))) then 'http://data.europa.eu/nuts/OP_DATPRO' else null";
+#                    rr:termType rr:IRI;
+#                ]
+#
+#        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasNutsCode ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:nuts;
+                    rr:joinCondition [
+                        rr:child "./*:NUTS/@CODE";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:address ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:ContractTermLotLocationAddress;
+                    rr:joinCondition [
+                        rr:child "if(exists(./@ITEM)) then ./@ITEM else 1";
+                        rr:parent "if(exists(./@ITEM)) then ./@ITEM else 1";
+                    ];
+                ] ;
+        ] .
+tedm:ContractTermLotLocationAddress a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate locn:fullAddress ;
+            rr:objectMap
+                 [
+                    rml:reference "MAIN_SITE";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] .
+tedm:Duration a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate time:numericDuration ;
+            rr:objectMap
+                [
+                    rml:reference ".";
+                    rr:datatype xsd:decimal
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate time:unitType ;
+            rr:objectMap
+                [
+                    rml:reference "if(./@TYPE='MONTH') then 'http://www.w3.org/2006/time#unitMonth' else if (./@TYPE='DAY') then 'http://www.w3.org/2006/time#unitDay' else null ";
+                    rr:termType rr:IRI;
+                ] ;
+        ] .
+tedm:Period a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasBeginning ;
+            rr:objectMap
+                [
+                    rml:reference "if(exists(DATE_START)) then DATE_START else null";
+                    rr:datatype xsd:date
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasEnd ;
+            rr:objectMap
+                [
+                    rml:reference "if(exists(DATE_END)) then DATE_END else null";
+                    rr:datatype xsd:date
+                ] ;
+        ] .
+
+tedm:LotPurpose a rr:TriplesMap ;
+# Not mapping supplementary CPV codes, as EPO does not provide a way to group them with "regular" CPV codes. See issues #119 and #205.
+#    rr:predicateObjectMap
+#        [
+#            rr:predicate epo:hasAdditionalClassification ;
+#            rr:objectMap
+#                [
+#                    rr:parentTriplesMap tedm:cpvsuppl;
+#                    rr:joinCondition [
+#                        rr:child "CPV_SUPPLEMENTARY_CODE/@CODE";
+#                        rr:parent "code.value";
+#                    ];
+#                ] ;
+#        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasAdditionalClassification ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:cpv;
+                    rr:joinCondition [
+                        rr:child "CPV_CODE/@CODE";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+
+tedm:LotIdentifier a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasIdentifierValue;
+            rr:objectMap
+                [
+                    rml:reference "LOT_NO"
+                ]
+        ] .
+#JLR#
+
+tedm:ProcedureTerm a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasCrossBorderLaw;
+            rr:objectMap
+                [
+                    rml:reference "../CONTRACTING_BODY/PROCUREMENT_LAW";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ]
+        ] ;
+     rr:predicateObjectMap
+        [
+            rr:predicate epo:isAwardedByCPB ;
+            rr:objectMap
+                [
+                   rml:reference "if(exists(../CONTRACTING_BODY/CENTRAL_PURCHASING)) then 'true' else null";
+                   rr:datatype xsd:boolean
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:isSubmissionForAllLotsAllowed;
+            rr:objectMap
+                [
+                   rml:reference "if(exists(LOT_DIVISION/LOT_ALL)) then 'true' else null";
+                   rr:datatype xsd:boolean
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasMaximumLotSubmissionAllowed;
+            rr:objectMap
+                [
+                    rml:reference "LOT_DIVISION/LOT_MAX_NUMBER";
+                    rr:datatype xsd:integer
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:isOneLotOnlyAllowed;
+            rr:objectMap
+                [
+                   rml:reference "if(exists(LOT_DIVISION/LOT_ONE_ONLY)) then 'true' else null";
+                   rr:datatype xsd:boolean
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasMaximumNumberOfLotsToBeAwarded;
+            rr:objectMap
+                [
+                    rml:reference "LOT_DIVISION/LOT_MAX_ONE_TENDERER";
+                    rr:datatype xsd:integer
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasLotAwardCombination;
+            rr:objectMap
+                [
+                    rml:reference "LOT_DIVISION/LOT_COMBINING_CONTRACT_RIGHT"
+
+                ]
+        ] .
+tedm:ContractTermProcedure a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasContractNatureType ;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:contractNature ;
+                    rr:joinCondition [
+                        rr:child "lower-case(../OBJECT_CONTRACT/TYPE_CONTRACT/@CTYPE)";
+                        rr:parent "code.value";
+                    ];
+                ] ;
+        ] .
+tedm:FrameworkAgreementTermLot a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDurationExtensionJustification ;
+            rr:objectMap
+                [
+                    rml:reference "JUSTIFICATION";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ] ;
+        ] .
+tedm:MultipleStageProcedureTerm a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasQualificationSystemDuration;
+            rr:objectMap
+                [
+                    rr:parentTriplesMap tedm:MultipleStageProcedureIndefiniteDuration;
+                    rr:joinCondition [
+                        rr:child "path()";
+                        rr:parent "path()";
+                    ];
+                ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasQualificationSystemPeriod ;
+            rr:objectMap
+            [
+                rr:parentTriplesMap tedm:MultipleStageProcedurePeriod;
+                rr:joinCondition [
+                    rr:child "path()";
+                    rr:parent "path()";
+                ];
+            ]
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasQualificationSystemRenewalDescription;
+            rr:objectMap
+                [
+                    rml:reference "RENEWAL_DESC"
+                ]
+        ] .
+tedm:MultipleStageProcedurePeriod a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasBeginning ;
+            rr:objectMap
+                [
+                    rml:reference "if(exists(QS/DATE_START)) then QS/DATE_START else null";
+                    rr:datatype xsd:date
+                ] ;
+        ] ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasEnd ;
+            rr:objectMap
+                [
+                    rml:reference "if(exists(QS/DATE_END)) then QS/DATE_END |else null";
+                    rr:datatype xsd:date
+                ] ;
+        ] .
+tedm:Fund a rr:TriplesMap ;
+    rr:predicateObjectMap
+        [
+            rr:predicate epo:hasDescription;
+            rr:objectMap
+                [
+                    rml:reference "EU_PROGR_RELATED";
+                    rml:languageMap [
+                        rml:reference "lower-case(ancestor::*/@LG)"
+                    ]
+                ]
+        ] .
+
