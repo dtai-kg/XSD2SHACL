@@ -1,8 +1,7 @@
 import argparse
 import os
 from src.XSDtoSHACL import XSDtoSHACL
-from src.XSDtoSHACL_alignedShEx import XSDtoSHACL_alignedShEx
-from src.adjustment import Adjustment
+from src.adjustment_RINF import Adjustment_RINF
 from src.adjustment_TED import Adjustment_TED
 import time
 if __name__ == "__main__":
@@ -10,32 +9,16 @@ if __name__ == "__main__":
     parser.add_argument("-x", "--xsd", help='XSD file to be translated', type=str, default=None)
     parser.add_argument("-s", "--shacl", help='SHACL path to do adjustment', type=str, default=None)
     parser.add_argument("-r", "--rml", help='rml mapping file path to do adjustment', type=str, default=None)
-    parser.add_argument("-a", "--aligned", help='aligned ShEx file path to do adjustment', type=str, default=None)
     parser.add_argument("-d", "--destination", help='aligned ShEx file path to do adjustment', type=str, default=None)
     args = parser.parse_args()
 
-    if args.aligned:
-        if args.xsd:
-            print("##### Start translate XSD to aligned ShEx")
-            start = time.time()
-            X2S = XSDtoSHACL_alignedShEx()
-            X2S.evaluate_file(args.xsd)
-            end = time.time()
-            print("##### Time cost: " + str(end - start))
-            SHACL_path = args.xsd + ".shape.alignedShEx.ttl"
+    if args.xsd:
+        X2S = XSDtoSHACL()
+        X2S.evaluate_file(args.xsd)
+        SHACL_path = args.xsd + ".shape.ttl"
+
     else:
-        if args.xsd:
-
-            print("##### Start translate XSD to SHACL")
-            start = time.time()
-            X2S = XSDtoSHACL()
-            X2S.evaluate_file(args.xsd)
-            SHACL_path = args.xsd + ".shape.ttl"
-            end = time.time()
-            print("##### Time cost: " + str(end - start))
-
-        else:
-            SHACL_path = args.shacl
+        SHACL_path = args.shacl
 
     if args.rml:
         if args.rml.endswith(".ttl"):

@@ -6,7 +6,7 @@ import re
 import json
 from .utils import clear_graph, update_graph
 
-class Adjustment:
+class Adjustment_RINF:
     def __init__(self):
         """
         Adjust the vocabulary of SHACL shapes from the XSD against the vocabulary used in the relavant mapping file

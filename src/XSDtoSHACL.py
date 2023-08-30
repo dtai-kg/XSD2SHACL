@@ -5,6 +5,7 @@ from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
 from pyshacl import validate
 import argparse
 from .utils import recursiceCheck
+import time
 
 
 class XSDtoSHACL:
@@ -22,7 +23,6 @@ class XSDtoSHACL:
         self.SHACL = Graph()
         self.shapes = []
         self.extensionShapes = []
-        self.contentShapes = {}
         self.enumerationShapes = []
         self.choiceShapes = []
         self.order_list = []
@@ -81,28 +81,16 @@ class XSDtoSHACL:
             self.SHACL.add((subject,p,o))
 
         elif "fixed" in tag:
-            #add sh:in
-            # p = self.shaclNS.hasValue
             p = self.shaclNS["in"]
             o = Literal(value)
             bn = BNode()
             self.SHACL.add((subject,p,bn))
             self.SHACL.add((bn,RDF.first,o))
             self.SHACL.add((bn,RDF.rest,RDF.nil))
-            # self.SHACL.add((subject,p,o))
 
         elif "pattern" in tag:
             p = self.shaclNS.pattern
             o = Literal(value)
-            # shacl_pattern = "^"
-            # shacl_pattern += str(o).replace("\\d", "[0-9]") \
-            #     .replace("\\w", "[A-Za-z0-9_]") \
-            #     .replace("\\s", "[ \\t\\r\\n]") \
-            #     .replace("\\D", "[^0-9]") \
-            #     .replace("\\W", "[^A-Za-z0-9_]") \
-            #     .replace("\\S", "[^ \\t\\r\\n]")
-            # shacl_pattern += "$"
-            # o = Literal(shacl_pattern)
             self.SHACL.add((subject,p,o))
 
         elif "maxExclusive" in tag:
@@ -163,7 +151,6 @@ class XSDtoSHACL:
         element_name = xsd_element.get("name")
 
         subject = self.NS[f'PropertyShape/{element_name}']
-        # self.translatedShapes[subject] = subject
 
         if self.shapes != []:
             if "NodeShape" in str(self.shapes[-1]):
@@ -241,9 +228,6 @@ class XSDtoSHACL:
         
         self.SHACL.add((subject,self.shaclNS.nodeKind,self.shaclNS.IRI))
         self.SHACL.add((subject,self.shaclNS.targetClass,self.xsdTargetNS[element_name]))
-        # self.SHACL.add((subject,self.shaclNS.targetSubjectsOf,self.xsdTargetNS[element_name]))
-        # self.SHACL.add((subject,self.shaclNS.targetObjectsOf,self.xsdTargetNS[element_name]))
-        # complex type does not have target, element can
 
         """Uncomment this if you want to add one more Property Shape for complex element which will be translated to Node Shape"""
         # self.SHACL.add((subject,self.shaclNS.property,ps_subject))
@@ -619,6 +603,7 @@ class XSDtoSHACL:
                 for child in next_ref_root.findall("./"):
                     self.root.append(child)
                 self.parseXSD(next_ref_root)
+        print("Processed_files",self.processed_files)
 
 
         
@@ -634,7 +619,6 @@ class XSDtoSHACL:
 
         print("Start parsing")
         self.parseXSD(self.root)
-        print("Processed_files",self.processed_files)
         # tree = ET.ElementTree(self.root)
         # tree.write("parse_merge.xsd", encoding="utf-8", xml_declaration=True)
         # return None
@@ -642,23 +626,26 @@ class XSDtoSHACL:
         for key in self.root.attrib:
             if key == "targetNamespace":
                 self.xsdTargetNS = Namespace(self.root.attrib[key])
-    
+
         print("Start translating")
+        start = time.time()
         self.translate(self.root)
+        end = time.time()
+        print("##### Time cost: " + str(end - start))
 
-        # print("Start validating")
-
+        # print("Start checking SHACL shapes")
         # shaclValidation = Graph()
         # shaclValidation.parse("https://www.w3.org/ns/shacl-shacl")
 
         # r = validate(self.SHACL, shacl_graph=shaclValidation)
         # if not r[0]:
         #     print(r[2])
+        # else:
+        #     print("Well formed SHACL shapes")
 
-        print("Start writing to file")
+        # print("Start writing to file")
+        # self.writeShapeToFile(xsd_file + ".shape.ttl")
 
-        self.writeShapeToFile(xsd_file + ".shape.ttl")
-        # print(self.SHACL.serialize(format="turtle"))
         
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Translate XSD to SHACL')
