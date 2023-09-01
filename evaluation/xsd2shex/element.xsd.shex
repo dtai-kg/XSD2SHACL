@@ -1,6 +1,6 @@
 prefix : <http://example.org/>
 PREFIX xs: <http://www.w3.org/2001/XMLSchema#>
-
+List(MaxExclusive(Attributes(Map(value -> "100"))))
 <item> {
 :productName  xs:string {1}  ;
 :USPrice  xs:decimal {1}  ;
