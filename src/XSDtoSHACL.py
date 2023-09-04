@@ -772,6 +772,7 @@ class XSDtoSHACL:
                         self.root.append(child)
                 self.parseXSD(next_ref_root)
 
+
     
     def evaluate_file(self, xsd_file, shacl_file=None):
         self.BASE_PATH = os.path.dirname(xsd_file)

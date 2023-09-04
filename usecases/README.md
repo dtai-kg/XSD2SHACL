@@ -15,3 +15,7 @@ Tenders Electronic Daily ([TED](https://ted.europa.eu))
 
 We use the [Publication XSD](https://op.europa.eu/en/web/eu-vocabularies/e-procurement/tedschemas)
 and [SHACL shapes](https://github.com/OP-TED/ted-rdf-mapping)
+
+## Validation Metrics Results
+
+Execute metrics.py under each folder to get validation results C_T, R/T, R/T', C_P, R/P, R/P'
