@@ -123,9 +123,9 @@ name.extend(["RINF-platforms","RINF-sections-of-line","RINF-sidings","RINF-sol-t
 name.extend(["RINF-train-detection-systems","RINF-tunnels"])
 
 for case in name:
-    ground_truth = f"D://xueminduan//PhD//projects//XSD2SHACL//usecases//RINF//shapes//{case}.ttl"
-    predicted = f"D://xueminduan//PhD//projects//XSD2SHACL//usecases//RINF//RINF-metadata.xsd.shape.ttl.{case}.yml.adjustment.ttl"
-    mapping = f"D://xueminduan//PhD//projects//XSD2SHACL//usecases//RINF//mappings//{case}.yml.ttl"
+    ground_truth = f"usecases/RINF/shapes/{case}.ttl"
+    predicted = f"usecases/RINF/RINF-metadata.xsd.shape.ttl.{case}.yml.adjustment.ttl"
+    mapping = f"usecases/RINF/mappings//{case}.yml.ttl"
 
     metric = SHACLMetric(ground_truth, predicted, mapping)
     metric.parseRML()

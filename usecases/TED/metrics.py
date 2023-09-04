@@ -126,9 +126,9 @@ F.add(URIRef("http://data.europa.eu/a4g/ontology#ContractAwardNotice"))
 F.add(URIRef("http://data.europa.eu/a4g/ontology#ResultNotice"))
 
 for case in ["F03","F06","F13"]:
-    ground_truth = "D://xueminduan//PhD//projects//XSD2SHACL//usecases//TED//shapes//all.shape.ttl"
-    predicted = f"D://xueminduan//PhD//projects//XSD2SHACL//usecases//TED//TED_EXPORT_merge_{case}.shape.adjustment.ttl"
-    mapping = f"D://xueminduan//PhD//projects//XSD2SHACL//usecases//TED//mappings//{case}"
+    ground_truth = "usecases/TED/shapes/all.shape.ttl"
+    predicted = f"usecases/TED/TED_EXPORT_merge_{case}.shape.adjustment.ttl"
+    mapping = f"usecases/TED/mappings//{case}"
 
     mappings = [mapping+"/"+name for name in os.listdir(mapping)]
     metric = SHACLMetric(ground_truth, predicted, mappings)

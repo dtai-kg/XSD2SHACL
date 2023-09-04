@@ -50,6 +50,12 @@ $ python post_adjustment/main.py usecases/RINF/RINF-metadata.xsd.shape.ttl -r us
 And the following for TED:
 
 ```
-$ python python main.py usecases/TED/TED_EXPORT_merge.xsd.shape.ttl -r usecases/TED/mappings/F03 -a usecases/TED/TED_EXPORT_merge_F03.shape.adjustment.ttl
+$ python main.py usecases/TED/TED_EXPORT_merge.xsd.shape.ttl -r usecases/TED/mappings/F03 -a usecases/TED/TED_EXPORT_merge_F03.shape.adjustment.ttl
 ```
 
+Run following get the validation results (C_T, R/T, R/T', C_P, R/P, R/P'):
+
+```
+$ python usecases/RINF/metrics.py
+$ python usecases/TED/metrics.py
+```
