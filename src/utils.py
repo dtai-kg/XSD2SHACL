@@ -19,9 +19,6 @@ def identifyXSD(element):
         allowed_tags = ["annotation"]
         if False in [child.tag.split("}")[-1] in allowed_tags for child in element.findall("*")]:
             raise Exception("Invalid XSD file: any or anyAttribute or field or import or include or notation or selector should only contain annotation")
-    # elif "appinfo" == tag or "documentation" == tag:
-    #     for child in element:
-    #         raise Exception("Invalid XSD file: appinfo or documentation should not contain any child")
     elif "attribute" == tag:
         allowed_tags = ["annotation", "simpleType"]
         if False in [child.tag.split("}")[-1] in allowed_tags for child in element.findall("*")]:
@@ -215,19 +212,10 @@ def recursiceCheck(element):
         identifyXSD(child)
         if "element" in child.tag:
             name = child.get("name")
-
-            # print(child.tag, name, identifyElementType(element, child))
         recursiceCheck(child)
 
-# xsdTree = ET.parse("usecase\RINF\RINF-metadata.xsd")
-# root = xsdTree.getroot()
-
-# XSD_FILES, XSD_TYPES = parseXSD("F03_2014.xsd", "usecase/TED/")
-# print("XSD_FILES", XSD_FILES)
-# print(root.find(f".//*[@name='RINFDataq']"))
-# recursiceCheck(xsdTree.getroot())
-# print("Valid XSD file")
-
+def built_in_types():
+    return ['string', 'normalizedString', 'token', 'base64Binary', 'hexBinary', 'integer', 'positiveInteger', 'negativeInteger', 'nonNegativeInteger', 'nonPositiveInteger', 'long', 'unsignedLong', 'int', 'unsignedInt', 'short', 'unsignedShort', 'byte', 'unsignedByte', 'decimal', 'float', 'double', 'boolean', 'duration', 'dateTime', 'date', 'time', 'gYear', 'gYearMonth', 'gMonth', 'gMonthDay', 'gDay', 'Name', 'QName', 'NCName', 'anyURI', 'language', 'ID', 'IDREF', 'IDREFS', 'ENTITY', 'ENTITIES', 'NOTATION', 'NMTOKEN', 'NMTOKENS']
 
 
 

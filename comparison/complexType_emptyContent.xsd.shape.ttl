@@ -1,0 +1,21 @@
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/address> a sh:NodeShape ;
+    sh:name "address" ;
+    sh:node <http://example.com/NodeShape/USAddress> ;
+    sh:nodeKind sh:IRI ;
+    sh:targetClass ex:address .
+
+<http://example.com/NodeShape/USAddress> a sh:NodeShape ;
+    sh:name "USAddress" ;
+    sh:property <http://example.com/PropertyShape/USAddress/country> .
+
+<http://example.com/PropertyShape/USAddress/country> a sh:PropertyShape ;
+    sh:datatype xsd:NMTOKEN ;
+    sh:in ( "US" ) ;
+    sh:name "country" ;
+    sh:path ex:country .
+

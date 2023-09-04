@@ -1,5 +1,0 @@
-<person> {
-:firstname  xs:string ?  ;
-:lastname  xs:string ?  ;
-
-}

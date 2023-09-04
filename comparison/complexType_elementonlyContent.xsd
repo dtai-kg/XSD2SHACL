@@ -1,0 +1,12 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <xsd:element name="address" type="USAddress"/>
+
+  <xsd:complexType name="USAddress">
+    <xsd:sequence>
+      <xsd:element name="street" type="xsd:string"/>
+    </xsd:sequence>
+    <xsd:attribute name="country" type="xsd:NMTOKEN" fixed="US"/>
+  </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,22 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+
+  <xsd:element name="partNum" type="SKU"/>
+
+
+  <!-- Stock Keeping Unit, a code for identifying products -->
+  <xsd:simpleType name="SKU">
+    <xsd:union>
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:integer">
+          <xsd:pattern value="\d{3}-[A-Z]{2}"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:pattern value="\d{3}-[A-Z]{4}"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:union>
+  </xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,14 @@
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/PropertyShape/partNum> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "partNum" ;
+    sh:or ( [ sh:datatype xsd:string ;
+                sh:pattern "\\d{3}-[A-Z]{4}" ] [ sh:datatype xsd:integer ;
+                sh:pattern "\\d{3}-[A-Z]{2}" ] ) ;
+    sh:path ex:partNum .
+

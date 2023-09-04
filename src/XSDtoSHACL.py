@@ -4,22 +4,22 @@ import rdflib
 from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
 from pyshacl import validate
 import argparse
-from .utils import recursiceCheck
+from .utils import recursiceCheck, built_in_types
 import time
 
 
 class XSDtoSHACL:
     def __init__(self):
         """
-
+        Initialize the XSDtoSHACL class
         """
         self.shaclNS = rdflib.Namespace('http://www.w3.org/ns/shacl#')
         self.rdfSyntax = rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
         self.xsdNS = rdflib.Namespace('http://www.w3.org/2001/XMLSchema#')
         self.xsdTargetNS = rdflib.Namespace('http://example.com/')
         self.NS = rdflib.Namespace('http://example.com/')
+        self.type_list = built_in_types()
         self.xsdNSdict = dict()
-        self.type_list = ['string', 'normalizedString', 'token', 'base64Binary', 'hexBinary', 'integer', 'positiveInteger', 'negativeInteger', 'nonNegativeInteger', 'nonPositiveInteger', 'long', 'unsignedLong', 'int', 'unsignedInt', 'short', 'unsignedShort', 'byte', 'unsignedByte', 'decimal', 'float', 'double', 'boolean', 'duration', 'dateTime', 'date', 'time', 'gYear', 'gYearMonth', 'gMonth', 'gMonthDay', 'gDay', 'Name', 'QName', 'NCName', 'anyURI', 'language', 'ID', 'IDREF', 'IDREFS', 'ENTITY', 'ENTITIES', 'NOTATION', 'NMTOKEN', 'NMTOKENS']
         self.SHACL = Graph()
         self.shapes = []
         self.extensionShapes = []
@@ -40,11 +40,17 @@ class XSDtoSHACL:
                 elif "simpleType" in child.tag:
                     return 0
             return 0
-        elif "xs" in xsd_type or "xsd" in xsd_type or xsd_type in self.type_list:
+        # elif "xs" in xsd_type or "xsd" in xsd_type or xsd_type in self.type_list:
+        elif xsd_type.split(":")[-1] in self.type_list:
             return 0 #built-in type
         else:
             child = self.root.find(f".//*[@name='{xsd_type}']",self.xsdNSdict)
             if "complexType" in child.tag:
+                if child.attrib.get("mixed") == "true":
+                    return "mixed"
+                for sub_child in child:
+                    if "simpleContent" in sub_child.tag:
+                        return "simpleContent"
                 return 1
             elif "simpleType" in child.tag:
                 return 0
@@ -247,23 +253,69 @@ class XSDtoSHACL:
                 self.transRestriction(name, xsd_element.attrib[name], ps_subject)
 
         element_type = xsd_element.get("type")
+        self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_type}'])) #Will be translated later
+
+        return xsd_element
+
+    def transEleComplexSimpleContent(self,xsd_element):
+        """A function to translate XSD element with complex type simple Content to SHACL node shape"""
+        element_name = xsd_element.get("name")
+        subject = self.NS[f'NodeShape/{element_name}']
+        ps_subject = self.NS[f'PropertyShape/{element_name}']
+
+        if self.shapes != []:
+            if "NodeShape" in str(self.shapes[-1]):
+                pre_subject_path = self.shapes[-1].split("NodeShape/")[1]
+            elif "PropertyShape" in str(self.shapes[-1]):
+                pre_subject_path = self.shapes[-1].split("PropertyShape/")[1]
+            subject = self.NS[f'NodeShape/{pre_subject_path}/{element_name}']
+            ps_subject = self.NS[f'PropertyShape/{pre_subject_path}/{element_name}']
+            if subject not in self.choiceShapes:
+                self.SHACL.add((self.shapes[-1],self.shaclNS.node,subject))
+
+        self.transAnnotation(xsd_element,subject)
+        self.shapes.append(subject)
+        self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
+        self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
+        
+        self.SHACL.add((subject,self.shaclNS.nodeKind,self.shaclNS.IRI))
+        self.SHACL.add((subject,self.shaclNS.targetClass,self.xsdTargetNS[element_name]))
+
+        # Add one more property shape
+        self.SHACL.add((subject,self.shaclNS.property,ps_subject))
+        self.SHACL.add((ps_subject,self.rdfSyntax['type'],self.shaclNS.PropertyShape))
+        self.SHACL.add((ps_subject,self.shaclNS.name,Literal(element_name)))
+        self.SHACL.add((ps_subject,self.shaclNS.path,self.xsdTargetNS[element_name]))
+        element_min_occurs = Literal(int(xsd_element.get("minOccurs", "1")))
+        self.SHACL.add((ps_subject,self.shaclNS.minCount,element_min_occurs))
+        element_max_occurs = xsd_element.get("maxOccurs", "1")
+        if element_max_occurs != "unbounded" and (isinstance(element_max_occurs, int) or isinstance(element_max_occurs, str)):
+            element_max_occurs = Literal(int(element_max_occurs))    
+            self.SHACL.add((ps_subject,self.shaclNS.maxCount,element_max_occurs))
+    
+
+        for name in xsd_element.attrib:
+            if "type" not in name:
+                self.transRestriction(name, xsd_element.attrib[name], ps_subject)
+
+        element_type = xsd_element.get("type")
         if element_type == None:
             for i in xsd_element.findall(f".//{{http://www.w3.org/2001/XMLSchema}}complexType/{{http://www.w3.org/2001/XMLSchema}}simpleContent/{{http://www.w3.org/2001/XMLSchema}}extension"):
                 type_name = i.get("base")
-                if "xs" in type_name or "xsd" in type_name or type_name in self.type_list:
+                if type_name.split(":")[-1] in self.type_list:
                     self.SHACL.add((ps_subject,self.shaclNS.datatype,self.xsdNS[type_name.split(":")[1]]))
             return xsd_element
         else:
             self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_type}'])) #Will be translated later
   
-            for i in self.root.findall(f".//*[@name='{name}']/{{http://www.w3.org/2001/XMLSchema}}simpleContent/{{http://www.w3.org/2001/XMLSchema}}extension"):
+            for i in self.root.findall(f".//*[@name='{element_type}']/{{http://www.w3.org/2001/XMLSchema}}simpleContent/{{http://www.w3.org/2001/XMLSchema}}extension"):
                 type_name = i.get("base")
-                if "xs" in type_name or "xsd" in type_name or type_name in self.type_list:
+                if type_name.split(":")[-1] in self.type_list:
                     self.SHACL.add((ps_subject,self.shaclNS.datatype,self.xsdNS[type_name.split(":")[1]]))
-            for i in self.root.findall(f".//*[@name='{name}']/{{http://www.w3.org/2001/XMLSchema}}complexContent/{{http://www.w3.org/2001/XMLSchema}}extension"):
+            for i in self.root.findall(f".//*[@name='{element_type}']/{{http://www.w3.org/2001/XMLSchema}}complexContent/{{http://www.w3.org/2001/XMLSchema}}extension"):
                 type_name = i.get("base")
-                if "xs" in type_name or "xsd" in type_name or type_name in self.type_list:
-                    self.SHACL.add((ps_subject,self.shaclNS.datatype,self.xsdNS[type_name.split(":")[1]]))
+                if type_name.split(":")[-1] in self.type_list:
+                    self.SHACL.add((ps_subject,self.shaclNS.datatype,self.xsdNS[type_name.split(":")[-1]]))
 
             return xsd_element
         return xsd_element
@@ -386,26 +438,86 @@ class XSDtoSHACL:
         values = []
         subject = self.shapes[-1]
 
-        memberTypes = xsd_element.get("memberTypes").split(" ")
+        if xsd_element.get("memberTypes") and len(xsd_element)==0 :
+            memberTypes = xsd_element.get("memberTypes").split(" ")
 
-        current_BN = BNode()
-        self.SHACL.add((subject, self.shaclNS["or"], current_BN))
+            current_BN = BNode()
+            self.SHACL.add((subject, self.shaclNS["or"], current_BN))
 
-        for index in range(len(memberTypes)):
-            memberType = memberTypes[index]
-            if (":" in memberType) and (memberType.split(":")[1] in self.type_list):
-                shape_BN = BNode()
-                self.SHACL.add((current_BN, RDF.first, shape_BN)) 
-                self.SHACL.add((shape_BN, self.shaclNS.datatype, self.xsdNS[memberType.split(":")[1]])) 
-                next_BN = BNode()
-                if index == len(memberTypes)-1:
-                    self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
-                else:   
-                    self.SHACL.add((current_BN, RDF.rest, next_BN))
-                current_BN = next_BN
-            else:
-                sub_node = self.root.find(f'.//*[@name="{memberType}"]',self.xsdNSdict)
-                element_type = self.isSimpleComplex(sub_node, memberType)
+            for index in range(len(memberTypes)):
+                memberType = memberTypes[index]
+                if (":" in memberType) and (memberType.split(":")[-1] in self.type_list):
+                    shape_BN = BNode()
+                    self.SHACL.add((current_BN, RDF.first, shape_BN)) 
+                    self.SHACL.add((shape_BN, self.shaclNS.datatype, self.xsdNS[memberType.split(":")[1]])) 
+                    next_BN = BNode()
+                    if index == len(memberTypes)-1:
+                        self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+                    else:   
+                        self.SHACL.add((current_BN, RDF.rest, next_BN))
+                    current_BN = next_BN
+                else:
+                    sub_node = self.root.find(f'.//*[@name="{memberType}"]',self.xsdNSdict)
+                    element_type = self.isSimpleComplex(sub_node, memberType)
+                    if element_type == 1:
+                        self.SHACL.add((current_BN, RDF.first, self.NS[f'NodeShape/{memberType}'])) 
+                        next_BN = BNode()
+                        if index == len(memberTypes)-1:
+                            self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+                        else:   
+                            self.SHACL.add((current_BN, RDF.rest, next_BN))
+                        current_BN = next_BN
+                    elif element_type == 0:
+                        sub_BN = BNode()
+                        self.SHACL.add((current_BN, RDF.first, sub_BN))
+                        self.shapes.append(sub_BN)
+                        self.translate(sub_node)
+                        self.shapes.pop()
+                        next_BN = BNode()
+                        if index == len(memberTypes)-1:
+                            self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+                        else:   
+                            self.SHACL.add((current_BN, RDF.rest, next_BN))
+                        current_BN = next_BN
+        elif xsd_element.get("memberTypes") and len(xsd_element)>0 :
+            memberTypes = xsd_element.get("memberTypes").split(" ")
+
+            current_BN = BNode()
+            self.SHACL.add((subject, self.shaclNS["or"], current_BN))
+
+            for index in range(len(memberTypes)):
+                memberType = memberTypes[index]
+                if (":" in memberType) and (memberType.split(":")[-1] in self.type_list):
+                    shape_BN = BNode()
+                    self.SHACL.add((current_BN, RDF.first, shape_BN)) 
+                    self.SHACL.add((shape_BN, self.shaclNS.datatype, self.xsdNS[memberType.split(":")[1]])) 
+                    next_BN = BNode()
+                    if index == len(memberTypes)-1:
+                        self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+                    else:   
+                        self.SHACL.add((current_BN, RDF.rest, next_BN))
+                    current_BN = next_BN
+                else:
+                    sub_node = self.root.find(f'.//*[@name="{memberType}"]',self.xsdNSdict)
+                    element_type = self.isSimpleComplex(sub_node, memberType)
+                    if element_type == 1:
+                        self.SHACL.add((current_BN, RDF.first, self.NS[f'NodeShape/{memberType}'])) 
+                        next_BN = BNode()  
+                        self.SHACL.add((current_BN, RDF.rest, next_BN))
+                        current_BN = next_BN
+                    elif element_type == 0:
+                        sub_BN = BNode()
+                        self.SHACL.add((current_BN, RDF.first, sub_BN))
+                        self.shapes.append(sub_BN)
+                        self.translate(sub_node)
+                        self.shapes.pop()
+                        next_BN = BNode()
+                        self.SHACL.add((current_BN, RDF.rest, next_BN))
+                        current_BN = next_BN         
+            index = 0
+            for sub_node in xsd_element:
+                index += 1
+                element_type = self.isSimpleComplex(sub_node)
                 if element_type == 1:
                     self.SHACL.add((current_BN, RDF.first, self.NS[f'NodeShape/{memberType}'])) 
                     next_BN = BNode()
@@ -421,11 +533,38 @@ class XSDtoSHACL:
                     self.translate(sub_node)
                     self.shapes.pop()
                     next_BN = BNode()
+                    if index == len(xsd_element):
+                        self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+                    else:   
+                        self.SHACL.add((current_BN, RDF.rest, next_BN))
+                    current_BN = next_BN         
+        else:
+            current_BN = BNode()
+            self.SHACL.add((subject, self.shaclNS["or"], current_BN))
+            index = 0
+            for sub_node in xsd_element:
+                index += 1
+                element_type = self.isSimpleComplex(sub_node)
+                if element_type == 1:
+                    self.SHACL.add((current_BN, RDF.first, self.NS[f'NodeShape/{memberType}'])) 
+                    next_BN = BNode()
                     if index == len(memberTypes)-1:
                         self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
                     else:   
                         self.SHACL.add((current_BN, RDF.rest, next_BN))
                     current_BN = next_BN
+                elif element_type == 0:
+                    sub_BN = BNode()
+                    self.SHACL.add((current_BN, RDF.first, sub_BN))
+                    self.shapes.append(sub_BN)
+                    self.translate(sub_node)
+                    self.shapes.pop()
+                    next_BN = BNode()
+                    if index == len(xsd_element):
+                        self.SHACL.add((current_BN, RDF.rest, RDF.nil)) 
+                    else:   
+                        self.SHACL.add((current_BN, RDF.rest, next_BN))
+                    current_BN = next_BN         
 
     def transChoice(self, xsd_element):
 
@@ -476,6 +615,7 @@ class XSDtoSHACL:
 
     def translate(self,current_node):
         """A function to iteratively translate XSD to SHACL"""
+        print(current_node.tag)
         for child in current_node.findall("*"):
             # Translate current node and associate this SHACL term/shape with its corresponding SHACL shape
             tag = child.tag
@@ -498,6 +638,8 @@ class XSDtoSHACL:
                         next_node = self.transEleSimple(child)
                     elif element_type == 1:
                         next_node = self.transEleComplex(child)
+                    elif element_type == "simpleContent" or element_type == "mixed":
+                        next_node = self.transEleComplexSimpleContent(child)
             elif ("simpleType" in tag) and (self.shapes == []):
                 continue
             elif ("extension" in tag):
@@ -532,8 +674,8 @@ class XSDtoSHACL:
             elif ("enumeration" in tag):
                 self.transEnumeration(child)
             elif ("sequence" in tag):
-                pass
-                # self.order_list = list(reversed(range(len(child.findall("./")))))
+                # pass
+                self.order_list = list(reversed(range(len(child.findall("./")))))
             elif ("choice" in tag):
                 self.transChoice(child)
             elif ("all" in tag):
@@ -541,6 +683,9 @@ class XSDtoSHACL:
             elif ("union" in tag):
                 # memberTypes = child.get("memberTypes").split(" ")
                 self.transUnion(child)
+                continue
+            elif ("appinfo" in tag) or ("documentation" in tag) or ("annotation" in tag):
+                continue
             else:
                 value = child.get("value")
                 self.transRestriction(tag,value)
@@ -602,7 +747,7 @@ class XSDtoSHACL:
                 for child in next_ref_root.findall("./"):
                     self.root.append(child)
                 self.parseXSD(next_ref_root)
-        print("Processed_files",self.processed_files)
+        #print("Processed_files",self.processed_files)
 
 
         
@@ -616,7 +761,7 @@ class XSDtoSHACL:
 
         self.xsdNSdict = dict([node for (_, node) in ET.iterparse(xsd_file, events=['start-ns'])])
 
-        print("Start parsing")
+        print("#########Start parsing#########")
         self.parseXSD(self.root)
         # tree = ET.ElementTree(self.root)
         # tree.write("parse_merge.xsd", encoding="utf-8", xml_declaration=True)
@@ -626,21 +771,21 @@ class XSDtoSHACL:
             if key == "targetNamespace":
                 self.xsdTargetNS = Namespace(self.root.attrib[key])
 
-        print("Start translating")
+        print("#########Start translating")
         start = time.time()
         self.translate(self.root)
         end = time.time()
-        print("##### Time cost: " + str(end - start))
+        print("#########Time cost: " + str(end - start), "Seconds#########")
 
-        # print("Start checking SHACL shapes")
-        # shaclValidation = Graph()
-        # shaclValidation.parse("https://www.w3.org/ns/shacl-shacl")
+        print("Start checking SHACL shapes")
+        shaclValidation = Graph()
+        shaclValidation.parse("https://www.w3.org/ns/shacl-shacl")
 
-        # r = validate(self.SHACL, shacl_graph=shaclValidation)
-        # if not r[0]:
-        #     print(r[2])
-        # else:
-        #     print("Well formed SHACL shapes")
+        r = validate(self.SHACL, shacl_graph=shaclValidation)
+        if not r[0]:
+            print(r[2])
+        else:
+            print("Well formed SHACL shapes")
 
         print("Start writing to file")
         if shacl_file:
@@ -649,10 +794,10 @@ class XSDtoSHACL:
             self.writeShapeToFile(xsd_file + ".shape.ttl")
 
         
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Translate XSD to SHACL')
-    parser.add_argument("xsd_file",  help='xsd_file', type=str)
-    args = parser.parse_args()
+# if __name__ == "__main__":
+#     parser = argparse.ArgumentParser(description='Translate XSD to SHACL')
+#     parser.add_argument("xsd_file",  help='xsd_file', type=str)
+#     args = parser.parse_args()
 
-    X2S = XSDtoSHACL()
-    X2S.evaluate_file(args.xsd_file)
+#     X2S = XSDtoSHACL()
+#     X2S.evaluate_file(args.xsd_file)

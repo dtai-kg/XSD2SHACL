@@ -1,0 +1,43 @@
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/USAddress> a sh:NodeShape ;
+    sh:name "USAddress" ;
+    sh:node <http://example.com/NodeShape/IdentifierGroup> ;
+    sh:property <http://example.com/PropertyShape/USAddress/name>,
+        <http://example.com/PropertyShape/USAddress/street> .
+
+<http://example.com/NodeShape/IdentifierGroup> a sh:NodeShape ;
+    sh:name "IdentifierGroup" ;
+    sh:property <http://example.com/PropertyShape/IdentifierGroup/country>,
+        <http://example.com/PropertyShape/IdentifierGroup/orderDate> .
+
+<http://example.com/PropertyShape/IdentifierGroup/country> a sh:PropertyShape ;
+    sh:datatype xsd:NMTOKEN ;
+    sh:in ( "US" ) ;
+    sh:name "country" ;
+    sh:path ex:country .
+
+<http://example.com/PropertyShape/IdentifierGroup/orderDate> a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:name "orderDate" ;
+    sh:path ex:orderDate .
+
+<http://example.com/PropertyShape/USAddress/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:order 0 ;
+    sh:path ex:name .
+
+<http://example.com/PropertyShape/USAddress/street> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "street" ;
+    sh:order 1 ;
+    sh:path ex:street .
+
