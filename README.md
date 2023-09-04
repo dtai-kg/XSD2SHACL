@@ -2,9 +2,9 @@
 
 A tool to generate SHACL shapes from XSD for RDF graphs validation. 
 
-- The results of comparison and evaluation of supported XSD components are under [comparison folder](https://gitlab.kuleuven.be/dtai/kg/code/xsd2shacl/-/tree/main/comparison).
+- The results of comparison and evaluation of supported XSD components are under [comparison folder](https://github.com/dtai-kg/XSD2SHACL/tree/main/comparison).
 
-- The results of validation on two usecases are under [usecases folder](https://gitlab.kuleuven.be/dtai/kg/code/xsd2shacl/-/tree/main/usecases). 
+- The results of validation on two usecases are under [usecases folder](https://github.com/dtai-kg/XSD2SHACL/tree/main/usecases). 
 
 ## Prerequisite
 
