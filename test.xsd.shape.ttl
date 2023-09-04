@@ -1,0 +1,33 @@
+@prefix : <http://tempuri.org/po.xsd> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/student> a sh:NodeShape ;
+    sh:name "student" ;
+    sh:nodeKind sh:IRI ;
+    sh:property <http://example.com/PropertyShape/student/ID>,
+        <http://example.com/PropertyShape/student/Name>,
+        <http://example.com/PropertyShape/student/Sport> ;
+    sh:targetClass :student .
+
+<http://example.com/PropertyShape/student/ID> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "ID" ;
+    sh:path :ID .
+
+<http://example.com/PropertyShape/student/Name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Name" ;
+    sh:path :Name .
+
+<http://example.com/PropertyShape/student/Sport> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Sport" ;
+    sh:path :Sport .
+

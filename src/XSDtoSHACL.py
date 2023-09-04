@@ -337,7 +337,6 @@ class XSDtoSHACL:
 
             elif element_type == 0:
                 # simpleType will not be translated seperatly so we need to redirect it here
-                # next_node = self.root.find(f'.//xs:simpleType[@name="{element_name}"]',self.xsdNSdict)
                 next_node = sub_node
                 self.SHACL.add((subject,self.shaclNS.property,self.NS[f'PropertyShape/{element_name}'])) 
                 subject = self.NS[f'PropertyShape/{element_name}']
@@ -608,7 +607,7 @@ class XSDtoSHACL:
 
         
     
-    def evaluate_file(self, xsd_file):
+    def evaluate_file(self, xsd_file, shacl_file=None):
         self.BASE_PATH = os.path.dirname(xsd_file)
         self.xsdTree = ET.parse(xsd_file)
         self.root = self.xsdTree.getroot()
@@ -643,8 +642,11 @@ class XSDtoSHACL:
         # else:
         #     print("Well formed SHACL shapes")
 
-        # print("Start writing to file")
-        # self.writeShapeToFile(xsd_file + ".shape.ttl")
+        print("Start writing to file")
+        if shacl_file:
+            self.writeShapeToFile(shacl_file)
+        else:
+            self.writeShapeToFile(xsd_file + ".shape.ttl")
 
         
 if __name__ == "__main__":
