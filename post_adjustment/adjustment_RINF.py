@@ -4,7 +4,7 @@ from rdflib.plugins.sparql import prepareQuery
 import os
 import re
 import json
-from .utils import clear_graph, update_graph
+from utils import clear_graph, update_graph
 
 class Adjustment_RINF:
     def __init__(self):

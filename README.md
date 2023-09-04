@@ -1,6 +1,6 @@
 # XSD2SHACL
 
-See translation and implementation detail in report.
+A tool to generate SHACL shapes from XSD for RDF graphs validation.
 
 ## Prerequisite
 
@@ -12,32 +12,40 @@ $ pip install -r requirements.txt
 
 ## Usage
 
-To translate XML Schema to SHACL shapes:
+To translate XSD to SHACL shapes:
 
 ```
-$ python XSDtoSHACL.py XSD_FILE
+$ python main.py XSD_FILE
 ```
 
-For example, if you execute the following:
+Or you can specify the location for storing the generated SHACL shapes
 
 ```
-$ python XSDtoSHACL.py testcase/example.xml
-```
-
-The generated shape file will then be located here: testcase/example.xml.shape.ttl
-
-
-To adjust the generated SHACL shapes with corresponding RML mapping files:
-
-```
-$ python XSDtoSHACL.py XSD_FILE -R RML_PATH/DICTIONARY_PATH
+$ python main.py XSD_FILE -s SHACL_PATH
 ```
 
 For example, if you execute the following:
 
 ```
-$ python python main.py usecase/RINF/RINF-metadata.xsd -r usecase\RINF\mappings
+$ python main.py test/test.xsd
 ```
 
-The generated shape file will then be located here: usecase/RINF/RINF-metadata.xsd.shape.ttl AND RINF-metadata.xsd.shape.ttl.adjustment.ttl
+The generated shape file will then be located here: test/test.xsd.shape.ttl. 
+
+
+## Post-adjustment
+
+To adjust the generated SHACL shapes with corresponding RML mapping files to the post-adjusted shapes on two use cases:
+
+You can run the following for RINF:
+
+```
+$ python post_adjustment/main.py validation/RINF/RINF-metadata.xsd.shape.ttl -r validation/RINF/mappings/RINF-contact-line-systems.yml.ttl -a validation/RINF/RINF-metadata.xsd.shape.RINF-contact-line-systems.adjustment.ttl
+```
+
+And the following for TED:
+
+```
+$ python python main.py validation/TED/TED_EXPORT_merge.xsd.shape.ttl -r validation/TED/mappings/F03 -a validation/TED/TED_EXPORT_merge_F03.shape.adjustment.ttl
+```
 
