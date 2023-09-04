@@ -489,35 +489,5 @@ class Adjustment_TED:
         result = iterator.split("/")
         return "/".join([r.split('[')[0].split('(')[0].split("*")[0] for r in result])
 
-    # def clearReference(self, reference):
-    #     matches = reference.split("/")
-    #     matches = [r.split('[')[0].split('(')[0].split("*")[0] for r in matches]
-    #     matches = [r for r in matches if "parent::" not in r]
-    #     result = "/".join(matches)
-    #     return result.replace("//","/").replace("@","")
-
-    # def extract_curly_braces_content(self, iterator, input_string):
-    #     pattern = r'\{([^{}]+)\}'  
-    #     matches = re.findall(pattern, input_string)
-    #     matches = [self.clearIterator(match) for match in matches]
-    #     matches = [i for i in matches if "parent::" not in i]
-    #     # result = iterator+"/"+"/".join(matches)
-    #     result = "/".join(matches)
-    #     return result.replace("//","/").replace("@","")
-
-
-# ADJ = Adjustment()
-
-# mapping_path = "usecase/TED/mappings"
-
-# rml_path = [mapping_path + "/" + i for i in os.listdir(mapping_path)]
-# # rml_path = "usecase/TED/mappings/technical_mapping_F03.rml.ttl"
-# SHACL_g = "usecase/TED/TED_EXPORT_merge.xsd.shape.ttl"
-# ADJ.loadMapping(SHACL_g, rml_path)
-
-# print("####Start adjust SHACL shape")
-# SHACL_g = ADJ.adjust()
-
-# SHACL_g.serialize(destination="adjustTEDtarget.ttl", format='turtle')
 
 

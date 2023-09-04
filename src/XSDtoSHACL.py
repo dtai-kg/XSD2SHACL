@@ -738,6 +738,7 @@ class XSDtoSHACL:
 
         # Process xs:include
         for include_import_elem in ref_root.findall(".//xs:include", namespaces={"xs": "http://www.w3.org/2001/XMLSchema"}):
+            self.root.remove(include_import_elem)
             included_imported_xsd_path = include_import_elem.get("schemaLocation")
             if included_imported_xsd_path and included_imported_xsd_path not in self.processed_files:
                 try:
@@ -749,11 +750,13 @@ class XSDtoSHACL:
                     continue
 
                 for child in next_ref_root.findall("./"):
-                    self.root.append(child)
+                    if ("import" not in child.tag) or ("include" not in child.tag):
+                        self.root.append(child)
                 self.parseXSD(next_ref_root)
 
         # Process xs:import
         for include_import_elem in ref_root.findall(".//xs:import", namespaces={"xs": "http://www.w3.org/2001/XMLSchema"}):
+            self.root.remove(include_import_elem)
             included_imported_xsd_path = include_import_elem.get("schemaLocation")
             if included_imported_xsd_path and included_imported_xsd_path not in self.processed_files:
                 try:
@@ -765,7 +768,8 @@ class XSDtoSHACL:
                     continue
 
                 for child in next_ref_root.findall("./"):
-                    self.root.append(child)
+                    if ("import" not in child.tag) or ("include" not in child.tag):
+                        self.root.append(child)
                 self.parseXSD(next_ref_root)
 
     
@@ -797,12 +801,15 @@ class XSDtoSHACL:
         print("#########Start validating SHACL shapes syntax")
         shaclValidation = Graph()
         shaclValidation.parse("https://www.w3.org/ns/shacl-shacl")
-
-        r = validate(self.SHACL, shacl_graph=shaclValidation)
-        if not r[0]:
-            print(r[2])
+        
+        if len(self.SHACL) < 10000:
+            r = validate(self.SHACL, shacl_graph=shaclValidation)
+            if not r[0]:
+                print(r[2])
+            else:
+                print("It is well formed SHACL shapes!")
         else:
-            print("It is well formed SHACL shapes!")
+            print("Skip SHACL shape syntax check using pyshacl due to the size of SHACL shapes is too large! ")
 
         print("#########Start writing to file")
         if shacl_file:

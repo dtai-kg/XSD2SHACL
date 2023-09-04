@@ -371,8 +371,3 @@ class Adjustment_RINF:
 # SHACL_g = ADJ.adjust(SHACL_g)
 # SHACL_g.serialize(destination="adjust2.ttl", format='turtle')
 
-# with open(rml_path+".mapping-dict.json", "w") as outfile:
-#     json.dump(mapping_dict, outfile)
-
-# with open(rml_path+".path-dict.json", "w") as outfile:
-#     json.dump(path_dict, outfile, indent=4)
