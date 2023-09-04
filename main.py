@@ -14,10 +14,6 @@ if __name__ == "__main__":
     parser.add_argument("--SHACL_PATH", "-s", type=str,
                         help="The path used to store the generated SHACL shapes, the default is XSD_FILE.shape.ttl")
 
-    # parser.add_argument("-x", "--xsd", help='XSD file to be translated', type=str, default=None)
-    # parser.add_argument("-s", "--shacl", help='SHACL path to do adjustment', type=str, default=None)
-    # parser.add_argument("-r", "--rml", help='rml mapping file path to do adjustment', type=str, default=None)
-    # parser.add_argument("-d", "--destination", help='aligned ShEx file path to do adjustment', type=str, default=None)
     args = parser.parse_args()
 
     # if args.xsd:
