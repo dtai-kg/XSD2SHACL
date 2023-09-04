@@ -1,0 +1,31 @@
+@prefix ex: <http://example.com/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/USAddress> a sh:NodeShape ;
+    sh:name "USAddress" ;
+    sh:property <http://example.com/PropertyShape/USAddress/country>,
+        <http://example.com/PropertyShape/USAddress/name>,
+        <http://example.com/PropertyShape/USAddress/street> .
+
+<http://example.com/PropertyShape/USAddress/country> a sh:PropertyShape ;
+    sh:datatype xsd:NMTOKEN ;
+    sh:maxCount 1 ;
+    sh:minCount 0 ;
+    sh:name "country" ;
+    sh:path ex:country .
+
+<http://example.com/PropertyShape/USAddress/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:path ex:name .
+
+<http://example.com/PropertyShape/USAddress/street> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "street" ;
+    sh:path ex:street .
+

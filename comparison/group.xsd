@@ -9,7 +9,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:group name="DescriptionGroup"/>
+  <xsd:group name="DescriptionGroup">
     <xsd:sequence>
       <xsd:element name="name"   type="xsd:string"/>
       <xsd:element name="street" type="xsd:string"/>

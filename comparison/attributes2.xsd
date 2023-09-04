@@ -5,7 +5,7 @@
       <xsd:element name="name"   type="xsd:string"/>
       <xsd:element name="street" type="xsd:string"/>
     </xsd:all>
-    <xsd:attribute name="country" type="xsd:NMTOKEN" use="required"/>
+    <xsd:attribute name="country" type="xsd:NMTOKEN" use="optional"/>
   </xsd:complexType>
 
 </xsd:schema>

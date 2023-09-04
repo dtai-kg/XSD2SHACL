@@ -1,0 +1,56 @@
+@prefix ex: <http://example.com/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NodeShape/USAddress> a sh:NodeShape ;
+    sh:name "USAddress" ;
+    sh:node <http://example.com/NodeShape/DescriptionGroup> ;
+    sh:property <http://example.com/PropertyShape/USAddress/state>,
+        <http://example.com/PropertyShape/USAddress/zip> .
+
+<http://example.com/NodeShape/DescriptionGroup> a sh:NodeShape ;
+    sh:name "DescriptionGroup" ;
+    sh:property <http://example.com/PropertyShape/DescriptionGroup/city>,
+        <http://example.com/PropertyShape/DescriptionGroup/name>,
+        <http://example.com/PropertyShape/DescriptionGroup/street> .
+
+<http://example.com/PropertyShape/DescriptionGroup/city> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "city" ;
+    sh:order 2 ;
+    sh:path ex:city .
+
+<http://example.com/PropertyShape/DescriptionGroup/name> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "name" ;
+    sh:order 0 ;
+    sh:path ex:name .
+
+<http://example.com/PropertyShape/DescriptionGroup/street> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "street" ;
+    sh:order 1 ;
+    sh:path ex:street .
+
+<http://example.com/PropertyShape/USAddress/state> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "state" ;
+    sh:order 0 ;
+    sh:path ex:state .
+
+<http://example.com/PropertyShape/USAddress/zip> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "zip" ;
+    sh:order 1 ;
+    sh:path ex:zip .
+

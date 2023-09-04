@@ -2,6 +2,10 @@
 
 A tool to generate SHACL shapes from XSD for RDF graphs validation.
 
+The comparison and evaluation results of supported XSD components are under comparison folder.
+
+The validation on two usecases results are under usecases folder. 
+
 ## Prerequisite
 
 Install the required dependencies:
@@ -40,12 +44,12 @@ To adjust the generated SHACL shapes with corresponding RML mapping files to the
 You can run the following for RINF:
 
 ```
-$ python post_adjustment/main.py validation/RINF/RINF-metadata.xsd.shape.ttl -r validation/RINF/mappings/RINF-contact-line-systems.yml.ttl -a validation/RINF/RINF-metadata.xsd.shape.RINF-contact-line-systems.adjustment.ttl
+$ python post_adjustment/main.py usecases/RINF/RINF-metadata.xsd.shape.ttl -r usecases/RINF/mappings/RINF-contact-line-systems.yml.ttl -a usecases/RINF/RINF-metadata.xsd.shape.RINF-contact-line-systems.adjustment.ttl
 ```
 
 And the following for TED:
 
 ```
-$ python python main.py validation/TED/TED_EXPORT_merge.xsd.shape.ttl -r validation/TED/mappings/F03 -a validation/TED/TED_EXPORT_merge_F03.shape.adjustment.ttl
+$ python python main.py usecases/TED/TED_EXPORT_merge.xsd.shape.ttl -r usecases/TED/mappings/F03 -a usecases/TED/TED_EXPORT_merge_F03.shape.adjustment.ttl
 ```
 
