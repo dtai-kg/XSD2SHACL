@@ -31,7 +31,7 @@ $ python main.py XSD_FILE -s SHACL_PATH
 For example, if you execute the following:
 
 ```
-$ python main.py test/test.xsd
+$ python main.py comparison/pos.xsd
 ```
 
 The generated shape file will then be located here: test/test.xsd.shape.ttl. 
