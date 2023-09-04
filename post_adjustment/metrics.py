@@ -73,7 +73,6 @@ class SHACLMetric:
             for r in self.mapping.objects(om, self.RML.reference):
                 self.reference.add(self.mapping.value(pm, self.RR.constant))
 
-        print("RRRRRRRRRRR",self.reference)
         print("The number of Class and predicate: ", len(self.class_predicate))
 
     def strictMode(self):
@@ -118,14 +117,8 @@ class SHACLMetric:
         P_T = ground_truth_targets.intersection(predicated_targets)
         # the differnce between RT and PT
         D_T = R_T.difference(P_T)
-        print("TARGETDDDDDDDDDDDDDDDDDDDDDDDD",len(D_T),D_T)
+        print(len(D_T),D_T)
 
-        # f1_score = self.get_F1_score(ground_truth_targets, predicated_targets)
-        # print("Target declaration coverage score: ")
-        # print("Recall: " + str(recall))
-        # print("Precision: " + str(precision))
-        # print("F1 score: " + str(f1_score))
-        # print("Difference: ", ground_truth_targets.difference(predicated_targets))
         if classDefined:
             return recall, precision, len(ground_truth_targets), len(predicated_targets),len(ground_truth_targets.intersection(new_classDefined))
         return recall, precision, len(ground_truth_targets), len(predicated_targets),len(ground_truth_targets.intersection(self.class_predicate))
@@ -142,20 +135,14 @@ class SHACLMetric:
 
         recall = self.get_recall(ground_truth_property_paths, predicated_property_paths)
         precision = self.get_precision(ground_truth_property_paths, predicated_property_paths)
-        # f1_score = self.get_F1_score(ground_truth_property_paths, predicated_property_paths)
-        # the common target between ground truth and predicted
+
         R_T = ground_truth_property_paths.intersection(self.class_predicate)
         # the common target between ground truth and predicted
         P_T = ground_truth_property_paths.intersection(predicated_property_paths)
         # the differnce between RT and PT
         D_T = R_T.difference(P_T)
-        print("PROPERTYDDDDDDDDDDDDDDDDDDDDDDDD",len(D_T),D_T)
+        print(len(D_T),D_T)
 
-        # print("Property path coverage score: ")
-        # print("Recall: " + str(recall))
-        # print("Precision: " + str(precision))
-        # print("F1 score: " + str(f1_score))
-        # print("Difference PPPPPP: ", ground_truth_property_paths.difference(predicated_property_paths))
         return recall, precision, len(ground_truth_property_paths), len(predicated_property_paths), len(ground_truth_property_paths.intersection(self.class_predicate))
 
 
