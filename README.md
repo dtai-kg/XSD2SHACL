@@ -1,5 +1,8 @@
 # XSD2SHACL
 
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![DOI](https://zenodo.org/badge/687035494.svg)](https://zenodo.org/badge/latestdoi/687035494)
+
 A tool to generate SHACL shapes from XSD for RDF graphs validation. 
 
 - The results of comparison and evaluation of supported XSD components are under [comparison folder](https://github.com/dtai-kg/XSD2SHACL/tree/main/comparison).
