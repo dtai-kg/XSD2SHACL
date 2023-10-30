@@ -282,6 +282,7 @@ class XSDtoSHACL:
         self.transAnnotation(xsd_element,subject)
         self.shapes.append(subject)
         self.shapes.append(ps_subject)
+        self.simpleContent = subject
         self.extension = True
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
@@ -317,7 +318,6 @@ class XSDtoSHACL:
                     if extension_node_type == 0:
                         next_node = self.root.find(f'.//{{http://www.w3.org/2001/XMLSchema}}simpleType[@name="{element_type}"]')
                         # redirect current process to the next root (simple type)
-                        print("Here1")
                         return next_node 
                     elif extension_node_type == 1:
                         self.SHACL.add((ps_subject,self.shaclNS.node,self.NS[f'NodeShape/{type_name}']))
@@ -700,8 +700,8 @@ class XSDtoSHACL:
             elif ("enumeration" in tag):
                 self.transEnumeration(child)
             elif ("sequence" in tag):
-                # pass
-                self.order_list = list(reversed(range(len(child.findall("./")))))
+                pass
+                # self.order_list = list(reversed(range(len(child.findall("./")))))
             elif ("choice" in tag):
                 self.transChoice(child)
             elif ("all" in tag):
@@ -721,6 +721,9 @@ class XSDtoSHACL:
             if (("element" in tag) and (child.get("name"))) or (("attribute" in tag) and ("attributeGroup" not in tag) and not child.get("ref")) or (("complexType" in tag) and (child.get("name"))) or (("attributeGroup" in tag) and (child.get("name"))) or (("group" in tag) and (child.get("name") or child.get("id"))) or self.extension:
                 self.shapes.pop()
                 self.extension = False
+                if (self.shapes!=[]) and (self.simpleContent == self.shapes[-1]):
+                    self.shapes.pop()
+                    self.simpleContent = False
         if self.backUp != None:
             self.shapes.pop()
             temp = self.backUp
@@ -788,7 +791,7 @@ class XSDtoSHACL:
 
         self.xsdNSdict = dict([node for (_, node) in ET.iterparse(xsd_file, events=['start-ns'])])
 
-        print("#########Start parsing XSD file")
+        # print("#########Start parsing XSD file")
         self.parseXSD(self.root)
         # tree = ET.ElementTree(self.root)
         # tree.write("parse_merge.xsd", encoding="utf-8", xml_declaration=True)
@@ -813,7 +816,7 @@ class XSDtoSHACL:
             if not r[0]:
                 print(r[2])
             else:
-                print("It is well formed SHACL shapes!")
+                print("Well formed SHACL shapes!")
         else:
             print("Skip SHACL shape syntax check using pyshacl due to the size of SHACL shapes is too large! ")
 
@@ -824,6 +827,3 @@ class XSDtoSHACL:
         else:
             self.writeShapeToFile(xsd_file + ".shape.ttl")
             print(f"Saved SHACL shapes in {xsd_file}.shape.ttl!")
-
-        
-
