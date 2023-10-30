@@ -37,6 +37,11 @@ class XSDtoSHACL:
         if xsd_type == None:
             for child in xsd_element.findall("./"):
                 if "complexType" in child.tag:
+                    if child.attrib.get("mixed") == "true":
+                        return "mixed"
+                    for sub_child in child:
+                        if "simpleContent" in sub_child.tag:
+                            return "simpleContent"
                     return 1
                 elif "simpleType" in child.tag:
                     return 0
