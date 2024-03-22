@@ -62,3 +62,19 @@ Run following get the validation results (C_T, R/T, R/T', C_P, R/P, R/P'):
 $ python usecases/RINF/metrics.py
 $ python usecases/TED/metrics.py
 ```
+
+# Cite 
+
+To cite our work:
+
+    @inproceedings{duan2023xsd,
+        author = {Duan, Xuemin and Chaves-Fraga, David and Dimou, Anastasia},
+        title = {{XSD2SHACL: Capturing RDF Constraints from XML Schema}},
+        year = {2023},
+        isbn = {9798400701412},
+        publisher = {ACM},
+        doi = {10.1145/3587259.3627565},
+        booktitle = {Proceedings of the 12th Knowledge Capture Conference 2023},
+        keywords = {Validation, XSD, SHACL, RDF shapes, XML Schema},
+        series = {K-CAP '23}
+        }
