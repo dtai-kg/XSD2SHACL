@@ -1,13 +1,9 @@
 cff-version: 1.2.0
-title: "XSD2SHACL: Capturing RDF Constraints from XML Schema"
+title: "XSD2SHACL"
 license: Apache-2.0
 authors:
   - family-names: Duan
     given-names: Xuemin
-  - family-names: Chaves-Fraga
-    given-names: David
-  - family-names: Dimou
-    given-names: Anastasia
 preferred-citation:
   authors:
     - family-names: Duan
