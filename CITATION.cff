@@ -1,0 +1,22 @@
+cff-version: 1.0.0
+references:
+  - type: conference-paper
+  authors:
+    - family-names: Duan
+      given-names: Xuemin
+    - family-names: Chaves-Fraga
+      given-names: David
+    - family-names: Dimou
+      given-names: Anastasia
+  title: "XSD2SHACL: Capturing RDF Constraints from XML Schema"
+  year: 2023
+  collection-title: "Proceedings of the 12th Knowledge Capture Conference 2023"
+  conference:
+    - name: 1st Conference on Wishful Thinking
+      location: Pensacola, FL, USA
+  pages: 9
+  start: 214
+  end: 222
+  publisher:
+    name: Association for Computing Machinery
+  doi: 10.1145/3587259.3627565
