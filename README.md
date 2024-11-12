@@ -31,7 +31,7 @@ For example, if you execute the following:
 python -m xsd2shacl -x comparison/pos.xsd
 ```
 
-The generated shape file will then be located here: test/test.xsd.shape.ttl. 
+The generated shape file will then be located here: comparison/pos.xsd.shape.ttl. 
 
 
 ## Post-adjustment
