@@ -3,6 +3,7 @@ import os
 import rdflib
 from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
 from pyshacl import validate
+import argparse
 from .utils import recursiceCheck, built_in_types
 import time
 
@@ -161,14 +162,20 @@ class XSDtoSHACL:
         """A function to translate XSD element with simple type and attribute to SHACL property shape"""
         element_name = xsd_element.get("name")
 
-        subject = self.NS[f'PropertyShape/{element_name}']
+        if "attribute" in xsd_element.tag:
+            subject = self.NS[f'PropertyShape/@{element_name}']
+        else:
+            subject = self.NS[f'PropertyShape/{element_name}']
 
         if self.shapes != []:
             if "NodeShape" in str(self.shapes[-1]):
                 pre_subject_path = self.shapes[-1].split("NodeShape/")[1]
             elif "PropertyShape" in str(self.shapes[-1]):
                 pre_subject_path = self.shapes[-1].split("PropertyShape/")[1]
-            subject = self.NS[f'PropertyShape/{pre_subject_path}/{element_name}']
+            if "attribute" in xsd_element.tag:
+                subject = self.NS[f'PropertyShape/{pre_subject_path}/@{element_name}']
+            else:
+                subject = self.NS[f'PropertyShape/{pre_subject_path}/{element_name}']
             if subject not in self.choiceShapes:
                 self.SHACL.add((self.shapes[-1],self.shaclNS.property,subject))
         
@@ -280,8 +287,8 @@ class XSDtoSHACL:
 
         self.transAnnotation(xsd_element,subject)
         self.shapes.append(subject)
-        self.shapes.append(ps_subject)
-        self.simpleContent = subject
+        # self.shapes.append(ps_subject)
+        # self.simpleContent = subject
         self.extension = True
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
@@ -720,9 +727,9 @@ class XSDtoSHACL:
             if (("element" in tag) and (child.get("name"))) or (("attribute" in tag) and ("attributeGroup" not in tag) and not child.get("ref")) or (("complexType" in tag) and (child.get("name"))) or (("attributeGroup" in tag) and (child.get("name"))) or (("group" in tag) and (child.get("name") or child.get("id"))) or self.extension:
                 self.shapes.pop()
                 self.extension = False
-                if (self.shapes!=[]) and (self.simpleContent == self.shapes[-1]):
-                    self.shapes.pop()
-                    self.simpleContent = False
+                # if (self.shapes!=[]) and (self.simpleContent == self.shapes[-1]):
+                #     self.shapes.pop()
+                #     self.simpleContent = False
         if self.backUp != None:
             self.shapes.pop()
             temp = self.backUp
@@ -804,7 +811,7 @@ class XSDtoSHACL:
         start = time.time()
         self.translate(self.root)
         end = time.time()
-        print("Translation time cost: " + str(end - start), "Seconds")
+        # print("Translation time cost: " + str(end - start), "Seconds")
 
         print("#########Start validating SHACL shapes syntax")
         shaclValidation = Graph()
@@ -826,3 +833,5 @@ class XSDtoSHACL:
         else:
             self.writeShapeToFile(xsd_file + ".shape.ttl")
             print(f"Saved SHACL shapes in {xsd_file}.shape.ttl!")
+
+        
