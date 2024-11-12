@@ -1,2 +1,0 @@
-rdflib==6.2.0
-pyshacl==0.20.0

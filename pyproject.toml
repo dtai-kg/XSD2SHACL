@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "xsd2shacl"
+version = "1.0.0"
+description = "Generates SHACL shapes from XML Schema files"
+authors = ["Xuemin Duan <xuemin.duan@kuleuven.be>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pyshacl = "^0.20.0"
+rdflib = "^6.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

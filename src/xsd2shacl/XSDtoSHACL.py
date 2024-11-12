@@ -3,7 +3,6 @@ import os
 import rdflib
 from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
 from pyshacl import validate
-import argparse
 from .utils import recursiceCheck, built_in_types
 import time
 
