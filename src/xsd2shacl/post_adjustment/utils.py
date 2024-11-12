@@ -1,6 +1,5 @@
-import xml.etree.ElementTree as ET
-import rdflib
-from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
+
+from rdflib import BNode
 
 def clear_graph(g,old_subjects):
     bnodes = []
