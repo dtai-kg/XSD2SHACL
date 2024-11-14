@@ -11,12 +11,17 @@ A tool to generate SHACL shapes from XSD for RDF graphs validation.
 
 ## Installation
 
-Install the required dependencies:
-
+- From PyPi package
 ```bash
-$ pip install xsd2shacl
+pip install xsd2shacl
 ```
 
+- From source code:
+```bash
+python -m pip install poetry
+poetry update
+poetry build
+```
 ## Usage
 
 To translate XSD to SHACL shapes:
