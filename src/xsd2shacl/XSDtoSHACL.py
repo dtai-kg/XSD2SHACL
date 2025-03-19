@@ -23,7 +23,7 @@ class XSDtoSHACL:
         self.SHACL = Graph()
         self.shapes = []
         self.extensionShapes = []
-        self.extension = False
+        #self.extension = False
         self.enumerationShapes = []
         self.choiceShapes = []
         self.order_list = []
@@ -50,7 +50,13 @@ class XSDtoSHACL:
         elif xsd_type.split(":")[-1] in self.type_list:
             return 0 #built-in type
         else:
-            child = self.root.find(f".//*[@name='{xsd_type}']",self.xsdNSdict)
+            xsd_type = xsd_type.split(":")[-1]
+            elements = self.root.findall(f".//*[@name='{xsd_type}']", self.xsdNSdict)
+            # can't combine both conditions as xmltree doesn't support the full xpath syntax
+            # sometimes, some elements are named after their type, we need to find the element that contains the type definition
+            # that means we need to find the complexType or the simpleType element with that name
+            child = next((e for e in elements if ("complexType" in e.tag or "simpleType" in e.tag)), None)
+
             if "complexType" in child.tag:
                 if child.attrib.get("mixed") == "true":
                     return "mixed"
@@ -107,22 +113,22 @@ class XSDtoSHACL:
 
         elif "maxExclusive" in tag:
             p = self.shaclNS.maxExclusive
-            o = Literal(int(value))
+            o = Literal(value)
             self.SHACL.add((subject,p,o))
 
         elif "minExclusive" in tag:
             p = self.shaclNS.minExclusive
-            o = Literal(int(value))
+            o = Literal(value)
             self.SHACL.add((subject,p,o))
   
         elif "maxInclusive" in tag:
             p = self.shaclNS.maxInclusive
-            o = Literal(int(value))
+            o = Literal(value)
             self.SHACL.add((subject,p,o))
 
         elif "minInclusive" in tag:
             p = self.shaclNS.minInclusive
-            o = Literal(int(value))
+            o = Literal(value)
             self.SHACL.add((subject,p,o))
 
         elif "length" in tag:        
@@ -265,7 +271,8 @@ class XSDtoSHACL:
                 self.transRestriction(name, xsd_element.attrib[name], ps_subject)
 
         element_type = xsd_element.get("type")
-        self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_type}'])) #Will be translated later
+        if element_type != None:
+            self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_type}'])) #Will be translated later
 
         return xsd_element
 
@@ -289,7 +296,7 @@ class XSDtoSHACL:
         self.shapes.append(subject)
         # self.shapes.append(ps_subject)
         # self.simpleContent = subject
-        self.extension = True
+        #self.extension = True
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
         
@@ -322,7 +329,7 @@ class XSDtoSHACL:
                     extension_node = self.root.find(f".//*[@name='{type_name}']")
                     extension_node_type = self.isSimpleComplex(extension_node)
                     if extension_node_type == 0:
-                        next_node = self.root.find(f'.//{{http://www.w3.org/2001/XMLSchema}}simpleType[@name="{element_type}"]')
+                        next_node = self.root.find(f'.//{{http://www.w3.org/2001/XMLSchema}}simpleType[@name="{type_name}"]')
                         # redirect current process to the next root (simple type)
                         return next_node 
                     elif extension_node_type == 1:
@@ -660,8 +667,12 @@ class XSDtoSHACL:
                     ref_node = self.root.find(f".//*[@name='{ref}']")
                     if ref_node != None:
                         element_type = self.isSimpleComplex(ref_node)
-                        if element_type == 0:
-                            self.SHACL.add((self.shapes[-1],self.shaclNS.property,self.NS[f'PropertyShape/{ref}']))
+                        if element_type == 0:                            
+                            if "attribute" in ref_node.tag:
+                                object = self.NS[f'PropertyShape/@{ref}']
+                            else:
+                                object = self.NS[f'PropertyShape/{ref}']
+                            self.SHACL.add((self.shapes[-1],self.shaclNS.property,object))
                         elif element_type == 1:
                             self.SHACL.add((self.shapes[-1],self.shaclNS.node,self.NS[f'NodeShape/{ref}']))
                 else:
@@ -723,10 +734,13 @@ class XSDtoSHACL:
                 self.transRestriction(tag,value)
             # Translate next node
             self.translate(next_node)
-                
-            if (("element" in tag) and (child.get("name"))) or (("attribute" in tag) and ("attributeGroup" not in tag) and not child.get("ref")) or (("complexType" in tag) and (child.get("name"))) or (("attributeGroup" in tag) and (child.get("name"))) or (("group" in tag) and (child.get("name") or child.get("id"))) or self.extension:
+
+            # removed: or self.extension
+            # an <xs:extension> is always inside another case that will return true below
+            # there is a proven risk (taf_cat_complexe.xsd from the TAF_TSI) that the self.extension=true will result in an unwanted 2x pop()
+            if (("element" in tag) and (child.get("name"))) or (("attribute" in tag) and ("attributeGroup" not in tag) and not child.get("ref")) or (("complexType" in tag) and (child.get("name"))) or (("attributeGroup" in tag) and (child.get("name"))) or (("group" in tag) and (child.get("name") or child.get("id"))):
                 self.shapes.pop()
-                self.extension = False
+                #self.extension = False
                 # if (self.shapes!=[]) and (self.simpleContent == self.shapes[-1]):
                 #     self.shapes.pop()
                 #     self.simpleContent = False
@@ -805,7 +819,10 @@ class XSDtoSHACL:
 
         for key in self.root.attrib:
             if key == "targetNamespace":
-                self.xsdTargetNS = Namespace(self.root.attrib[key])
+                # Normalize namespace by removing trailing / (if present) and then adding it back
+                normalized_ns = self.root.attrib[key].rstrip('/') + '/'
+                self.xsdTargetNS = Namespace(normalized_ns)
+                self.NS = Namespace(normalized_ns)           
 
         print("#########Start translating XSD to SHACL shapes")
         start = time.time()

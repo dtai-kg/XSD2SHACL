@@ -3,3 +3,9 @@ __pycache__
 .venv
 poetry.lock
 .DS_Store
+telematics
+dist
+.vscode
+railml
+debug_cli.py
+requirements.txt
